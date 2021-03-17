@@ -12,7 +12,7 @@ class LoginPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final authBloc = context.bloc<AuthenticationBloc>();
+    final authBloc = context.watch<AuthenticationBloc>();
 
     return Scaffold(
       appBar: AppBar(

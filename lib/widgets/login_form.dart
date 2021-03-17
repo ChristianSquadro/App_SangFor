@@ -34,12 +34,12 @@ class _LoginFormState extends State<LoginForm> {
   }
 
   void loginButtonPressed(BuildContext context) {
-    context.bloc<CredentialsBloc>().add(LoginButtonPressed(
+    context.watch<CredentialsBloc>().add(LoginButtonPressed(
         username: emailController.text, password: passwordController.text));
   }
 
   void registerButtonPressed(BuildContext context) {
-    context.bloc<CredentialsBloc>().add(RegisterButtonPressed(
+    context.watch<CredentialsBloc>().add(RegisterButtonPressed(
         username: emailController.text, password: passwordController.text));
   }
 
