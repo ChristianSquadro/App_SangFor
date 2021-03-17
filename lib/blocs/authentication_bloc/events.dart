@@ -1,11 +1,11 @@
+import 'package:equatable/equatable.dart';
+
 /// Events for the [AuthenticationBloc] bloc
 abstract class AuthenticationEvent extends Equatable {
-  /// Base class for events fired by [AuthenticationBloc]
   const AuthenticationEvent();
 
   @override
   List<Object> get props => [];
-
 }
 
 /// User has logged with success

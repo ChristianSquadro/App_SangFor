@@ -1,11 +1,11 @@
+import 'package:equatable/equatable.dart';
+
 /// States emitted by [AuthenticationBloc]
 abstract class AuthenticationState extends Equatable {
-  /// Base class for states emitted by [AuthenticationBloc]
   const AuthenticationState();
 
   @override
   List<Object> get props => [];
-
 }
 
 /// App just opened, login or register actions required

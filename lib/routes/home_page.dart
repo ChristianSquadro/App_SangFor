@@ -1,6 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:app_sangfor/blocs/authentication_bloc.dart';
+import 'package:app_sangfor/widgets/login_page.dart';
+import 'package:app_sangfor/widgets/welcome_page.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+/// Home widget containing a tab that programmatically swipes between the
+/// login form and the welcome page.
 class HomePage extends StatefulWidget {
   const HomePage();
 
@@ -8,8 +13,9 @@ class HomePage extends StatefulWidget {
   _HomePageState createState() => _HomePageState();
 }
 
-class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin {
-  late final TabController tabController;
+class _HomePageState extends State<HomePage>
+    with SingleTickerProviderStateMixin {
+  TabController tabController;
 
   @override
   void initState() {
@@ -26,38 +32,39 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
     super.dispose();
   }
 
-  /// Sliding animation to show the welcome page
+  /// Sliding animation to show the login form
   void loginTransition() {
     if (tabController.index != 1) tabController.animateTo(1);
   }
 
-  /// Sliding animation to show the login page
+  /// Sliding animation to show the welcome page
   void logoutTransition() {
     if (tabController.index != 0) tabController.animateTo(0);
   }
 
   @override
   Widget build(BuildContext context) {
-
     return BlocBuilder<AuthenticationBloc, AuthenticationState>(
-        builder: (context, state) {
-      // This state is emitted on successful authentication
-      if (state is AuthenticationSuccess) {
-        loginTransition();
-      }
+      builder: (context, state) {
+        // This state is emitted on successful authentication
+        if (state is AuthenticationSuccess) {
+          loginTransition();
+        }
 
-      // This state is emitted on logout
-      if (state is AuthenticationRevoked) {
-        logoutTransition();
-      }
-      return TabBarView(
-        physics: const NeverScrollableScrollPhysics(),
-        controller: tabController,
-        children: const [
-          _LoginPage(),
-          _WelcomePage(),
-        ],
-      );
-    }
+        // This state is emitted on logout
+        if (state is AuthenticationRevoked) {
+          logoutTransition();
+        }
+
+        return TabBarView(
+          physics: const NeverScrollableScrollPhysics(),
+          controller: tabController,
+          children: const [
+            LoginPage(),
+            WelcomePage(),
+          ],
+        );
+      },
     );
   }
+}

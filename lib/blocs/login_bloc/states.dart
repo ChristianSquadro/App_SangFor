@@ -1,6 +1,7 @@
-/// States emitted by [CredentialsBloc]
+import 'package:equatable/equatable.dart';
+
+/// States emitted by [LogibBloc]
 abstract class CredentialsState extends Equatable {
-  /// State emitted by [CredentialsBloc] when the form is created
   const CredentialsState();
 
   @override

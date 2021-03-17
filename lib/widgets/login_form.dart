@@ -1,8 +1,10 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
+import 'package:app_sangfor/blocs/login_bloc.dart';
+import 'package:app_sangfor/widgets/separator.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:app_sangfor/blocs/credentials_bloc/credentials_bloc.dart';
 
+/// Actual login form, with validation, asking for email and password
 class LoginForm extends StatefulWidget {
   const LoginForm();
 
@@ -11,65 +13,105 @@ class LoginForm extends StatefulWidget {
 }
 
 class _LoginFormState extends State<LoginForm> {
-// controllers, form key, call to 'dispose' here...
-  final _formKey = GlobalKey<FormState>();
-  late final TabController tabController;
+  final formKey = GlobalKey<FormState>();
+  final emailController = TextEditingController();
+  final passwordController = TextEditingController();
 
-  @override
-  void initState() {
-    super.initState();
-    tabController = TabController(
-      vsync: this,
-      length: 2,
-    );
+  String validateEmail(String input) {
+    if ((input.length > 10) && (input.contains("@"))) {
+      return null;
+    } else {
+      return "invalid_field";
+    }
+  }
+
+  String validatePassword(String input) {
+    if (input.length > 5) {
+      return null;
+    } else {
+      return "invalid_field";
+    }
+  }
+
+  void loginButtonPressed(BuildContext context) {
+    context.bloc<CredentialsBloc>().add(LoginButtonPressed(
+        username: emailController.text, password: passwordController.text));
+  }
+
+  void registerButtonPressed(BuildContext context) {
+    context.bloc<CredentialsBloc>().add(RegisterButtonPressed(
+        username: emailController.text, password: passwordController.text));
   }
 
   @override
   void dispose() {
-    tabController.dispose();
+    emailController.dispose();
+    passwordController.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    return LayoutBuilder(builder: (context, data) {
-      var baseWidth = 250.0;
+    return LayoutBuilder(
+      builder: (context, data) {
+        var baseWidth = 250.0;
 
-      // For wider screen, such as tablets
-      if (data.maxWidth >= baseWidth) {
-        baseWidth = data.maxWidth / 1.4;
-      }
+        // For wider screen, such as tablets
+        if (data.maxWidth <= baseWidth) {
+          baseWidth = data.maxWidth / 1.4;
+        }
 
-      return Column(mainAxisAlignment: MainAxisAlignment.center, children: [
-        SvgPicture.asset(
-          "assets/flutter_logo.svg",
-          width: baseWidth,
-        ),
-        Form(
-          key: _formKey,
-          child: Wrap(
-            children: <Widget>[
-              SizedBox(
-                width: baseWidth - 30,
-                child: TextFormField(
-                  decoration: const InputDecoration(
-                      icon: Icon(Icons.mail), hintText: "Email"),
-                  validator: _validateEmail,
+        return SingleChildScrollView(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              FlutterLogo(size: 70),
+
+              const Separator(50),
+
+              Form(
+                key: formKey,
+                child: Wrap(
+                  direction: Axis.vertical,
+                  spacing: 20,
+                  children: <Widget>[
+                    SizedBox(
+                      width: baseWidth - 30,
+                      child: TextFormField(
+                        decoration: InputDecoration(
+                          prefixIcon: const Icon(Icons.email),
+                          hintText: "username",
+                        ),
+                        validator: validateEmail,
+                        controller: emailController,
+                      ),
+                    ),
+                    SizedBox(
+                      width: baseWidth - 30,
+                      child: TextFormField(
+                        obscureText: true,
+                        validator: validatePassword,
+                        controller: passwordController,
+                        decoration: InputDecoration(
+                          prefixIcon: const Icon(Icons.vpn_key),
+                          hintText: "password",
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
               ),
-              SizedBox(
-                width: baseWidth - 30,
-                child: TextFormField(
-                  decoration: const InputDecoration(
-                      icon: Icon(Icons.vpn_key), hintText: "Password"),
-                  obscureText: true,
-                  validator: _validatePassword,
-                ),
-              ),
+
+              const Separator(25),
+
+              // Login
               BlocConsumer<CredentialsBloc, CredentialsState>(
                 listener: (context, state) {
                   if (state is CredentialsLoginFailure) {
-                    // Show a snackbar or a dialog to notify the failure
+                    Scaffold.of(context).showSnackBar(SnackBar(
+                      duration: const Duration(seconds: 2),
+                      content: Text("error_login"),
+                    ));
                   }
                 },
                 builder: (context, state) {
@@ -77,43 +119,52 @@ class _LoginFormState extends State<LoginForm> {
                     return const CircularProgressIndicator();
                   }
 
-                  return ElevatedButton(
-                    child: Text(context.localize("login")),
+                  return RaisedButton(
+                    key: Key("loginButton"),
+                    child: Text("login"),
+                    color: Colors.lightGreen,
+                    textColor: Colors.white,
                     onPressed: () {
-                      final state = formKey.currentState;
-
-                      if (state?.validate() ?? false) {
-                        _loginButtonPressed(context);
+                      if (formKey.currentState.validate()) {
+                        loginButtonPressed(context);
                       }
                     },
                   );
                 },
               ),
+
+              const Separator(5),
+
+              // Register
+              BlocConsumer<CredentialsBloc, CredentialsState>(
+                listener: (context, state) {
+                  if (state is CredentialsRegisterFailure) {
+                    Scaffold.of(context).showSnackBar(SnackBar(
+                      duration: const Duration(seconds: 2),
+                      content: Text("register_login"),
+                    ));
+                  }
+                },
+                builder: (context, state) {
+                  if (state is CredentialsRegisterLoading) {
+                    return const CircularProgressIndicator();
+                  }
+
+                  return RaisedButton(
+                    key: Key("registerButton"),
+                    child: Text("register"),
+                    onPressed: () {
+                      if (formKey.currentState.validate()) {
+                        registerButtonPressed(context);
+                      }
+                    },
+                  );
+                },
+              )
             ],
           ),
-        ),
-      ]);
-    });
+        );
+      },
+    );
   }
-}
-
-String? _validateEmail(String value) {
-  if (value.isEmpty) {
-    return "Field cannot be empty";
-  } else {
-    return null;
-  }
-}
-
-String? _validatePassword(String value) {
-  if (value.length < 8) {
-    return "At least 8 chars!";
-  } else {
-    return null;
-  }
-}
-
-void _loginButtonPressed(BuildContext context) {
-  BlocProvider.of<CredentialsBloc>(context).add(LoginButtonPressed(
-      username: _emailController.text, password: _passwordController.text));
 }
