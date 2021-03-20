@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:app_sangfor/blocs/authentication_bloc/bloc.dart';
-import 'package:app_sangfor/blocs/authentication_bloc/events.dart';
-import 'package:app_sangfor/repository/user_repository.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
 import 'states.dart';
 import 'events.dart';
 
@@ -21,16 +18,12 @@ class CredentialsBloc extends Bloc<CredentialsEvent, CredentialsState> {
     if (event is LoginButtonPressed) {
       yield* _loginPressed(event);
     }
-
-    if (event is RegisterButtonPressed) {
-      yield* _registerPressed(event);
-    }
   }
 
   Stream<CredentialsState> _loginPressed(CredentialsEvent event) async* {
     yield CredentialsLoginLoading();
 
-    /*try {
+    try {
       final success =
           await userRepository.authenticate(event.username, event.password);
 
@@ -42,24 +35,6 @@ class CredentialsBloc extends Bloc<CredentialsEvent, CredentialsState> {
       }
     } on FirebaseAuthException {
       yield CredentialsLoginFailure();
-    }*/
-  }
-
-  Stream<CredentialsState> _registerPressed(CredentialsEvent event) async* {
-    yield CredentialsRegisterLoading();
-
-   /* try {
-      final success =
-          await userRepository.register(event.username, event.password);
-
-      if (success) {
-        authenticationBloc.add(const LoggedIn());
-        yield CredentialsInitial();
-      } else {
-        yield CredentialsRegisterFailure();
-      }
-    } on FirebaseAuthException {
-      yield CredentialsRegisterFailure();
-    }*/
+    }
   }
 }

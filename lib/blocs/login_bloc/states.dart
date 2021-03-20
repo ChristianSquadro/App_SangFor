@@ -18,17 +18,8 @@ class CredentialsLoginLoading extends CredentialsState {
   const CredentialsLoginLoading();
 }
 
-/// Registration request awaiting for response
-class CredentialsRegisterLoading extends CredentialsState {
-  const CredentialsRegisterLoading();
-}
-
 /// Invalid authentication credentials
 class CredentialsLoginFailure extends CredentialsState {
   const CredentialsLoginFailure();
 }
 
-/// Weak password or invalid email
-class CredentialsRegisterFailure extends CredentialsState {
-  const CredentialsRegisterFailure();
-}

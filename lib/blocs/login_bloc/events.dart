@@ -17,10 +17,3 @@ class LoginButtonPressed extends CredentialsEvent {
       {@required String username, @required String password})
       : super(username, password);
 }
-
-/// Event fired when the register button is tapped
-class RegisterButtonPressed extends CredentialsEvent {
-  const RegisterButtonPressed(
-      {@required String username, @required String password})
-      : super(username, password);
-}

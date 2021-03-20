@@ -14,8 +14,17 @@ class LoginForm extends StatefulWidget {
 
 class _LoginFormState extends State<LoginForm> {
   final formKey = GlobalKey<FormState>();
+  final ipServerController = TextEditingController();
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
+
+  String validateIpServer(String input) {
+    if (input.contains(RegExp(r"^(?!0)(?!.*\.$)((1?\d?\d|25[0-5]|2[0-4]\d)(\.|$)){4}$", caseSensitive: false, multiLine: false))) {
+      return null;
+    } else {
+      return "invalid_field";
+    }
+  }
 
   String validateEmail(String input) {
     if ((input.length > 10) && (input.contains("@"))) {
@@ -38,13 +47,10 @@ class _LoginFormState extends State<LoginForm> {
         username: emailController.text, password: passwordController.text));
   }
 
-  void registerButtonPressed(BuildContext context) {
-    context.watch<CredentialsBloc>().add(RegisterButtonPressed(
-        username: emailController.text, password: passwordController.text));
-  }
 
   @override
   void dispose() {
+    ipServerController.dispose();
     emailController.dispose();
     passwordController.dispose();
     super.dispose();
@@ -75,6 +81,17 @@ class _LoginFormState extends State<LoginForm> {
                   direction: Axis.vertical,
                   spacing: 20,
                   children: <Widget>[
+                    SizedBox(
+                      width: baseWidth - 30,
+                      child: TextFormField(
+                        decoration: InputDecoration(
+                          prefixIcon: const Icon(Icons.computer),
+                          hintText: "ip server",
+                        ),
+                        validator: validateIpServer,
+                        controller: ipServerController,
+                      ),
+                    ),
                     SizedBox(
                       width: baseWidth - 30,
                       child: TextFormField(
@@ -127,35 +144,6 @@ class _LoginFormState extends State<LoginForm> {
                     onPressed: () {
                       if (formKey.currentState.validate()) {
                         loginButtonPressed(context);
-                      }
-                    },
-                  );
-                },
-              ),
-
-              const Separator(5),
-
-              // Register
-              BlocConsumer<CredentialsBloc, CredentialsState>(
-                listener: (context, state) {
-                  if (state is CredentialsRegisterFailure) {
-                    Scaffold.of(context).showSnackBar(SnackBar(
-                      duration: const Duration(seconds: 2),
-                      content: Text("register_login"),
-                    ));
-                  }
-                },
-                builder: (context, state) {
-                  if (state is CredentialsRegisterLoading) {
-                    return const CircularProgressIndicator();
-                  }
-
-                  return RaisedButton(
-                    key: Key("registerButton"),
-                    child: Text("register"),
-                    onPressed: () {
-                      if (formKey.currentState.validate()) {
-                        registerButtonPressed(context);
                       }
                     },
                   );
