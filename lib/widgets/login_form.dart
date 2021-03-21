@@ -42,9 +42,10 @@ class _LoginFormState extends State<LoginForm> {
     }
   }
 
+  //it'll search for the instance of CredeintialsBloc from the loginform to the nearest widget above itself
   void loginButtonPressed(BuildContext context) {
     context.watch<CredentialsBloc>().add(LoginButtonPressed(
-        username: emailController.text, password: passwordController.text));
+        ipServer: ipServerController.text,username: emailController.text, password: passwordController.text));
   }
 
 

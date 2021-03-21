@@ -19,7 +19,7 @@ class LoginPage extends StatelessWidget {
         title: Text("Login")
       ),
       body: BlocProvider<CredentialsBloc>(
-        create: (context) => CredentialsBloc(
+        create: (context) =>CredentialsBloc(
           authenticationBloc: authBloc,
         ),
         child: const Center(child: LoginForm()),

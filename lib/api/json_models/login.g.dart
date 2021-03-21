@@ -6,8 +6,8 @@ part of 'login.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-Post _$PostFromJson(Map<String, dynamic> json) {
-  return Post(
+Login _$PostFromJson(Map<String, dynamic> json) {
+  return Login(
     json['userId'] as int,
     json['id'] as int,
     json['title'] as String,
@@ -15,7 +15,7 @@ Post _$PostFromJson(Map<String, dynamic> json) {
   );
 }
 
-Map<String, dynamic> _$PostToJson(Post instance) => <String, dynamic>{
+Map<String, dynamic> _$PostToJson(Login instance) => <String, dynamic>{
       'userId': instance.userId,
       'id': instance.id,
       'title': instance.title,

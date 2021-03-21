@@ -5,12 +5,12 @@ import 'package:flutter/widgets.dart';
 class RequestREST {
   final Dio client;
   final String endpoint;
-  final Map<String, String> data;
+  final FormData data;
 
-  const RequestREST({
+  RequestREST({
     @required this.client,
     @required this.endpoint,
-    this.data=const {},
+    this.data,
   });
 
  /*
@@ -30,7 +30,7 @@ class RequestREST {
   }
 
   Future<T> executePost<T>(JsonParser<T> parser) async {
-    final formData = FormData.fromMap(data);
+    final formData = data;
     final response = await client.post<String>(
       endpoint,
       data: formData,
