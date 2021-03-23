@@ -1,4 +1,4 @@
-import 'package:app_sangfor/api/interface_models/login_interface.dart';
+import 'package:app_sangfor/api/json_models/login.dart';
 import 'package:app_sangfor/blocs/authentication_bloc/events.dart';
 import 'package:flutter/material.dart';
 import 'package:app_sangfor/blocs/authentication_bloc/bloc.dart';
@@ -8,11 +8,11 @@ import 'events.dart';
 
 /// Manages the login state of the app
 class CredentialsBloc extends Bloc<CredentialsEvent, CredentialsState> {
-  final LoginInterface loginInterface;
+  final Login loginInterface;
   final AuthenticationBloc authenticationBloc;
   CredentialsBloc({
     @required this.authenticationBloc,
-    this.loginInterface= const LoginInterface(),
+    this.loginInterface= const Login(),
   }) : super(CredentialsInitial());
 
   @override
@@ -27,7 +27,7 @@ class CredentialsBloc extends Bloc<CredentialsEvent, CredentialsState> {
 
     try {
       final success =
-          await loginInterface.authenticate(event.ipServer,event.username, event.password);
+          await loginInterface.authenticate(event.ipServer,event.username, event.password,event.context);
 
       if (success) {
         authenticationBloc.add(const LoggedIn());

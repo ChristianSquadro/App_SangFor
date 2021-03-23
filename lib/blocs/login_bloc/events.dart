@@ -6,7 +6,8 @@ abstract class CredentialsEvent extends Equatable {
   final String ipServer;
   final String username;
   final String password;
-  const CredentialsEvent(this.ipServer,this.username, this.password);
+  final BuildContext context;
+  const CredentialsEvent(this.ipServer,this.username, this.password,this.context);
 
   @override
   List<Object> get props => [ipServer,username, password];
@@ -15,6 +16,6 @@ abstract class CredentialsEvent extends Equatable {
 /// Event fired when the login button is tapped
 class LoginButtonPressed extends CredentialsEvent {
   const LoginButtonPressed(
-      {@required String ipServer,@required String username, @required String password})
-      : super(ipServer,username, password);
+      {@required String ipServer,@required String username, @required String password,@required BuildContext context})
+      : super(ipServer,username, password,context);
 }

@@ -6,18 +6,40 @@ part of 'login.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-Login _$PostFromJson(Map<String, dynamic> json) {
+Login _$LoginFromJson(Map<String, dynamic> json) {
   return Login(
-    json['userId'] as int,
-    json['id'] as int,
-    json['title'] as String,
-    json['body'] as String,
+    json['access'] == null
+        ? null
+        : Access.fromJson(json['access'] as Map<String, dynamic>),
   );
 }
 
-Map<String, dynamic> _$PostToJson(Login instance) => <String, dynamic>{
-      'userId': instance.userId,
+Map<String, dynamic> _$LoginToJson(Login instance) => <String, dynamic>{
+      'access': instance.access?.toJson(),
+    };
+
+Access _$AccessFromJson(Map<String, dynamic> json) {
+  return Access(
+    json['token'] == null
+        ? null
+        : Token.fromJson(json['token'] as Map<String, dynamic>),
+  );
+}
+
+Map<String, dynamic> _$AccessToJson(Access instance) => <String, dynamic>{
+      'token': instance.token?.toJson(),
+    };
+
+Token _$TokenFromJson(Map<String, dynamic> json) {
+  return Token(
+    json['issued_at'] as String,
+    json['expires'] as String,
+    json['id'] as String,
+  );
+}
+
+Map<String, dynamic> _$TokenToJson(Token instance) => <String, dynamic>{
+      'issued_at': instance.issued_at,
+      'expires': instance.expires,
       'id': instance.id,
-      'title': instance.title,
-      'body': instance.body,
     };
