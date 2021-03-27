@@ -15,11 +15,20 @@ class LoginForm extends StatefulWidget {
 class _LoginFormState extends State<LoginForm> {
   final formKey = GlobalKey<FormState>();
   final ipServerController = TextEditingController();
+  final tenantController = TextEditingController();
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
 
   String validateIpServer(String input) {
     if (input.contains(RegExp(r"^(?!0)(?!.*\.$)((1?\d?\d|25[0-5]|2[0-4]\d)(\.|$)){4}$", caseSensitive: false, multiLine: false))) {
+      return null;
+    } else {
+      return "invalid_field";
+    }
+  }
+
+  String validateTenant(String input) {
+    if (!input.isEmpty) {
       return null;
     } else {
       return "invalid_field";
@@ -45,13 +54,14 @@ class _LoginFormState extends State<LoginForm> {
   //it'll search for the instance of CredeintialsBloc from the loginform to the nearest widget above itself
   void loginButtonPressed(BuildContext context) {
     context.watch<CredentialsBloc>().add(LoginButtonPressed(
-        ipServer: ipServerController.text,username: emailController.text, password: passwordController.text,context: context));
+        ipServer: ipServerController.text,tenant: tenantController.text,username: emailController.text, password: passwordController.text,context: context));
   }
 
 
   @override
   void dispose() {
     ipServerController.dispose();
+    tenantController.dispose();
     emailController.dispose();
     passwordController.dispose();
     super.dispose();
@@ -91,6 +101,17 @@ class _LoginFormState extends State<LoginForm> {
                         ),
                         validator: validateIpServer,
                         controller: ipServerController,
+                      ),
+                    ),
+                    SizedBox(
+                      width: baseWidth - 30,
+                      child: TextFormField(
+                        decoration: InputDecoration(
+                          prefixIcon: const Icon(Icons.person),
+                          hintText: "tenant",
+                        ),
+                        validator: validateTenant,
+                        controller: tenantController,
                       ),
                     ),
                     SizedBox(
