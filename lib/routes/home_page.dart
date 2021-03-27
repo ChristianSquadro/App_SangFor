@@ -13,8 +13,8 @@ class HomePage extends StatefulWidget {
   _HomePageState createState() => _HomePageState();
 }
 
-class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin {
-  TabController tabController;
+class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin<HomePage> {
+  late TabController tabController;
 
   @override
   void initState() {

@@ -15,7 +15,7 @@ Login _$LoginFromJson(Map<String, dynamic> json) {
 }
 
 Map<String, dynamic> _$LoginToJson(Login instance) => <String, dynamic>{
-      'access': instance.access?.toJson(),
+      'access': instance.access.toJson(),
     };
 
 Access _$AccessFromJson(Map<String, dynamic> json) {
@@ -27,7 +27,7 @@ Access _$AccessFromJson(Map<String, dynamic> json) {
 }
 
 Map<String, dynamic> _$AccessToJson(Access instance) => <String, dynamic>{
-      'token': instance.token?.toJson(),
+      'token': instance.token.toJson(),
     };
 
 Token _$TokenFromJson(Map<String, dynamic> json) {

@@ -19,39 +19,39 @@ class _LoginFormState extends State<LoginForm> {
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
 
-  String validateIpServer(String input) {
-    if (input.contains(RegExp(r"^(?!0)(?!.*\.$)((1?\d?\d|25[0-5]|2[0-4]\d)(\.|$)){4}$", caseSensitive: false, multiLine: false))) {
+  String? validateIpServer(String? input) {
+    if (input!.contains(RegExp(r"^(?!0)(?!.*\.$)((1?\d?\d|25[0-5]|2[0-4]\d)(\.|$)){4}$", caseSensitive: false, multiLine: false))) {
       return null;
     } else {
       return "invalid_field";
     }
   }
 
-  String validateTenant(String input) {
-    if (!input.isEmpty) {
+  String? validateTenant(String? input) {
+    if (!input!.isEmpty) {
       return null;
     } else {
       return "invalid_field";
     }
   }
 
-  String validateEmail(String input) {
-    if ((input.length > 10) && (input.contains("@"))) {
+  String? validateEmail(String? input) {
+    if ((input!.length > 10) && (input.contains("@"))) {
       return null;
     } else {
       return "invalid_field";
     }
   }
 
-  String validatePassword(String input) {
-    if (input.length > 5) {
+  String? validatePassword(String? input) {
+    if (input!.length > 5) {
       return null;
     } else {
       return "invalid_field";
     }
   }
 
-  //it'll search for the instance of CredeintialsBloc from the loginform to the nearest widget above itself
+  //it'll search for the instance of CredentialsBloc from the loginform to the nearest widget above itself
   void loginButtonPressed(BuildContext context) {
     context.watch<CredentialsBloc>().add(LoginButtonPressed(
         ipServer: ipServerController.text,tenant: tenantController.text,username: emailController.text, password: passwordController.text,context: context));
@@ -164,7 +164,7 @@ class _LoginFormState extends State<LoginForm> {
                     color: Colors.lightGreen,
                     textColor: Colors.white,
                     onPressed: () {
-                      if (formKey.currentState.validate()) {
+                      if (formKey.currentState!.validate()) {
                         loginButtonPressed(context);
                       }
                     },

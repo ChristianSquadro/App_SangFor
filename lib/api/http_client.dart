@@ -1,6 +1,5 @@
 import "package:app_sangfor/api/json_parsers/json_parser.dart";
 import 'package:dio/dio.dart';
-import 'package:flutter/widgets.dart';
 
 class RequestREST {
   final Dio client;
@@ -16,7 +15,7 @@ class RequestREST {
   Future<T> executeGet<T>(JsonParser<T> parser) async {
     try {
       final response = await client.get<String>(endpoint);
-      return await parser.parseFromJson(response.data);
+      return await parser.parseFromJson(response.data!);
     } on DioError catch (e) {
       rethrow;
     }
@@ -29,7 +28,7 @@ class RequestREST {
         endpoint,
         data: formData,
       );
-      return await parser.parseFromJson(response.data);
+      return await parser.parseFromJson(response.data!);
     } on DioError catch (e) {
       rethrow;
     }
