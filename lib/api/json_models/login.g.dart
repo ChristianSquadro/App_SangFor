@@ -8,9 +8,7 @@ part of 'login.dart';
 
 Login _$LoginFromJson(Map<String, dynamic> json) {
   return Login(
-    (json['access'] == null
-        ? null
-        : Access.fromJson(json['access'] as Map<String, dynamic>))!,
+    Access.fromJson(json['access'] as Map<String, dynamic>),
   );
 }
 
@@ -20,9 +18,7 @@ Map<String, dynamic> _$LoginToJson(Login instance) => <String, dynamic>{
 
 Access _$AccessFromJson(Map<String, dynamic> json) {
   return Access(
-    (json['token'] == null
-        ? null
-        : Token.fromJson(json['token'] as Map<String, dynamic>))!,
+    Token.fromJson(json['token'] as Map<String, dynamic>),
   );
 }
 

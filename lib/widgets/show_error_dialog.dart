@@ -17,7 +17,7 @@ Future<void> showErrorDialog(BuildContext context,String error) async {
         ),
         actions: <Widget>[
           TextButton(
-            child: Text('Approve'),
+            child: Text('Ok'),
             onPressed: () {
               Navigator.of(context).pop();
             },

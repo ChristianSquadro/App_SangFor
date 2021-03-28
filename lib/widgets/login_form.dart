@@ -36,7 +36,7 @@ class _LoginFormState extends State<LoginForm> {
   }
 
   String? validateEmail(String? input) {
-    if ((input!.length > 10) && (input.contains("@"))) {
+    if ((!input!.isEmpty)) {
       return null;
     } else {
       return "invalid_field";
@@ -53,7 +53,7 @@ class _LoginFormState extends State<LoginForm> {
 
   //it'll search for the instance of CredentialsBloc from the loginform to the nearest widget above itself
   void loginButtonPressed(BuildContext context) {
-    context.watch<CredentialsBloc>().add(LoginButtonPressed(
+    context.read<CredentialsBloc>().add(LoginButtonPressed(
         ipServer: ipServerController.text,tenant: tenantController.text,username: emailController.text, password: passwordController.text,context: context));
   }
 
@@ -160,7 +160,7 @@ class _LoginFormState extends State<LoginForm> {
 
                   return RaisedButton(
                     key: Key("loginButton"),
-                    child: Text("login"),
+                    child: Text("Login"),
                     color: Colors.lightGreen,
                     textColor: Colors.white,
                     onPressed: () {

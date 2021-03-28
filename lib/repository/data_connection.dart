@@ -2,11 +2,11 @@ import 'package:app_sangfor/api/http_client.dart';
 import 'package:dio/dio.dart';
 
 class DataConnection {
-  static late String _ipAdress;
-  static late String _token;
-  static late String _tenant;
-  static late String _username;
-  static late String _password;
+  static  String _ipAdress="";
+  static  String _token="";
+  static  String _tenant="";
+  static  String _username="";
+  static  String _password="";
 
   String get ipAddress => _ipAdress;
   String get token => _token;
@@ -28,7 +28,7 @@ class DataConnection {
     _password = password ?? _password;
   }
 
-  static RequestREST createRequestREST(String endpoint) {
+  static RequestREST createRequestREST(String resource_path) {
     var dio = Dio(BaseOptions(
       baseUrl: "https://" + _ipAdress,
       connectTimeout: 3000, // 3 seconds
@@ -36,7 +36,7 @@ class DataConnection {
     ));
     return RequestREST(
         client: dio,
-        endpoint: "/openstack/identity/"+endpoint,
+        endpoint: "/openstack"+resource_path,
         data: FormData.fromMap({
           "auth": {
             "tenantName": _tenant,
