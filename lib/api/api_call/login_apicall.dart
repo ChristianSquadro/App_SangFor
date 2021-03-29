@@ -14,11 +14,11 @@ class Login_ApiCall {
   /// Login with usernamne and password
   Future<bool> authenticate(String ipServer,String tenant,String username, String password,BuildContext context) async
   {
-    DataConnection.modifyDataConnection(ipAddress: ipServer);
-    var requestHTTP=DataConnection.createRequestREST("/identity/v2.0/tokens/");
+    DataConnection.modifyDataConnection(ipAddress: ipServer,tenant: tenant,username: username,password: password);
+    var requestHTTP=DataConnection.createRequestREST("/v2.0/tokens");
     try {
       var response = await requestHTTP.executePost<Login>(const LoginParser());
-      DataConnection.modifyDataConnection(tenant: tenant,username: username,password: password,token:response.access.token.id);
+      DataConnection.modifyDataConnection(token:response.access.token.id);
       return Future<bool>.value(true);
     } on DioError catch(e)
     {

@@ -4,7 +4,7 @@ import 'package:dio/dio.dart';
 class RequestREST {
   final Dio client;
   final String endpoint;
-  final FormData data;
+  final String data;
 
   const RequestREST({
       required this.client,
