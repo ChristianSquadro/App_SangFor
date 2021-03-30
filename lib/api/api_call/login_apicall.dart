@@ -1,7 +1,7 @@
 import 'package:app_sangfor/api/json_parsers/loginParser/login_parser.dart';
 import 'package:app_sangfor/api/json_models/login/login.dart';
 import 'package:app_sangfor/repository/data_connection.dart';
-import 'file:///C:/Users/CHRI/AndroidStudioProjects/app_sangfor/lib/widgets/reusable_widgets/show_error_dialog.dart';
+import 'package:app_sangfor/widgets/reusable_widgets/show_error_dialog.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 

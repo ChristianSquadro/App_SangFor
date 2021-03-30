@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:app_sangfor/blocs/login_bloc.dart';
-import 'file:///C:/Users/CHRI/AndroidStudioProjects/app_sangfor/lib/widgets/reusable_widgets/separator.dart';
+import 'package:app_sangfor/widgets/reusable_widgets/separator.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 /// Actual login form, with validation, asking for email and password
