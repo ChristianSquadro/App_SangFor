@@ -1,7 +1,9 @@
+import 'package:app_sangfor/api/api_call/login_apicall.dart';
+import 'package:app_sangfor/repository/data_connection.dart';
+import 'package:app_sangfor/widgets/homepage_pages/dashboard.dart';
+import 'package:app_sangfor/widgets/homepage_pages/login_page.dart';
 import 'package:flutter/material.dart';
 import 'package:app_sangfor/blocs/authentication_bloc.dart';
-import 'package:app_sangfor/widgets/login_page.dart';
-import 'package:app_sangfor/widgets/welcome_page.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 /// Home widget containing a tab that programmatically swipes between the
@@ -23,12 +25,26 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
       vsync: this,
       length: 2,
     );
+    checkCredentials();
   }
 
   @override
   void dispose() {
     tabController.dispose();
     super.dispose();
+  }
+
+  ///check the credential already insert before showing the login
+  Future<void> checkCredentials () async
+  {
+    var loginApiCall= const Login_ApiCall();
+    await DataConnection.storageRead();
+    var success=false;
+    //it means someone didn't log in yet or log out
+   if (DataConnection.ipAddress.isNotEmpty)
+        success= await loginApiCall.authenticate(DataConnection.ipAddress, DataConnection.tenant, DataConnection.username,DataConnection.password, context);
+    if(success)
+      tabController.animateTo(1);
   }
 
   /// Sliding animation to show the login form
@@ -60,7 +76,7 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
           controller: tabController,
           children: const [
             LoginPage(),
-            WelcomePage(),
+            DashBoard(),
           ],
         );
       },

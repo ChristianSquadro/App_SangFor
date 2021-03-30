@@ -1,22 +1,22 @@
 import 'dart:convert';
 import 'dart:io';
-
 import 'package:app_sangfor/api/http_client.dart';
 import 'package:dio/adapter.dart';
 import 'package:dio/dio.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 class DataConnection {
-  static  String _ipAdress="";
-  static  String _token="";
-  static  String _tenant="";
-  static  String _username="";
-  static  String _password="";
+  static String _ipAdress = "";
+  static String _token = "";
+  static String _tenant = "";
+  static String _username = "";
+  static String _password = "";
 
-  String get ipAddress => _ipAdress;
-  String get token => _token;
-  String get tenant => _tenant;
-  String get username => _username;
-  String get password => _password;
+  static String get ipAddress => _ipAdress;
+  static String get token => _token;
+  static String get tenant => _tenant;
+  static String get username => _username;
+  static String get password => _password;
 
   ///this is for insert data  (IpAdress,Token,Tenant,Username,Password) with optional-parameters
   static modifyDataConnection(
@@ -30,6 +30,7 @@ class DataConnection {
     _tenant = tenant ?? _tenant;
     _username = username ?? _username;
     _password = password ?? _password;
+
   }
 
   static RequestREST createRequestREST(String resource_path) {
@@ -56,11 +57,39 @@ class DataConnection {
     };
 
     return RequestREST(
-        client: dio,
-        endpoint: resource_path,
-        data: jsonEncode(objectJSON)
-    );
+        client: dio, endpoint: resource_path, data: jsonEncode(objectJSON));
   }
+
+  static Future<void> storageWrite () async {
+    var storage = new FlutterSecureStorage();
+    await storage.write(key: "ipAddress", value: _ipAdress);
+    await storage.write(key: "token", value: _token);
+    await storage.write(key: "tenant", value: _tenant);
+    await storage.write(key: "username", value: _username);
+    await storage.write(key: "password", value: _password);
+    var tmp=await storage.readAll();
+    print(tmp.toString());
+  }
+
+  static Future<void> storageRead () async {
+    var storage = new FlutterSecureStorage();
+    _ipAdress=(await storage.read(key: "ipAddress"))!;
+    _token=(await storage.read(key: "token"))!;
+    _tenant=(await storage.read(key: "tenant"))!;
+    _username=(await storage.read(key: "username"))!;
+    _password=(await storage.read(key: "password"))!;
+    var tmp=await storage.readAll();
+    print(tmp.toString());
+  }
+
+  static Future<void> storageDeleteAll () async {
+    var storage = new FlutterSecureStorage();
+    await storage.deleteAll();
+  }
+
+  static Future<Map<String,String>> storageReadAll () async {
+    var storage = new FlutterSecureStorage();
+    return await storage.readAll();
+  }
+
 }
-
-

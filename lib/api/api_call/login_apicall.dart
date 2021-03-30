@@ -4,6 +4,7 @@ import 'package:app_sangfor/repository/data_connection.dart';
 import 'package:app_sangfor/widgets/show_error_dialog.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 /// Contains the minimal authentication logic that must be implemented
 /// by a provider. It can also be used to create "mock" classes for easy
@@ -19,6 +20,7 @@ class Login_ApiCall {
     try {
       var response = await requestHTTP.executePost<Login>(const LoginParser());
       DataConnection.modifyDataConnection(token:response.access.token.id);
+      DataConnection.storageWrite();
       return Future<bool>.value(true);
     } on DioError catch(e)
     {
@@ -30,6 +32,6 @@ class Login_ApiCall {
   /// Logout
   Future<void> logOut() async
   {
-    //TO-DO:cancel the dataConnection saved
+    DataConnection.storageDeleteAll();
   }
 }

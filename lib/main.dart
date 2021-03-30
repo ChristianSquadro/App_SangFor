@@ -5,7 +5,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'blocs/authentication_bloc.dart';
 
-void main() => runApp(const LoginApp());
+void main() => runApp(
+    const LoginApp()
+);
 
 class LoginApp extends StatelessWidget {
   const LoginApp();
