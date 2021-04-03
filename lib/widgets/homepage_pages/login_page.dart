@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:app_sangfor/blocs/authentication_bloc.dart';
 import 'package:app_sangfor/blocs/login_bloc.dart';
-import 'package:app_sangfor/widgets/login_form.dart';
+import 'file:///C:/Users/CHRI/AndroidStudioProjects/app_sangfor/lib/widgets/reusable_widgets/login_form.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:provider/provider.dart';
 
@@ -16,7 +16,7 @@ class LoginPage extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text("Login")
+          title: Text("Login"),
       ),
       body: BlocProvider<CredentialsBloc>(
         create: (context) =>CredentialsBloc(

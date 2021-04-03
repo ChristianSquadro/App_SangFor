@@ -1,3 +1,4 @@
+import 'package:app_sangfor/widgets/reusable_widgets/drawer_menu.dart';
 import 'package:flutter/material.dart';
 import 'package:app_sangfor/blocs/authentication_bloc.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -18,6 +19,7 @@ class DashBoard extends StatelessWidget {
           )
         ],
       ),
+      drawer: DrawerMenu(),
       body: Center(
         child: Text("welcome"),
       ),

@@ -1,10 +1,9 @@
-import 'package:app_sangfor/api/json_models/login.dart';
+import 'file:///C:/Users/CHRI/AndroidStudioProjects/app_sangfor/lib/api/json_models/login/login.dart';
 import 'package:app_sangfor/api/json_parsers/json_parser.dart';
 import 'package:app_sangfor/repository/data_connection.dart';
-import 'package:app_sangfor/widgets/show_error_dialog.dart';
+import 'file:///C:/Users/CHRI/AndroidStudioProjects/app_sangfor/lib/widgets/reusable_widgets/show_error_dialog.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 /// Contains the minimal authentication logic that must be implemented
 /// by a provider. It can also be used to create "mock" classes for easy

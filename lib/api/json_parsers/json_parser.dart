@@ -1,6 +1,7 @@
 library json_parser;
 
-export 'login_parser.dart';
+export 'loginParser/login_parser.dart';
+export 'flavorVMParser/flavorVM_parser.dart';
 export 'object_decoder.dart';
 
 abstract class JsonParser<T> {

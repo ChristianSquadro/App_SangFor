@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:app_sangfor/blocs/login_bloc.dart';
-import 'package:app_sangfor/widgets/separator.dart';
+import 'file:///C:/Users/CHRI/AndroidStudioProjects/app_sangfor/lib/widgets/reusable_widgets/separator.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 /// Actual login form, with validation, asking for email and password
@@ -28,7 +28,7 @@ class _LoginFormState extends State<LoginForm> {
   }
 
   String? validateTenant(String? input) {
-    if (!input!.isEmpty) {
+    if (input!.isNotEmpty) {
       return null;
     } else {
       return "invalid_field";
@@ -36,7 +36,7 @@ class _LoginFormState extends State<LoginForm> {
   }
 
   String? validateEmail(String? input) {
-    if ((!input!.isEmpty)) {
+    if ((input!.isNotEmpty)) {
       return null;
     } else {
       return "invalid_field";
