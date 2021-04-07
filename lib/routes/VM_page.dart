@@ -1,8 +1,6 @@
 import 'package:app_sangfor/api/api_call/listVM_apicall.dart';
 import 'package:app_sangfor/api/json_models/listVM/listVM.dart';
 import 'package:app_sangfor/widgets/reusable_widgets/drawer_menu.dart';
-import 'package:app_sangfor/widgets/reusable_widgets/show_error_dialog.dart';
-import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 
 class VMPage extends StatefulWidget {
@@ -13,28 +11,34 @@ class VMPage extends StatefulWidget {
 }
 
 class _VMPageState extends State<VMPage> {
-  late Future<ListVM?> _listVM;
-  late final BuildContext mainContext;
+  late Future<ListVM> _listVM;
   final ListVM_ApiCall listVM_ApiCall = const ListVM_ApiCall();
 
   @override
   void initState() {
     super.initState();
-    mainContext=context;
-    _listVM = listVM_ApiCall.loadVM();
+    _listVM = listVM_ApiCall.loadVM(context);
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text("Virtual Machine"),
-      ),
+      appBar: AppBar(title: Text("Virtual Machine"), actions: <Widget>[
+        IconButton(
+          icon: Icon(Icons.refresh),
+          onPressed: () {
+            _listVM = listVM_ApiCall.loadVM(context);
+           setState(() => {} );
+          },
+        )
+      ]),
       drawer: DrawerMenu(),
-      body: FutureBuilder<ListVM?>(
+      body: FutureBuilder<ListVM>(
           future: _listVM,
           builder: (context, snapshot) {
-            if (snapshot.hasData) {
+            //adding connectionState i'm sure when i press the refresh button to show the circular progress bar
+            // because after set state the hasData and hasError aren't reset until the response is back
+            if (snapshot.hasData && snapshot.connectionState == ConnectionState.done) {
               final data = snapshot.data;
 
               return ListView.builder(
@@ -45,13 +49,12 @@ class _VMPageState extends State<VMPage> {
                       color: Colors.blueGrey,
                       child: Center(
                           child: Text("Name VM: ${data.servers[index].name} \n"
-                                      "Status: ${data.servers[index].status}")));
+                              "Status: ${data.servers[index].status}")));
                 },
               );
             }
-            if (snapshot.hasError) {
-              showErrorDialog(mainContext,snapshot.error!);
-              return Center (child : Text ("No Data!"));
+            if (snapshot.hasError && snapshot.connectionState == ConnectionState.done) {
+              return Center(child: Text("No Data!"));
             }
 
             return const Center(

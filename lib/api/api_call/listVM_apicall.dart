@@ -8,13 +8,14 @@ import 'package:flutter/material.dart';
 class ListVM_ApiCall {
   const ListVM_ApiCall();
 
-  Future<ListVM> loadVM() async {
+  Future<ListVM> loadVM(BuildContext context) async {
     var requestHTTP =
-        DataConnection.createRequestREST("/compute/v2/servers/detai", true);
+        DataConnection.createRequestREST("/compute/v2/servers/detail", true);
     try {
       var response = await requestHTTP.executeGet<ListVM>(const ListVMParser());
       return response;
     } on DioError catch (e) {
+      showErrorDialog(context,e);
       return Future<ListVM>.error(e);
     }
   }
