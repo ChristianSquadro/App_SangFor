@@ -33,13 +33,13 @@ class DataConnection {
 
   }
 
-  static RequestREST createRequestREST(String resource_path,{String? headerToken}) {
+  static RequestREST createRequestREST(String resource_path,bool headerToken) {
     var dio = Dio(BaseOptions(
-        baseUrl: "https://" + _ipAdress + "/openstack/identity/",
+        baseUrl: "https://" + _ipAdress + "/openstack/",
         connectTimeout: 3000, // 3 seconds
         receiveTimeout: 3000, // 3 seconds
         receiveDataWhenStatusError: true,
-        headers: (headerToken != null) ?  {"X-Auth-Token" : headerToken} : <String, String> {},
+        headers: (headerToken) ?  {"X-Auth-Token" : token} : <String, String> {},
     ));
 
     //accept the HTTP certification

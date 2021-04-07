@@ -1,4 +1,4 @@
-import "package:app_sangfor/api/json_parsers/json_parser.dart";
+import 'package:app_sangfor/api/json_parsers/json_parser.dart';
 import 'package:dio/dio.dart';
 
 class RequestREST {

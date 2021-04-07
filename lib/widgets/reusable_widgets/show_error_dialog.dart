@@ -1,6 +1,7 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 
-Future<void> showErrorDialog(BuildContext context,String error) async {
+Future<void> showErrorDialog(BuildContext context,Object error) async {
   return showDialog<void>(
     context: context,
     barrierDismissible: false, // user must tap button!
@@ -11,7 +12,7 @@ Future<void> showErrorDialog(BuildContext context,String error) async {
           child: ListBody(
             children: <Widget>[
               Text('Connection Error!'),
-              Text(error),
+              Text((error as DioError).message),
             ],
           ),
         ),

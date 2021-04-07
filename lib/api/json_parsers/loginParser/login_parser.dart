@@ -1,4 +1,4 @@
-import 'file:///C:/Users/CHRI/AndroidStudioProjects/app_sangfor/lib/api/json_models/login/login.dart';
+import 'package:app_sangfor/api/json_models/login/login.dart';
 import 'package:app_sangfor/api/json_parsers/json_parser.dart';
 import '../object_decoder.dart';
 

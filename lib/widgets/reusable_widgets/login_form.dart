@@ -149,7 +149,7 @@ class _LoginFormState extends State<LoginForm> {
                   if (state is CredentialsLoginFailure) {
                     Scaffold.of(context).showSnackBar(SnackBar(
                       duration: const Duration(seconds: 2),
-                      content: Text("error_login"),
+                      content: Text("error login"),
                     ));
                   }
                 },
