@@ -22,10 +22,26 @@ Servers _$ServersFromJson(Map<String, dynamic> json) {
   return Servers(
     json['name'] as String,
     json['status'] as String,
+    (json['links'] as List<dynamic>)
+        .map((e) => Links.fromJson(e as Map<String, dynamic>))
+        .toList(),
   );
 }
 
 Map<String, dynamic> _$ServersToJson(Servers instance) => <String, dynamic>{
       'name': instance.name,
       'status': instance.status,
+      'links': instance.links.map((e) => e.toJson()).toList(),
+    };
+
+Links _$LinksFromJson(Map<String, dynamic> json) {
+  return Links(
+    json['href'] as String,
+    json['rel'] as String,
+  );
+}
+
+Map<String, dynamic> _$LinksToJson(Links instance) => <String, dynamic>{
+      'href': instance.href,
+      'rel': instance.rel,
     };

@@ -2,12 +2,13 @@ import 'package:app_sangfor/api/api_call/login_apicall.dart';
 import 'package:flutter/material.dart';
 import 'package:app_sangfor/routes.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:provider/provider.dart';
 
 import 'blocs/authentication_bloc.dart';
+import 'cache/UrlConsoleCache.dart';
 
-void main() => runApp(
-    const LoginApp()
-);
+void main() => runApp(Provider<UrlConsoleCache>(
+    create: (_) => UrlConsoleCache(), child: const LoginApp()));
 
 class LoginApp extends StatelessWidget {
   const LoginApp();

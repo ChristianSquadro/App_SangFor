@@ -33,13 +33,14 @@ class DataConnection {
 
   }
 
-  static RequestREST createRequestREST(String resource_path,bool headerToken) {
+  static Dio _createDio (String resource_path,bool headerToken)
+  {
     var dio = Dio(BaseOptions(
-        baseUrl: "https://" + _ipAdress + "/openstack/",
-        connectTimeout: 3000, // 3 seconds
-        receiveTimeout: 3000, // 3 seconds
-        receiveDataWhenStatusError: true,
-        headers: (headerToken) ?  {"X-Auth-Token" : token} : <String, String> {},
+      baseUrl: "https://" + _ipAdress + "/openstack/",
+      connectTimeout: 3000, // 3 seconds
+      receiveTimeout: 3000, // 3 seconds
+      receiveDataWhenStatusError: true,
+      headers: (headerToken) ?  {"X-Auth-Token" : token} : <String, String> {},
     ));
 
     //accept the HTTP certification
@@ -50,6 +51,12 @@ class DataConnection {
       return client;
     };
 
+    return dio;
+  }
+
+  static RequestREST createFirstRequestREST(String resource_path,bool headerToken) {
+    var dio=_createDio(resource_path,headerToken);
+
     var objectJSON = {
       "auth": {
         "tenantName": _tenant,
@@ -59,6 +66,13 @@ class DataConnection {
 
     return RequestREST(
         client: dio, endpoint: resource_path, data: jsonEncode(objectJSON));
+  }
+
+  static RequestREST createRequestREST(String resource_path,bool headerToken,[objectJSON]) {
+    var dio=_createDio(resource_path,headerToken);
+
+    return RequestREST(
+        client: dio, endpoint: resource_path, data: jsonEncode(objectJSON ?? <String,String> {}));
   }
 
   static Future<void> storageWrite () async {
