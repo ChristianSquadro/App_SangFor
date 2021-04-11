@@ -17,17 +17,17 @@ class RouteGenerator {
 
         );
       case vmPage:
-        return SlidingPageRoute(
+        return SlidingPageRoute1(
             navigateTo: const VMPage()
         );
 
       case dashboard:
-        return SlidingPageRoute(
+        return SlidingPageRoute1(
             navigateTo: const DashBoard()
         );
 
       case webViewConsole:
-        return SlidingPageRoute(
+        return SlidingPageRoute2(
             navigateTo: const WebViewConsole()
         );
 

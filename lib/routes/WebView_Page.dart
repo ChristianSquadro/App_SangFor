@@ -11,12 +11,25 @@ class WebViewConsole extends StatefulWidget {
 }
 
 class WebViewConsoleState extends State<WebViewConsole> {
+
   @override
   Widget build(BuildContext context) {
+    final flutterWebviewPlugin = new FlutterWebviewPlugin();
+    flutterWebviewPlugin.onScrollYChanged.listen((double offsetY) => offsetY=2);
+
+    flutterWebviewPlugin.onScrollXChanged.listen((double offsetx) => offsetx=2);
+
     return Scaffold(body: Consumer<UrlConsoleCache>(builder: (_, value, __) {
       return WebviewScaffold(
-        url: value.url,
-        ignoreSSLErrors: true,
+          withZoom: true,
+          useWideViewPort: true,
+          withOverviewMode: true,
+          url: value.url,
+          ignoreSSLErrors: true,
+          hidden: true,
+          appBar: new AppBar(
+            title: new Text("Console"),
+          )
       );
     }));
   }
