@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:app_sangfor/cache/UrlConsoleCache.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_webview_plugin/flutter_webview_plugin.dart';
@@ -11,22 +13,29 @@ class WebViewConsole extends StatefulWidget {
 }
 
 class WebViewConsoleState extends State<WebViewConsole> {
-
   late final flutterWebviewPlugin;
 
   @override
-  void initState ()
-  {
+  void initState() {
     super.initState();
-    flutterWebviewPlugin= new FlutterWebviewPlugin();
-    flutterWebviewPlugin.onScrollYChanged.listen((double offsetY) => offsetY=2);
-    flutterWebviewPlugin.onScrollXChanged.listen((double offsetX) => offsetX=2);
+    flutterWebviewPlugin = new FlutterWebviewPlugin();
+    if (Platform.isIOS) {
+      flutterWebviewPlugin.onScrollYChanged
+          .listen((double offsetY) => offsetY = 2);
+      flutterWebviewPlugin.onScrollXChanged
+          .listen((double offsetX) => offsetX = 2);
+    }
+
+    if (Platform.isAndroid) {
+      flutterWebviewPlugin.onScrollYChanged
+          .listen((double offsetY) => offsetY = 0.5);
+      flutterWebviewPlugin.onScrollXChanged
+          .listen((double offsetX) => offsetX = 0.5);
+    }
   }
 
-
   @override
-  void dispose ()
-  {
+  void dispose() {
     super.dispose();
     flutterWebviewPlugin.close();
   }
@@ -43,8 +52,7 @@ class WebViewConsoleState extends State<WebViewConsole> {
           hidden: true,
           appBar: new AppBar(
             title: new Text("Console"),
-          )
-      );
+          ));
     }));
   }
 }

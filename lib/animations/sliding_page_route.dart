@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
-class SlidingPageRoute1 extends PageRouteBuilder {
+class FadePageRoute extends PageRouteBuilder {
   final Widget navigateTo;
-  SlidingPageRoute1({required this.navigateTo})
+  FadePageRoute({required this.navigateTo})
       : super(
           pageBuilder: (context, _, __) => navigateTo,
           transitionsBuilder: (context, animation, _, child) => FadeTransition(
@@ -15,15 +15,15 @@ class SlidingPageRoute1 extends PageRouteBuilder {
         );
 }
 
-class SlidingPageRoute2 extends PageRouteBuilder {
+class SlideUpPageRoute extends PageRouteBuilder {
   final Widget navigateTo;
-  SlidingPageRoute2({required this.navigateTo})
+  SlideUpPageRoute({required this.navigateTo})
       : super(
     pageBuilder: (context, _, __) => navigateTo,
-    transitionsBuilder: (context, animation, _, child) => ScaleTransition(
-      scale: Tween<double>(
-        begin: 0,
-        end: 1,
+    transitionsBuilder: (context, animation, _, child) => SlideTransition(
+       position: Tween<Offset>(
+        begin: Offset(0,1),
+        end: Offset.zero,
       ).animate(animation),
       child: child,
     )
