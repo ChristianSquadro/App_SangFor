@@ -4,6 +4,7 @@ import 'package:app_sangfor/routes/WebView_Page.dart';
 import 'package:app_sangfor/routes/home_page.dart';
 import 'package:app_sangfor/widgets/homepage_pages/dashboard.dart';
 import 'package:flutter/material.dart';
+import 'routes/vmDetails.dart';
 
 /// Route management class
 class RouteGenerator {
@@ -16,19 +17,25 @@ class RouteGenerator {
           builder: (_) => const HomePage(),
 
         );
+
+      case dashboard:
+        return  FadePageRoute(
+            navigateTo: const DashBoard()
+        );
+
       case vmPage:
         return FadePageRoute(
             navigateTo: const VMPage()
         );
 
-      case dashboard:
-        return FadePageRoute(
-            navigateTo: const DashBoard()
-        );
-
       case webViewConsole:
         return SlideUpPageRoute(
             navigateTo: const WebViewConsole()
+        );
+
+      case VMDetails:
+        return SlideUpPageRoute(
+            navigateTo: const VMDetailsPage()
         );
 
       default:
@@ -41,6 +48,7 @@ class RouteGenerator {
   static const vmPage = '/VM';
   static const dashboard = '/DashBoard';
   static const webViewConsole = '/DashBoard/WebViewConsole';
+  static const VMDetails = '/DashBoard/VMDetails';
 }
 
 /// Exception thrown when a given route doesn't exist

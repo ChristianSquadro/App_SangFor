@@ -1,5 +1,4 @@
 import 'package:app_sangfor/api/api_call/listVM_apicall.dart';
-import 'package:app_sangfor/api/json_models/listVM/UrlConsole.dart';
 import 'package:app_sangfor/api/json_models/listVM/listVM.dart';
 import 'package:app_sangfor/cache/UrlConsoleCache.dart';
 import 'package:app_sangfor/widgets/reusable_widgets/drawer_menu.dart';
@@ -63,10 +62,19 @@ class _VMPageState extends State<VMPage> {
                         child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceAround,
                             children: [
-                              ElevatedButton(
-                                  onPressed: () => loadConsole(context,
-                                      data.servers[index].links[0].href, value),
-                                  child: Text("Console")),
+                              Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    ElevatedButton(
+                                        onPressed: () => loadConsole(
+                                            context,
+                                            data.servers[index].links[0].href,
+                                            value),
+                                        child: Text("Console")),
+                                    ElevatedButton(
+                                        onPressed: () =>  Navigator.of(context).pushNamed(RouteGenerator.VMDetails),
+                                        child: Text("Details"))
+                                  ]),
                               Column(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [

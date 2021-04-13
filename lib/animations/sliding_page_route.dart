@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 class FadePageRoute extends PageRouteBuilder {
   final Widget navigateTo;
+
   FadePageRoute({required this.navigateTo})
       : super(
           pageBuilder: (context, _, __) => navigateTo,
