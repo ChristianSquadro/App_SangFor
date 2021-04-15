@@ -30,6 +30,7 @@ dependencies:
   flutter_secure_storage: ^4.1.0
   flutter_webview_plugin: ^0.3.11
   provider: ^5.0.0
+  fl_chart: ^0.35.0
   flutter:
     sdk: flutter
 

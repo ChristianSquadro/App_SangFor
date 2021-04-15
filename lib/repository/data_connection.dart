@@ -6,17 +6,12 @@ import 'package:dio/dio.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 class DataConnection {
-  static String _ipAdress = "";
-  static String _token = "";
-  static String _tenant = "";
-  static String _username = "";
-  static String _password = "";
+  static String ipAddress = "";
+  static String token = "";
+  static String tenant = "";
+  static String username = "";
+  static String password = "";
 
-  static String get ipAddress => _ipAdress;
-  static String get token => _token;
-  static String get tenant => _tenant;
-  static String get username => _username;
-  static String get password => _password;
 
   ///this is for insert data  (IpAdress,Token,Tenant,Username,Password) with optional-parameters
   static modifyDataConnection(
@@ -25,18 +20,18 @@ class DataConnection {
       String? tenant,
       String? username,
       String? password}) {
-    _ipAdress = ipAddress ?? _ipAdress;
-    _token = token ?? _token;
-    _tenant = tenant ?? _tenant;
-    _username = username ?? _username;
-    _password = password ?? _password;
+    ipAddress = ipAddress ?? DataConnection.ipAddress;
+    token = token ?? DataConnection.token;
+    tenant = tenant ?? DataConnection.tenant;
+    username = username ?? DataConnection.username;
+    password = password ?? DataConnection.password;
 
   }
 
   static Dio _createDio (String resource_path,bool headerToken)
   {
     var dio = Dio(BaseOptions(
-      baseUrl: "https://" + _ipAdress + "/openstack/",
+      baseUrl: "https://" + ipAddress + "/openstack/",
       connectTimeout: 3000, // 3 seconds
       receiveTimeout: 3000, // 3 seconds
       receiveDataWhenStatusError: true,
@@ -59,8 +54,8 @@ class DataConnection {
 
     var objectJSON = {
       "auth": {
-        "tenantName": _tenant,
-        "passwordCredentials": {"username": _username, "password": _password}
+        "tenantName": tenant,
+        "passwordCredentials": {"username": username, "password": password}
       }
     };
 
@@ -77,22 +72,22 @@ class DataConnection {
 
   static Future<void> storageWrite () async {
     var storage = new FlutterSecureStorage();
-    await storage.write(key: "ipAddress", value: _ipAdress);
-    await storage.write(key: "token", value: _token);
-    await storage.write(key: "tenant", value: _tenant);
-    await storage.write(key: "username", value: _username);
-    await storage.write(key: "password", value: _password);
+    await storage.write(key: "ipAddress", value: ipAddress);
+    await storage.write(key: "token", value: token);
+    await storage.write(key: "tenant", value: tenant);
+    await storage.write(key: "username", value: username);
+    await storage.write(key: "password", value: password);
     var tmp=await storage.readAll();
     print(tmp.toString());
   }
 
   static Future<void> storageRead () async {
     var storage = new FlutterSecureStorage();
-    _ipAdress=(await storage.read(key: "ipAddress"))!;
-    _token=(await storage.read(key: "token"))!;
-    _tenant=(await storage.read(key: "tenant"))!;
-    _username=(await storage.read(key: "username"))!;
-    _password=(await storage.read(key: "password"))!;
+    ipAddress=(await storage.read(key: "ipAddress"))!;
+    token=(await storage.read(key: "token"))!;
+    tenant=(await storage.read(key: "tenant"))!;
+    username=(await storage.read(key: "username"))!;
+    password=(await storage.read(key: "password"))!;
     var tmp=await storage.readAll();
     print(tmp.toString());
   }
