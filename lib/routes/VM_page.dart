@@ -24,8 +24,7 @@ class _VMPageState extends State<VMPage> {
     _listVM = listVM_ApiCall.loadVM(context);
   }
 
-  void loadConsole(
-      BuildContext context, String urlConsole, UrlConsoleCache value) async {
+  void loadConsole(BuildContext context, String urlConsole, UrlConsoleCache value) async {
     value.url = await listVM_ApiCall.loadConsole(context, urlConsole);
     Navigator.of(context).pushNamed(RouteGenerator.webViewConsole);
   }
@@ -53,8 +52,10 @@ class _VMPageState extends State<VMPage> {
                   snapshot.connectionState == ConnectionState.done) {
                 final data = snapshot.data;
 
-                return ListView.builder(
+                return ListView.separated(
                   itemCount: data!.servers.length,
+                  padding: const EdgeInsets.all(8),
+                  separatorBuilder: (BuildContext context, int index) => const Divider(),
                   itemBuilder: (context, index) {
                     return Container(
                         height: 100,

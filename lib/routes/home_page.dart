@@ -6,6 +6,43 @@ import 'package:flutter/material.dart';
 import 'package:app_sangfor/blocs/authentication_bloc.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../routes.dart';
+
+//first level function necessary because the method red cannot be called anywhere else
+Future<void> showLogoutDialog(BuildContext context) async {
+  return showDialog<void>(
+    context: context,
+    barrierDismissible: false, // user must tap button!
+    builder: (BuildContext context) {
+      return AlertDialog(
+        title: Text('Warning'),
+        content: SingleChildScrollView(
+          child: ListBody(
+            children: <Widget>[
+              Text('Are you sure to Log Out?'),
+            ],
+          ),
+        ),
+        actions: <Widget>[
+          TextButton(
+            child: Text('Cancel'),
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+          ),
+          TextButton(
+            child: Text('Ok'),
+            onPressed: () {
+              context.read<AuthenticationBloc>().add(LoggedOut());
+              Navigator.pushNamedAndRemoveUntil(context, RouteGenerator.homePage, (r) => false);
+            },
+          ),
+        ],
+      );
+    },
+  );
+}
+
 /// Home widget containing a tab that programmatically swipes between the
 /// login form and the welcome page.
 class HomePage extends StatefulWidget {
@@ -72,6 +109,7 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
         }
 
         return TabBarView(
+          key: UniqueKey(),
           physics: const NeverScrollableScrollPhysics(),
           controller: tabController,
           children: const [

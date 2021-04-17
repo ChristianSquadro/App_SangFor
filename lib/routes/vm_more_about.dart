@@ -25,7 +25,7 @@ class _VMDetailsState extends State<VMDetailsPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: Text("Virtual Machine Details")),
-      body: _widgetOptions.elementAt(_selectedIndex),
+      //body: _widgetOptions.elementAt(_selectedIndex),
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _selectedIndex,
         selectedItemColor: Colors.white,

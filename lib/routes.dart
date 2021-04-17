@@ -4,7 +4,7 @@ import 'package:app_sangfor/routes/WebView_Page.dart';
 import 'package:app_sangfor/routes/home_page.dart';
 import 'package:app_sangfor/widgets/homepage_pages/dashboard.dart';
 import 'package:flutter/material.dart';
-import 'routes/vmDetails.dart';
+import 'routes/vm_more_about.dart';
 
 /// Route management class
 class RouteGenerator {

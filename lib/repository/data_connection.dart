@@ -15,16 +15,16 @@ class DataConnection {
 
   ///this is for insert data  (IpAdress,Token,Tenant,Username,Password) with optional-parameters
   static modifyDataConnection(
-      {String? ipAddress,
-      String? token,
-      String? tenant,
-      String? username,
-      String? password}) {
-    ipAddress = ipAddress ?? DataConnection.ipAddress;
-    token = token ?? DataConnection.token;
-    tenant = tenant ?? DataConnection.tenant;
-    username = username ?? DataConnection.username;
-    password = password ?? DataConnection.password;
+      {String? IpAddress,
+      String? Token,
+      String? Tenant,
+      String? Username,
+      String? Password}) {
+    ipAddress = IpAddress ?? ipAddress;
+    token = Token ?? token;
+    tenant = Tenant ?? tenant;
+    username = Username ?? username;
+    password = Password ?? password;
 
   }
 
@@ -32,8 +32,8 @@ class DataConnection {
   {
     var dio = Dio(BaseOptions(
       baseUrl: "https://" + ipAddress + "/openstack/",
-      connectTimeout: 3000, // 3 seconds
-      receiveTimeout: 3000, // 3 seconds
+      connectTimeout: 5000, // 3 seconds
+      receiveTimeout: 5000, // 3 seconds
       receiveDataWhenStatusError: true,
       headers: (headerToken) ?  {"X-Auth-Token" : token} : <String, String> {},
     ));
