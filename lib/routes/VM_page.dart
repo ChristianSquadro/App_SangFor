@@ -1,6 +1,6 @@
 import 'package:app_sangfor/api/api_call/listVM_apicall.dart';
 import 'package:app_sangfor/api/json_models/listVM/listVM.dart';
-import 'package:app_sangfor/cache/UrlConsoleCache.dart';
+import 'package:app_sangfor/cache/Vm_Cache.dart';
 import 'package:app_sangfor/widgets/reusable_widgets/drawer_menu.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -24,16 +24,13 @@ class _VMPageState extends State<VMPage> {
     _listVM = listVM_ApiCall.loadVM(context);
   }
 
-  void loadConsole(BuildContext context, String urlConsole, UrlConsoleCache value) async {
-    value.url = await listVM_ApiCall.loadConsole(context, urlConsole);
-    Navigator.of(context).pushNamed(RouteGenerator.webViewConsole);
-  }
+//you have to transfer this method in WebView_Page
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<UrlConsoleCache>(builder: (_, value, __) {
+    return Consumer<VmCache>(builder: (_, value, __) {
       return Scaffold(
-        appBar: AppBar(title: Text("Virtual Machine"), actions: <Widget>[
+        appBar: AppBar(title: Text("Virtual Machines"), actions: <Widget>[
           IconButton(
             icon: Icon(Icons.refresh),
             onPressed: () {
@@ -55,7 +52,8 @@ class _VMPageState extends State<VMPage> {
                 return ListView.separated(
                   itemCount: data!.servers.length,
                   padding: const EdgeInsets.all(8),
-                  separatorBuilder: (BuildContext context, int index) => const Divider(),
+                  separatorBuilder: (BuildContext context, int index) =>
+                      const Divider(),
                   itemBuilder: (context, index) {
                     return Container(
                         height: 100,
@@ -67,14 +65,17 @@ class _VMPageState extends State<VMPage> {
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
                                     ElevatedButton(
-                                        onPressed: () => loadConsole(
-                                            context,
-                                            data.servers[index].links[0].href,
-                                            value),
+                                        onPressed: () {
+                                          value.urlServer = data.servers[index].links[0].href;
+                                          Navigator.of(context).pushNamed(RouteGenerator.webViewConsole);
+                                        },
                                         child: Text("Console")),
                                     ElevatedButton(
-                                        onPressed: () =>  Navigator.of(context).pushNamed(RouteGenerator.VMDetails),
-                                        child: Text("Details"))
+                                        onPressed: () {
+                                          value.urlServer = data.servers[index].links[0].href;
+                                          Navigator.of(context).pushNamed(RouteGenerator.VMDetails);
+                                        },
+                                        child: Text("More"))
                                   ]),
                               Column(
                                   mainAxisAlignment: MainAxisAlignment.center,

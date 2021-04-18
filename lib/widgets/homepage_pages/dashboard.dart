@@ -32,7 +32,10 @@ class _DashBoardState extends State<DashBoard> {
           actions: [
             IconButton(
               icon: const Icon(Icons.refresh),
-              onPressed: () {},
+              onPressed: () {
+                _listStatusVM = _dashboard_apicall.loadDashBoard(context);
+                setState(() => {});
+              },
             )
           ],
         ),
@@ -177,9 +180,10 @@ class _DashBoardState extends State<DashBoard> {
       final isTouched = i == _touchedIndex;
       final double fontSize = isTouched ? 25 : 17;
       final double radius = isTouched ? 60 : 50;
+      //the if statement is necessary because the zero value isn't permitted by the Chart Package
       switch (i) {
         case 0:
-          return (listStatusVM[1]== 0.0) ? PieChartSectionData(value: 0.1, title: '',radius: radius) :PieChartSectionData(
+          return (listStatusVM[1]== 0.0) ? PieChartSectionData(value: 0.1, title: '',radius: radius,color: const Color(0xff0293ee)) :PieChartSectionData(
             color: const Color(0xff0293ee),
             value: listStatusVM[0],
             title: listStatusVM[0].toString().replaceAll(".0", ""),
@@ -190,7 +194,7 @@ class _DashBoardState extends State<DashBoard> {
                 color: const Color(0xffffffff)),
           );
         case 1:
-          return (listStatusVM[2]== 0.0) ? PieChartSectionData(value: 0.1, title: '',radius: radius) : PieChartSectionData(
+          return (listStatusVM[2]== 0.0) ? PieChartSectionData(value: 0.1, title: '',radius: radius,color: const Color(0xfff8b250)) : PieChartSectionData(
             color: const Color(0xfff8b250),
             value: listStatusVM[1],
             title: listStatusVM[1].toString().replaceAll(".0", ""),
@@ -201,7 +205,7 @@ class _DashBoardState extends State<DashBoard> {
                 color: const Color(0xffffffff)),
           );
         case 2:
-          return (listStatusVM[2]== 0.0) ? PieChartSectionData(value: 0.1, title: '',radius: radius) : PieChartSectionData(
+          return (listStatusVM[2]== 0.0) ? PieChartSectionData(value: 0.1, title: '',radius: radius,color: const Color(0xff845bef)) : PieChartSectionData(
             color: const Color(0xff845bef),
             value: listStatusVM[2],
             title: listStatusVM[2].toString().replaceAll(".0", ""),
@@ -212,7 +216,7 @@ class _DashBoardState extends State<DashBoard> {
                 color: const Color(0xffffffff)),
           );
         case 3:
-          return (listStatusVM[3]== 0.0) ? PieChartSectionData(value: 0.1, title: '',radius: radius) : PieChartSectionData(
+          return (listStatusVM[3]== 0.0) ? PieChartSectionData(value: 0.1, title: '',radius: radius,color: const Color(0xff13d38e)) : PieChartSectionData(
             color: const Color(0xff13d38e),
             value: listStatusVM[3],
             title: listStatusVM[2].toString().replaceAll(".0", ""),

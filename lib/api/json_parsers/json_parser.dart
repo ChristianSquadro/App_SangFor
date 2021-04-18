@@ -1,4 +1,3 @@
-
 abstract class JsonParser<T> {
   const JsonParser();
 
