@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:app_sangfor/blocs/authentication_bloc.dart';
 import 'package:app_sangfor/blocs/login_bloc.dart';
-import 'file:///C:/Users/CHRI/AndroidStudioProjects/app_sangfor/lib/widgets/homepage_pages/login_form.dart';
+import 'package:app_sangfor/widgets/homepage_pages/login_form.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:provider/provider.dart';
 
