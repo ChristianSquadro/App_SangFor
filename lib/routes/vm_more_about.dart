@@ -41,6 +41,7 @@ class _VMDetailsState extends State<VMDetailsPage> {
       body: SizedBox.expand(
         child: PageView(
           controller: _pageController,
+          physics:new NeverScrollableScrollPhysics(),
           onPageChanged: (index) {
             setState(() => _selectedIndex = index);
           },

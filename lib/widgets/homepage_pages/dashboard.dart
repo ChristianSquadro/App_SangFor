@@ -153,6 +153,7 @@ class _DashBoardState extends State<DashBoard> {
                                     show: false,
                                   ),
                                   sectionsSpace: 0,
+                                  startDegreeOffset: 97,
                                   centerSpaceRadius: 50,
                                   sections: _showingSections(data!)),
                             ),
@@ -183,7 +184,7 @@ class _DashBoardState extends State<DashBoard> {
       //the if statement is necessary because the zero value isn't permitted by the Chart Package
       switch (i) {
         case 0:
-          return (listStatusVM[1]== 0.0) ? PieChartSectionData(value: 0.1, title: '',radius: radius,color: const Color(0xff0293ee)) :PieChartSectionData(
+          return (listStatusVM[0]== 0.0) ? PieChartSectionData(value: 0.1, title: '',radius: radius,color: const Color(0xff0293ee)) :PieChartSectionData(
             color: const Color(0xff0293ee),
             value: listStatusVM[0],
             title: listStatusVM[0].toString().replaceAll(".0", ""),

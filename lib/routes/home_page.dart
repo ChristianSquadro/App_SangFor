@@ -109,7 +109,6 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
         }
 
         return TabBarView(
-          key: UniqueKey(),
           physics: const NeverScrollableScrollPhysics(),
           controller: tabController,
           children: const [

@@ -38,6 +38,7 @@ class DataConnection {
       headers: (headerToken) ?  {"X-Auth-Token" : token} : <String, String> {},
     ));
 
+
     //accept the HTTP certification
     (dio.httpClientAdapter as DefaultHttpClientAdapter).onHttpClientCreate =
         (HttpClient client) {

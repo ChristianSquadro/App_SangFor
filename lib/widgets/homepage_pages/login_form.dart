@@ -20,7 +20,8 @@ class _LoginFormState extends State<LoginForm> {
   final passwordController = TextEditingController();
 
   String? validateIpServer(String? input) {
-    if (input!.contains(RegExp(r"^(?!0)(?!.*\.$)((1?\d?\d|25[0-5]|2[0-4]\d)(\.|$)){4}$", caseSensitive: false, multiLine: false))) {
+    if(input!.isNotEmpty){
+    //if (input!.contains(RegExp(r"^(?!0)(?!.*\.$)((1?\d?\d|25[0-5]|2[0-4]\d)(\.|$)){4}$", caseSensitive: false, multiLine: false))) {
       return null;
     } else {
       return "invalid_field";
