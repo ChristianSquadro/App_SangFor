@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'states.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'events.dart';
@@ -9,12 +11,18 @@ class PerformanceBloc extends Bloc<PerformanceEvent, PerformanceState> {
 
   @override
   Stream<PerformanceState> mapEventToState(PerformanceEvent event) async* {
-    if (event is PerformanceDownload) {
-      yield* _performanceDownload(event);
-    }
+    yield* _performanceDownload(event);
   }
 
   Stream<PerformanceState> _performanceDownload(PerformanceEvent event) async* {
-    yield PerformanceCpu(event.chartCpu);
+
+    if (event is ChartCpuDownload)
+      yield PerformanceCpu(event.chartCpu);
+
+    if (event is ChartRamDownload)
+      yield PerformanceRam(event.chartRam);
+
+    if (event is ChartDiskDownload)
+      yield PerformanceDisk(event.chartDisk);
   }
 }

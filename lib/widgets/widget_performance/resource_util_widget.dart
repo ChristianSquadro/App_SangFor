@@ -1,36 +1,54 @@
+import 'package:app_sangfor/blocs/performance_bloc/bloc.dart';
 import 'package:app_sangfor/blocs/performance_bloc/states.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class CpuWidget extends StatefulWidget {
-  const CpuWidget();
+class ResourceWidget extends StatefulWidget {
+  final String typeResource;
+
+
+  const ResourceWidget(this.typeResource);
 
   @override
-  _CpuState createState() => _CpuState();
+  _CpuState createState() => _CpuState(typeResource);
 }
 
-class _CpuState extends State<CpuWidget> {
-  final List<Color> _gradientColors = [
-    const Color(0xff23b6e6),
-    const Color(0xff02d39a),
+class _CpuState extends State<ResourceWidget> {
+  final List<Color> _gradientColors = const [
+    Color(0xff23b6e6),
+    Color(0xff02d39a),
   ];
+  final String _typeResource;
+  List<FlSpot> _coordinates = [];
+  List<String> _toolTips = [];
 
-  late List<FlSpot> _coordinates;
+  _CpuState(this._typeResource);
 
-  void _loadFlSpot (List<List<dynamic>> chartCpu)
-  {
-    for(int i=0;i < chartCpu.length;i++)
-      _coordinates.add(FlSpot(chartCpu[i][2] as double , i as double));
+  void _loadFlSpot(List<dynamic> chart) {
+    for (int i = 0; i < chart.length; i++) {
+       var percentageUtil=chart[i][2] as num;
+       var dateUtil=chart[i][0] as String;
+      _coordinates.add(FlSpot(i.toDouble(), percentageUtil.roundToDouble()));
+      _toolTips.add(dateUtil.replaceFirst("T", "\n"));
+    }
   }
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder(
+    return BlocBuilder<PerformanceBloc, PerformanceState>(
       builder: (context, state) {
 
-        if (state is PerformanceCpu) {
+        if (state is PerformanceCpu && _typeResource=="CPU") {
           _loadFlSpot(state.chartCpu);
+        }
+
+        if (state is PerformanceRam && _typeResource=="RAM") {
+          _loadFlSpot(state.chartRam);
+        }
+
+        if (state is PerformanceDisk && _typeResource=="DISK") {
+          _loadFlSpot(state.chartDisk);
         }
 
         return Stack(
@@ -45,9 +63,42 @@ class _CpuState extends State<CpuWidget> {
                     color: Color(0xff232d37)),
                 child: Padding(
                     padding: const EdgeInsets.only(
-                        right: 18.0, left: 12.0, top: 30, bottom: 12),
+                        right: 25.0, left: 12.0, top: 30, bottom: 12),
                     child: LineChart(
                       LineChartData(
+                        lineTouchData: LineTouchData(
+                          touchTooltipData: LineTouchTooltipData(
+                              tooltipBgColor: Colors.blueAccent,
+                              getTooltipItems: (List<LineBarSpot> touchedBarSpots) {
+                                return touchedBarSpots.map((barSpot) {
+                                  final flSpot = barSpot;
+
+                                  return LineTooltipItem(
+                                    '${_toolTips[flSpot.spotIndex]} \n',
+                                    const TextStyle(
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                    children: [
+                                      TextSpan(
+                                        text: flSpot.y.toString().replaceFirst(".0", ""),
+                                        style: TextStyle(
+                                          color: Colors.grey[100],
+                                          fontWeight: FontWeight.normal,
+                                        ),
+                                      ),
+                                      TextSpan(
+                                        text: '%',
+                                        style: TextStyle(
+                                          fontStyle: FontStyle.italic,
+                                          fontWeight: FontWeight.normal,
+                                        ),
+                                      ),
+                                    ],
+                                  );
+                                }).toList();
+                              }),
+                        ),
                         gridData: FlGridData(
                           show: true,
                           drawVerticalLine: true,
@@ -77,15 +128,16 @@ class _CpuState extends State<CpuWidget> {
                               switch (value.toInt()) {
                                 case 0:
                                   return '60m';
-                                case 2:
+                                case 20:
                                   return '40m';
-                                case 4:
+                                case 40:
                                   return '20m';
-                                case 6:
+                                case 59:
                                   return 'now';
                               }
                               return '';
                             },
+                            interval: 1,
                             margin: 10,
                           ),
                           leftTitles: SideTitles(
@@ -99,15 +151,15 @@ class _CpuState extends State<CpuWidget> {
                               switch (value.toInt()) {
                                 case 0:
                                   return '0%';
-                                case 2:
+                                case 20:
                                   return '20%';
-                                case 4:
+                                case 40:
                                   return '40%';
-                                case 6:
+                                case 60:
                                   return '60%';
-                                case 8:
+                                case 80:
                                   return '80%';
-                                case 10:
+                                case 100:
                                   return '100%';
                               }
                               return '';
@@ -121,17 +173,12 @@ class _CpuState extends State<CpuWidget> {
                             border: Border.all(
                                 color: const Color(0xff37434d), width: 1)),
                         minX: 0,
-                        maxX: 6,
+                        maxX: 59,
                         minY: 0,
-                        maxY: 10,
+                        maxY: 100,
                         lineBarsData: [
                           LineChartBarData(
-                            spots: [
-                              FlSpot(0, 3),
-                              FlSpot(2.6, 2),
-                              FlSpot(2.8, 2.1),
-                              FlSpot(4.9, 5),
-                            ],
+                            spots: _coordinates,
                             isCurved: true,
                             colors: _gradientColors,
                             barWidth: 2,
@@ -154,7 +201,7 @@ class _CpuState extends State<CpuWidget> {
             Align(
               alignment: Alignment.topCenter,
               child: Text(
-                "CPU",
+                _typeResource,
                 style: TextStyle(fontSize: 20, color: Colors.white),
               ),
             ),

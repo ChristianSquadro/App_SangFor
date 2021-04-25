@@ -9,5 +9,15 @@ mixin ObjectDecoder<T> on JsonParser<T> {
 
 mixin ListDecoder<T> on JsonParser<T> {
   List<dynamic> decodeJsonList(String json) =>
-      jsonDecode(json) as List<dynamic>;
+      jsonDecode(json,reviver: (key, value)
+          {
+            if(value == null)
+            {
+            var newvalue = 0;
+            return newvalue;
+            }
+
+            return value;
+
+          }) as List<dynamic>;
 }

@@ -8,16 +8,20 @@ import 'package:flutter/material.dart';
 class PerformanceVM_ApiCall {
   const PerformanceVM_ApiCall();
 
-  Future<List<List<dynamic>>> getCpuUtilisation(BuildContext context, String urlServer) async {
-    var requestHTTP = DataConnection.createRequestREST(
-        "https://192.168.3.140/openstack/metric/v1/resource/generic/8dfac023-23ad-4659-b02f-d9d0d3b2016f/metric/memory_util/measures",
-        true);
+  Future<List<dynamic>> getChartUtilisation(BuildContext context, String idServer) async {
+    var requestHTTP1 = DataConnection.createRequestREST("https://192.168.3.140/openstack/metric/v1/resource/generic/$idServer/metric/cpu_util/measures", true);
+    var requestHTTP2 = DataConnection.createRequestREST("https://192.168.3.140/openstack/metric/v1/resource/generic/$idServer/metric/memory_util/measures", true);
+    var requestHTTP3 = DataConnection.createRequestREST("https://192.168.3.140/openstack/metric/v1/resource/generic/$idServer/metric/disk_util/measures", true);
+    List<dynamic> responses=[];
+
     try {
-      var response=await requestHTTP.executeGet<List<dynamic>>(const PerformanceVMParser());
-      return response.cast<List<List<dynamic>>>();
+      responses.add(await requestHTTP1.executeGet<List<dynamic>>(const PerformanceVMParser()));
+      responses.add(await requestHTTP2.executeGet<List<dynamic>>(const PerformanceVMParser()));
+      responses.add(await requestHTTP3.executeGet<List<dynamic>>(const PerformanceVMParser()));
+      return responses;
     } on DioError catch (e) {
       showErrorDialog(context, e);
-      return Future<List<List<dynamic>>>.error(e);
+      return Future<List<dynamic>>.error(e);
     }
   }
 }

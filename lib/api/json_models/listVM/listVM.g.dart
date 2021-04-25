@@ -20,6 +20,7 @@ Map<String, dynamic> _$ListVMToJson(ListVM instance) => <String, dynamic>{
 
 Servers _$ServersFromJson(Map<String, dynamic> json) {
   return Servers(
+    json['id'] as String,
     json['name'] as String,
     json['status'] as String,
     (json['links'] as List<dynamic>)
@@ -29,6 +30,7 @@ Servers _$ServersFromJson(Map<String, dynamic> json) {
 }
 
 Map<String, dynamic> _$ServersToJson(Servers instance) => <String, dynamic>{
+      'id': instance.id,
       'name': instance.name,
       'status': instance.status,
       'links': instance.links.map((e) => e.toJson()).toList(),

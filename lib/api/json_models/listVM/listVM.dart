@@ -16,11 +16,12 @@ class ListVM {
 
 @JsonSerializable(explicitToJson: true)
 class Servers {
+  final String id;
   final String name;
   final String status;
   final List<Links> links;
 
-  const Servers(this.name,this.status,this.links);
+  const Servers(this.id,this.name,this.status,this.links);
 
   //the factory method is used to hide the constructor
   factory Servers.fromJson(Map<String, dynamic> json) => _$ServersFromJson(json);

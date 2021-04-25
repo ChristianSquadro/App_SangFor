@@ -14,7 +14,7 @@ class ListVM_ApiCall {
     var requestHTTP =
         DataConnection.createRequestREST("/compute/v2/servers/detail", true);
     try {
-      var response = await requestHTTP.executeGet<ListVM>(const ListVMParser());
+      var response = requestHTTP.executeGet<ListVM>(const ListVMParser());
       return response;
     } on DioError catch (e) {
       showErrorDialog(context,e);
