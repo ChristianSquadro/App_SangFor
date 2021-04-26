@@ -12,19 +12,19 @@ abstract class PerformanceState extends Equatable {
 }
 
 
-class PerformanceInitial extends PerformanceState {
-  const PerformanceInitial() : super ();
+class PerformanceInitialState extends PerformanceState {
+  const PerformanceInitialState() : super ();
 }
 
 
-class PerformanceCpu extends PerformanceState {
-  const PerformanceCpu(List<dynamic> chartCpu) : super (chartCpu: chartCpu);
+class PerformanceCpuState extends PerformanceState {
+  const PerformanceCpuState(List<dynamic> chartCpu) : super (chartCpu: chartCpu);
 }
 
-class PerformanceRam extends PerformanceState {
-  const PerformanceRam(List<dynamic> chartRam) : super (chartRam: chartRam);
+class PerformanceRamState extends PerformanceState {
+  const PerformanceRamState(List<dynamic> chartRam) : super (chartRam: chartRam);
 }
 
-class PerformanceDisk extends PerformanceState {
-  const PerformanceDisk(List<dynamic> chartDisk) : super (chartDisk: chartDisk);
+class PerformanceDiskState extends PerformanceState {
+  const PerformanceDiskState(List<dynamic> chartDisk) : super (chartDisk: chartDisk);
 }

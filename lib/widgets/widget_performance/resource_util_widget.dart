@@ -7,8 +7,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 class ResourceWidget extends StatefulWidget {
   final String typeResource;
 
-
-  const ResourceWidget(this.typeResource);
+  const ResourceWidget(this.typeResource,);
 
   @override
   _CpuState createState() => _CpuState(typeResource);
@@ -36,19 +35,21 @@ class _CpuState extends State<ResourceWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<PerformanceBloc, PerformanceState>(
+    return BlocBuilder<PerformanceBloc, List<PerformanceState>>(
       builder: (context, state) {
 
-        if (state is PerformanceCpu && _typeResource=="CPU") {
-          _loadFlSpot(state.chartCpu);
-        }
+        for(int i=0;i< state.length;i++) {
+          if (state[i] is PerformanceCpuState && _typeResource == "CPU") {
+            _loadFlSpot(state[i].chartCpu);
+          }
 
-        if (state is PerformanceRam && _typeResource=="RAM") {
-          _loadFlSpot(state.chartRam);
-        }
+          if (state[i] is PerformanceRamState && _typeResource == "RAM") {
+            _loadFlSpot(state[i].chartRam);
+          }
 
-        if (state is PerformanceDisk && _typeResource=="DISK") {
-          _loadFlSpot(state.chartDisk);
+          if (state[i] is PerformanceDiskState && _typeResource == "DISK") {
+            _loadFlSpot(state[i].chartDisk);
+          }
         }
 
         return Stack(
@@ -63,7 +64,7 @@ class _CpuState extends State<ResourceWidget> {
                     color: Color(0xff232d37)),
                 child: Padding(
                     padding: const EdgeInsets.only(
-                        right: 25.0, left: 12.0, top: 30, bottom: 12),
+                        right: 25.0, left: 12.0, top: 35, bottom: 12),
                     child: LineChart(
                       LineChartData(
                         lineTouchData: LineTouchData(

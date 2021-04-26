@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:app_sangfor/api/api_call/performance_apicall.dart';
 import 'package:app_sangfor/blocs/performance_bloc/bloc.dart';
 import 'package:app_sangfor/blocs/performance_bloc/events.dart';
@@ -20,14 +22,17 @@ class _PerformanceState extends State<PerformancePage> {
     const Color(0xff23b6e6),
     const Color(0xff02d39a),
   ];
-  final performanceVM = PerformanceVM_ApiCall();
+  late final PerformanceVM_ApiCall performanceVM;
   late Future<List<dynamic>> listCpuUtil;
+
 
   @override
   void initState() {
     super.initState();
+    performanceVM=PerformanceVM_ApiCall();
     listCpuUtil = performanceVM.getChartUtilisation(context, Provider.of<VmCache>(context, listen: false).idServer);
   }
+
 
   @override
   Widget build(BuildContext context) {
@@ -45,14 +50,21 @@ class _PerformanceState extends State<PerformancePage> {
                     var data = snapshot.data;
 
                     //generate the event to rebuild the charts
-                    context.read<PerformanceBloc>().add(ChartCpuDownload(data![0] as List<dynamic>));
-                    context.read<PerformanceBloc>().add(ChartRamDownload(data[1] as List<dynamic>));
-                    context.read<PerformanceBloc>().add(ChartDiskDownload(data[2] as List<dynamic>));
+                    context.read<PerformanceBloc>().add(ChartDownloadEvent(data![0] as List<dynamic>,data[1] as List<dynamic>,data[2] as List<dynamic>));
 
                     return ListView(
-                      children: const <Widget>[
+                      children:const <Widget>[
+                        const SizedBox(
+                          height: 5,
+                        ),
                         ResourceWidget("CPU"),
+                        const SizedBox(
+                          height: 5,
+                        ),
                         ResourceWidget("RAM"),
+                        const SizedBox(
+                          height: 5,
+                        ),
                         ResourceWidget("DISK"),
                       ],
                     );
