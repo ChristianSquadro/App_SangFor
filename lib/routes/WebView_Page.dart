@@ -15,12 +15,14 @@ class WebViewConsole extends StatefulWidget {
 class _WebViewConsoleState extends State<WebViewConsole> {
   final listVMApiCall = ListVM_ApiCall();
   late Future<String> url;
+  bool isLoading = true;
+  final key=UniqueKey();
 
   @override
   void initState() {
     super.initState();
-    url = listVMApiCall.loadConsole(
-        context, Provider.of<VmCache>(context, listen: false).detailsVM.links[0].href);
+    url = listVMApiCall.loadConsole(context,
+        Provider.of<VmCache>(context, listen: false).detailsVM.links[0].href);
     // Enable hybrid composition.
     if (Platform.isAndroid) {
       WebView.platform = SurfaceAndroidWebView();
@@ -45,14 +47,20 @@ class _WebViewConsoleState extends State<WebViewConsole> {
                 print(data);
 
                 return WebView(
-
-                  initialUrl: data,
-                  //initialUrl: "https://www.youtube.it",
-                  initialMediaPlaybackPolicy: AutoMediaPlaybackPolicy.always_allow,
-                  javascriptMode: JavascriptMode.unrestricted,
-                  allowsInlineMediaPlayback: true,
-                );
-
+                    key:key,
+                    initialUrl: data,
+                    //initialUrl: "https://www.youtube.it",
+                    initialMediaPlaybackPolicy:
+                        AutoMediaPlaybackPolicy.always_allow,
+                    javascriptMode: JavascriptMode.unrestricted,
+                    allowsInlineMediaPlayback: true,
+                    onPageFinished: (finish) {
+                      setState(() {
+                        isLoading = false;
+                      });
+                    },
+                  );
+                  //isLoading ? Center(child: CircularProgressIndicator(),) : Stack(),;
               }
               if (snapshot.hasError &&
                   snapshot.connectionState == ConnectionState.done) {
