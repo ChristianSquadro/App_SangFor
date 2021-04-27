@@ -19,12 +19,16 @@ class _ResourceOneLineState extends State<ResourceOneLineWidget> {
     Color(0xff02d39a),
   ];
   final String _typeResource;
-  List<FlSpot> _coordinates = [];
-  List<String> _toolTips = [];
 
   _ResourceOneLineState(this._typeResource);
 
+  List<FlSpot> _coordinates=[];
+  List<String> _toolTips=[];
+
   void _loadFlSpot(List<dynamic> chart) {
+    //move inside bloc
+    _coordinates=[];
+    _toolTips=[];
     for (int i = 0; i < chart.length; i++) {
        var percentageUtil=chart[i][2] as num;
        var dateUtil=chart[i][0] as String;
@@ -45,10 +49,6 @@ class _ResourceOneLineState extends State<ResourceOneLineWidget> {
 
           if (state[i] is PerformanceRamState && _typeResource == "RAM") {
             _loadFlSpot(state[i].chartRam);
-          }
-
-          if (state[i] is PerformanceDiskState && _typeResource == "DISK") {
-            _loadFlSpot(state[i].chartDisk);
           }
         }
 

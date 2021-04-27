@@ -33,9 +33,9 @@ class RouteGenerator {
             navigateTo: const WebViewConsole()
         );
 
-      case VMDetails:
+      case VMMoreAbout:
         return SlideUpPageRoute(
-            navigateTo: const VMDetailsPage()
+            navigateTo: const VMMoreAboutPage()
         );
 
       default:
@@ -48,7 +48,7 @@ class RouteGenerator {
   static const vmPage = '/VM';
   static const dashboard = '/DashBoard';
   static const webViewConsole = '/DashBoard/WebViewConsole';
-  static const VMDetails = '/DashBoard/VMDetails';
+  static const VMMoreAbout = '/DashBoard/VMMoreAbout';
 }
 
 /// Exception thrown when a given route doesn't exist

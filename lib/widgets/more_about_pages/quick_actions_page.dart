@@ -17,7 +17,6 @@ class _QuickActionsState extends State<QuickActionsPage> {
   Widget build(BuildContext context) {
     return Consumer<VmCache>(builder: (_, value, __) {
       return Scaffold(
-        appBar: AppBar(title: Text("Quick Actions")),
         body: Column(children: [
           const SizedBox(
             height: 10,

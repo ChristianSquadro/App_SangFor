@@ -2,18 +2,25 @@ import 'package:app_sangfor/blocs/performance_bloc/bloc.dart';
 import 'package:app_sangfor/blocs/performance_bloc/states.dart';
 import 'package:app_sangfor/widgets/reusable_widgets/Indicator.dart';
 import 'package:fl_chart/fl_chart.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class ResourceTwoLineWidget extends StatefulWidget {
   final String typeResource;
+  final String measure;
+  final String lineDescription1;
+  final String lineDescritpion2;
 
   const ResourceTwoLineWidget(
-    this.typeResource,
+      this.typeResource,
+      this.measure,
+      this.lineDescription1,
+      this.lineDescritpion2,
   );
 
   @override
-  _ResourceTwoLineState createState() => _ResourceTwoLineState(typeResource);
+  _ResourceTwoLineState createState() => _ResourceTwoLineState(typeResource,measure,lineDescription1,lineDescritpion2);
 }
 
 class _ResourceTwoLineState extends State<ResourceTwoLineWidget> {
@@ -26,16 +33,25 @@ class _ResourceTwoLineState extends State<ResourceTwoLineWidget> {
     Color(0x99aa4cfc),
   ];
   final String _typeResource;
-  List<FlSpot> _coordinates1 = [];
-  List<String> _toolTips1 = [];
-  List<FlSpot> _coordinates2 = [];
-  List<String> _toolTips2 = [];
+  final String measure;
+  final String lineDescription1;
+  final String lineDescritpion2;
 
-  _ResourceTwoLineState(this._typeResource);
+  _ResourceTwoLineState(this._typeResource,this.measure,this.lineDescription1,this.lineDescritpion2);
+
+  List<FlSpot> _coordinates1=[];
+  List<String> _toolTips1=[];
+  List<FlSpot> _coordinates2=[];
+  List<String> _toolTips2=[];
+
 
   void _loadFlSpot(List<dynamic> chart1, List<dynamic> chart2) {
-    int length =
-        (chart1.length > chart2.length) ? chart1.length : chart2.length;
+    //move inside bloc
+    _coordinates1=[];
+    _toolTips1=[];
+    _coordinates2=[];
+    _toolTips2=[];
+    int length = (chart1.length > chart2.length) ? chart1.length : chart2.length;
     for (int i = 0; i < length; i++) {
       var percentageUtil1 = chart1[i][2] as num;
       var dateUtil1 = chart1[i][0] as String;
@@ -58,11 +74,17 @@ class _ResourceTwoLineState extends State<ResourceTwoLineWidget> {
             _loadFlSpot(
                 state[i].chartNetworkInComing, state[i].chartNetworkOutGoing);
           }
+
+          if (state[i] is PerformanceDiskState &&
+              _typeResource == "DISK") {
+            _loadFlSpot(
+                state[i].chartDiskRead, state[i].chartDiskWrite);
+          }
         }
 
         return Stack(children: <Widget>[
           AspectRatio(
-            aspectRatio: 1.60,
+            aspectRatio: 1.45,
             child: Container(
               decoration: const BoxDecoration(
                   borderRadius: BorderRadius.all(
@@ -71,7 +93,7 @@ class _ResourceTwoLineState extends State<ResourceTwoLineWidget> {
                   color: Color(0xff232d37)),
               child: Padding(
                   padding: const EdgeInsets.only(
-                      right: 25.0, left: 12.0, top: 35, bottom: 12),
+                      right: 25.0, left: 12.0, top: 35, bottom: 40),
                   child: LineChart(
                     LineChartData(
                       lineTouchData: LineTouchData(
@@ -99,7 +121,7 @@ class _ResourceTwoLineState extends State<ResourceTwoLineWidget> {
                                       ),
                                     ),
                                     TextSpan(
-                                      text: 'bps',
+                                      text: measure,
                                       style: TextStyle(
                                         fontStyle: FontStyle.italic,
                                         fontWeight: FontWeight.normal,
@@ -161,15 +183,15 @@ class _ResourceTwoLineState extends State<ResourceTwoLineWidget> {
                           getTitles: (value) {
                             switch (value.toInt()) {
                               case 0:
-                                return '0bps';
+                                return '0$measure';
                               case 50:
-                                return '50bps';
+                                return '50$measure';
                               case 100:
-                                return '100bps';
+                                return '100$measure';
                               case 150:
-                                return '150bps';
+                                return '150$measure';
                               case 200:
-                                return '200bps';
+                                return '200$measure';
                             }
                             return '';
                           },
@@ -230,30 +252,23 @@ class _ResourceTwoLineState extends State<ResourceTwoLineWidget> {
             ),
           ),
           Align(
-              alignment: Alignment.bottomLeft,
+              alignment: Alignment.bottomCenter,
+              heightFactor: 14,
               child: Row(
-            children: <Widget>[
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: <Widget>[
                   Indicator(
-                    color: const Color(0xff0293ee),
-                    text: 'Running',
+                    color: Colors.lightBlue,
+                    text: lineDescription1,
                     isSquare: false,
-                    //size: touchedIndex == 0 ? 18 : 16,
-                    //textColor: _touchedIndex == 0 ? Colors.black : Colors.grey,
                   ),
                   Indicator(
-                    color: const Color(0xfff8b250),
-                    text: 'Shutdown',
+                    color: const Color(0x99aa4cfc),
+                    text: lineDescritpion2,
                     isSquare: false,
-                    //size: touchedIndex == 1 ? 18 : 16,
-                    //textColor: _touchedIndex == 1 ? Colors.black : Colors.grey,
                   ),
                 ],
-              ),
-            ],
-          ))
+              ))
         ]);
       },
     );

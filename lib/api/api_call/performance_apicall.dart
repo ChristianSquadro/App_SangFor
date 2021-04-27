@@ -11,9 +11,10 @@ class PerformanceVM_ApiCall {
   Future<List<dynamic>> getChartUtilisation(BuildContext context, String idServer) async {
     var requestHTTP1 = DataConnection.createRequestREST("/metric/v1/resource/generic/$idServer/metric/cpu_util/measures", true);
     var requestHTTP2 = DataConnection.createRequestREST("/metric/v1/resource/generic/$idServer/metric/memory_util/measures", true);
-    var requestHTTP3 = DataConnection.createRequestREST("/metric/v1/resource/generic/$idServer/metric/disk_util/measures", true);
-    var requestHTTP4 = DataConnection.createRequestREST("/metric/v1/resource/generic/$idServer/metric/network.incoming.bytes/measures", true);
-    var requestHTTP5 = DataConnection.createRequestREST("/metric/v1/resource/generic/$idServer/metric/network.outgoing.bytes/measures", true);
+    var requestHTTP3 = DataConnection.createRequestREST("/metric/v1/resource/generic/$idServer/metric/disk.read.bytes.rate/measures", true);
+    var requestHTTP4 = DataConnection.createRequestREST("/metric/v1/resource/generic/$idServer/metric/disk.write.bytes.rate/measures", true);
+    var requestHTTP5 = DataConnection.createRequestREST("/metric/v1/resource/generic/$idServer/metric/network.incoming.bytes/measures", true);
+    var requestHTTP6 = DataConnection.createRequestREST("/metric/v1/resource/generic/$idServer/metric/network.outgoing.bytes/measures", true);
     List<dynamic> responses=[];
 
     try {
@@ -22,6 +23,7 @@ class PerformanceVM_ApiCall {
       responses.add(await requestHTTP3.executeGet<List<dynamic>>(const PerformanceVMParser()));
       responses.add(await requestHTTP4.executeGet<List<dynamic>>(const PerformanceVMParser()));
       responses.add(await requestHTTP5.executeGet<List<dynamic>>(const PerformanceVMParser()));
+      responses.add(await requestHTTP6.executeGet<List<dynamic>>(const PerformanceVMParser()));
       return responses;
     } on DioError catch (e) {
       showErrorDialog(context, e);

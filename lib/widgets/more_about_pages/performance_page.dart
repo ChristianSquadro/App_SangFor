@@ -6,7 +6,6 @@ import 'package:app_sangfor/blocs/performance_bloc/events.dart';
 import 'package:app_sangfor/cache/Vm_Cache.dart';
 import 'package:app_sangfor/widgets/widget_performance/resource_oneline_widget.dart';
 import 'package:app_sangfor/widgets/widget_performance/resource_twoline_widget.dart';
-import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:provider/provider.dart';
@@ -26,19 +25,17 @@ class _PerformanceState extends State<PerformancePage> {
   late final PerformanceVM_ApiCall performanceVM;
   late Future<List<dynamic>> listCpuUtil;
 
-
   @override
   void initState() {
     super.initState();
-    performanceVM=PerformanceVM_ApiCall();
-    listCpuUtil = performanceVM.getChartUtilisation(context, Provider.of<VmCache>(context, listen: false).idServer);
+    performanceVM = PerformanceVM_ApiCall();
+    listCpuUtil = performanceVM.getChartUtilisation(
+        context, Provider.of<VmCache>(context, listen: false).idServer);
   }
-
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(title: Text("Performance")),
         body: BlocProvider<PerformanceBloc>(
             create: (context) => PerformanceBloc(),
             child: FutureBuilder<List<dynamic>>(
@@ -51,10 +48,16 @@ class _PerformanceState extends State<PerformancePage> {
                     var data = snapshot.data;
 
                     //generate the event to rebuild the charts
-                    context.read<PerformanceBloc>().add(ChartDownloadEvent(data![0] as List<dynamic>,data[1] as List<dynamic>,data[2] as List<dynamic>,data[3] as List<dynamic>,data[4] as List<dynamic>));
+                    context.read<PerformanceBloc>().add(ChartDownloadEvent(
+                        data![0] as List<dynamic>,
+                        data[1] as List<dynamic>,
+                        data[2] as List<dynamic>,
+                        data[3] as List<dynamic>,
+                        data[4] as List<dynamic>,
+                        data[5] as List<dynamic>));
 
                     return ListView(
-                      children:const <Widget>[
+                      children: const <Widget>[
                         const SizedBox(
                           height: 5,
                         ),
@@ -66,11 +69,12 @@ class _PerformanceState extends State<PerformancePage> {
                         const SizedBox(
                           height: 5,
                         ),
-                        ResourceOneLineWidget("DISK"),
+                        ResourceTwoLineWidget("DISK", "B/s", "Read", "Write"),
                         const SizedBox(
                           height: 5,
                         ),
-                        ResourceTwoLineWidget("NETWORK"),
+                        ResourceTwoLineWidget(
+                            "NETWORK", "bps", "Inbound", "Outbound"),
                       ],
                     );
                   }
