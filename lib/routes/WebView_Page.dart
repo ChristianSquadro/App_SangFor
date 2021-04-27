@@ -38,11 +38,11 @@ class _WebViewConsoleState extends State<WebViewConsole> {
                   snapshot.connectionState == ConnectionState.done) {
                 var data = snapshot.data;
                 //it's for testing
-                data = data!.replaceFirst("192.168.3.140", "scp.sicloud.org");
+                //data = data!.replaceFirst("192.168.3.140", "scp.sicloud.org");
                 print(data);
 
                 return WebView(
-                  initialUrl: "www.google.it",
+                  initialUrl: "https://www.google.com/",
                 );
 
               }

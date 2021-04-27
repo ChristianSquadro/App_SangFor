@@ -8,12 +8,12 @@ import 'package:flutter/material.dart';
 class QuickActions_ApiCall {
   const QuickActions_ApiCall();
 
-  Future<bool> powerOn(BuildContext context,String urlServer) async {
+  Future<bool> powerOn(BuildContext context,String idServer) async {
     var objectJSON =
     {
       "os-start": null
     };
-    var requestHTTP = DataConnection.createRequestREST(urlServer+"/action", true,objectJSON);
+    var requestHTTP = DataConnection.createRequestREST("https://192.168.3.140/openstack/compute/v2/servers/$idServer/action", true,objectJSON);
     try {
       await requestHTTP.executePost<Empty>(const EmptyParser());
       return Future<bool>.value(true);
