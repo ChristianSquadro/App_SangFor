@@ -4,7 +4,8 @@ import 'package:app_sangfor/api/api_call/performance_apicall.dart';
 import 'package:app_sangfor/blocs/performance_bloc/bloc.dart';
 import 'package:app_sangfor/blocs/performance_bloc/events.dart';
 import 'package:app_sangfor/cache/Vm_Cache.dart';
-import 'package:app_sangfor/widgets/widget_performance/resource_util_widget.dart';
+import 'package:app_sangfor/widgets/widget_performance/resource_oneline_widget.dart';
+import 'package:app_sangfor/widgets/widget_performance/resource_twoline_widget.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -50,22 +51,26 @@ class _PerformanceState extends State<PerformancePage> {
                     var data = snapshot.data;
 
                     //generate the event to rebuild the charts
-                    context.read<PerformanceBloc>().add(ChartDownloadEvent(data![0] as List<dynamic>,data[1] as List<dynamic>,data[2] as List<dynamic>));
+                    context.read<PerformanceBloc>().add(ChartDownloadEvent(data![0] as List<dynamic>,data[1] as List<dynamic>,data[2] as List<dynamic>,data[3] as List<dynamic>,data[4] as List<dynamic>));
 
                     return ListView(
                       children:const <Widget>[
                         const SizedBox(
                           height: 5,
                         ),
-                        ResourceWidget("CPU"),
+                        ResourceOneLineWidget("CPU"),
                         const SizedBox(
                           height: 5,
                         ),
-                        ResourceWidget("RAM"),
+                        ResourceOneLineWidget("RAM"),
                         const SizedBox(
                           height: 5,
                         ),
-                        ResourceWidget("DISK"),
+                        ResourceOneLineWidget("DISK"),
+                        const SizedBox(
+                          height: 5,
+                        ),
+                        ResourceTwoLineWidget("NETWORK"),
                       ],
                     );
                   }

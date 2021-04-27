@@ -23,6 +23,7 @@ class PerformanceBloc extends Bloc<PerformanceEvent, List<PerformanceState>> {
     performanceStates.add(PerformanceCpuState(event.chartCpu));
     performanceStates.add(PerformanceRamState(event.chartRam));
     performanceStates.add(PerformanceDiskState(event.chartDisk));
+    performanceStates.add(PerformanceNetworkState(event.chartNetworkInComing, event.chartNetworkOutGoing));
 
     yield performanceStates;
   }

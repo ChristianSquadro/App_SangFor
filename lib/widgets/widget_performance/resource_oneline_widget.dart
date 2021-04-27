@@ -4,16 +4,16 @@ import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class ResourceWidget extends StatefulWidget {
+class ResourceOneLineWidget extends StatefulWidget {
   final String typeResource;
 
-  const ResourceWidget(this.typeResource,);
+  const ResourceOneLineWidget(this.typeResource,);
 
   @override
-  _CpuState createState() => _CpuState(typeResource);
+  _ResourceOneLineState createState() => _ResourceOneLineState(typeResource);
 }
 
-class _CpuState extends State<ResourceWidget> {
+class _ResourceOneLineState extends State<ResourceOneLineWidget> {
   final List<Color> _gradientColors = const [
     Color(0xff23b6e6),
     Color(0xff02d39a),
@@ -22,7 +22,7 @@ class _CpuState extends State<ResourceWidget> {
   List<FlSpot> _coordinates = [];
   List<String> _toolTips = [];
 
-  _CpuState(this._typeResource);
+  _ResourceOneLineState(this._typeResource);
 
   void _loadFlSpot(List<dynamic> chart) {
     for (int i = 0; i < chart.length; i++) {

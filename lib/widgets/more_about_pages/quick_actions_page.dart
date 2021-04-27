@@ -33,7 +33,7 @@ class _QuickActionsState extends State<QuickActionsPage> {
             Expanded(
                 child: ElevatedButton(
                     onPressed: () =>
-                        quickActionApiCall.powerOff(context, value.urlServer),
+                        quickActionApiCall.powerOff(context, value.idServer),
                     child: Text("Power Off")))
           ]),
         ]),

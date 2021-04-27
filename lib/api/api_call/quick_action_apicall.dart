@@ -13,7 +13,7 @@ class QuickActions_ApiCall {
     {
       "os-start": null
     };
-    var requestHTTP = DataConnection.createRequestREST("https://192.168.3.140/openstack/compute/v2/servers/$idServer/action", true,objectJSON);
+    var requestHTTP = DataConnection.createRequestREST("/compute/v2/servers/$idServer/action", true,objectJSON);
     try {
       await requestHTTP.executePost<Empty>(const EmptyParser());
       return Future<bool>.value(true);
@@ -23,12 +23,12 @@ class QuickActions_ApiCall {
     }
   }
 
-  Future<bool> powerOff(BuildContext context,String urlServer) async {
+  Future<bool> powerOff(BuildContext context,String idServer) async {
     var objectJSON =
     {
       "os-stop": null
     };
-    var requestHTTP = DataConnection.createRequestREST(urlServer+"/action", true,objectJSON);
+    var requestHTTP = DataConnection.createRequestREST("/compute/v2/servers/$idServer/action", true,objectJSON);
     try {
       await requestHTTP.executePost<Empty>(const EmptyParser());
       return Future<bool>.value(true);
