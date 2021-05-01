@@ -1,7 +1,7 @@
 import 'package:app_sangfor/api/api_call/login_apicall.dart';
 import 'package:app_sangfor/repository/data_connection.dart';
-import 'package:app_sangfor/widgets/homepage_pages/dashboard.dart';
-import 'package:app_sangfor/widgets/homepage_pages/login_page.dart';
+import 'package:app_sangfor/pages/homepage_pages/dashboard.dart';
+import 'package:app_sangfor/pages/homepage_pages/login_page.dart';
 import 'package:flutter/material.dart';
 import 'package:app_sangfor/blocs/authentication_bloc.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';

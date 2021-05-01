@@ -25,14 +25,14 @@ class _QuickActionsState extends State<QuickActionsPage> {
             Expanded(
                 child: ElevatedButton(
                     onPressed: () =>
-                        quickActionApiCall.powerOn(context, value.idServer),
+                        quickActionApiCall.powerOn(context, value.detailsVM.id),
                     child: Text("Power On")))
           ]),
           Row(children: [
             Expanded(
                 child: ElevatedButton(
                     onPressed: () =>
-                        quickActionApiCall.powerOff(context, value.idServer),
+                        quickActionApiCall.powerOff(context, value.detailsVM.id),
                     child: Text("Power Off")))
           ]),
         ]),

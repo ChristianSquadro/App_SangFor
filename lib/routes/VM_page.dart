@@ -66,14 +66,13 @@ class _VMPageState extends State<VMPage> {
                                   children: [
                                     ElevatedButton(
                                         onPressed: () {
-                                          value.urlServer = data.servers[index].links[0].href;
+                                          value.detailsVM= data.servers[index];
                                           Navigator.of(context).pushNamed(RouteGenerator.webViewConsole);
                                         },
                                         child: Text("Console")),
                                     ElevatedButton(
                                         onPressed: () {
-                                          value.idServer = data.servers[index].id;
-                                          value.name = data.servers[index].name;
+                                          value.detailsVM= data.servers[index];
                                           Navigator.of(context).pushNamed(RouteGenerator.VMMoreAbout);
                                         },
                                         child: Text("More"))

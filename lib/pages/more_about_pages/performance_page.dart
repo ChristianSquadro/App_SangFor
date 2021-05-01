@@ -30,7 +30,7 @@ class _PerformanceState extends State<PerformancePage> {
     super.initState();
     performanceVM = PerformanceVM_ApiCall();
     listCpuUtil = performanceVM.getChartUtilisation(
-        context, Provider.of<VmCache>(context, listen: false).idServer);
+        context, Provider.of<VmCache>(context, listen: false).detailsVM.id);
   }
 
   @override

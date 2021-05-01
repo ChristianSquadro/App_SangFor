@@ -1,7 +1,7 @@
 import 'package:app_sangfor/cache/Vm_Cache.dart';
-import 'package:app_sangfor/widgets/more_about_pages/details_page.dart';
-import 'package:app_sangfor/widgets/more_about_pages/performance_page.dart';
-import 'package:app_sangfor/widgets/more_about_pages/quick_actions_page.dart';
+import 'package:app_sangfor/pages/more_about_pages/details_page.dart';
+import 'package:app_sangfor/pages/more_about_pages/performance_page.dart';
+import 'package:app_sangfor/pages/more_about_pages/quick_actions_page.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
