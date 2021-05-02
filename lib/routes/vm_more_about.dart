@@ -48,7 +48,7 @@ class _VMMoreAboutState extends State<VMMoreAboutPage> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text(_title),
-            Text(Provider.of<VmCache>(context, listen: false).name,
+            Text(Provider.of<VmCache>(context, listen: false).detailsVM.name,
               style: new TextStyle(
               fontSize: 16.0,
               color: Colors.white,))

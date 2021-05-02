@@ -1,95 +1,39 @@
 import 'package:app_sangfor/animations/custom_rect_tween.dart';
+import 'package:app_sangfor/models/details_model.dart';
 import 'package:app_sangfor/styles.dart';
 import 'package:flutter/material.dart';
-
 import 'hero_dialog_route.dart';
-
-class PopUpDetails extends StatelessWidget {
-  /// {@macro home}
-  const PopUpDetails()
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: Stack(
-        children: [
-          Container(
-            decoration: const BoxDecoration(
-              gradient: LinearGradient(
-                begin: Alignment.topCenter,
-                end: Alignment.bottomCenter,
-                colors: [
-                  AppColors.backgroundFadedColor,
-                  AppColors.backgroundColor,
-                ],
-                stops: [0.0, 1],
-              ),
-            ),
-          ),
-          SafeArea(
-            child: _InfoContent(
-              todos: fakeData,
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-/// {@template todo_list_content}
-/// List of [Todo]s.
-/// {@endtemplate}
-class _InfoContent extends StatelessWidget {
-  const _InfoContent({
-    required this.todos,
-  });
-
-  final List<Todo> todos;
-
-  @override
-  Widget build(BuildContext context) {
-    return ListView.builder(
-      itemCount: todos.length,
-      padding: const EdgeInsets.all(16),
-      itemBuilder: (context, index) {
-        final _todo = todos[index];
-        return _InfoCard(todo: _todo);
-      },
-    );
-  }
-}
 
 /// {@template todo_card}
 /// Card that display a [Todo]'s content.
 ///
 /// On tap it opens a [HeroDialogRoute] with [_InfoPopupCard] as the content.
 /// {@endtemplate}
-class _InfoCard extends StatelessWidget {
+class InfoCard extends StatelessWidget {
   /// {@macro todo_card}
-  const _InfoCard({
-    required this.todo,
+  const InfoCard({
+    required this.model,
   });
 
-  final Todo todo;
+  final DetailsModel model;
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {
+      onTap: (model.showHero==true) ? () {
         Navigator.of(context).push(
           HeroDialogRoute(
             builder: (context) => Center(
-              child: _InfoPopupCard(todo: todo),
+              child: _InfoPopupCard(model: model),
             ),
           ),
         );
-      },
+      } : () {},
       child: Hero(
         createRectTween: (begin, end) {
           return CustomRectTween(begin: begin!, end: end!);
         },
-        tag: todo.id,
+        tag: model.id,
         child: Padding(
           padding: const EdgeInsets.symmetric(vertical: 8.0),
           child: Material(
@@ -99,13 +43,13 @@ class _InfoCard extends StatelessWidget {
               padding: const EdgeInsets.all(8.0),
               child: Column(
                 children: <Widget>[
-                  _InfoTitle(title: todo.description),
+                  _InfoTitle(title: model.title),
                   const SizedBox(
                     height: 8,
                   ),
-                  if (todo.items != null) ...[
+                  if (model.showHero == false)...[
                     const Divider(),
-                    _InfoItemsBox(items: todo.items),
+                    _InfoItemsBox(items: model.items),
                   ]
                 ],
               ),
@@ -143,15 +87,15 @@ class _InfoTitle extends StatelessWidget {
 /// Activated from [_InfoCard].
 /// {@endtemplate}
 class _InfoPopupCard extends StatelessWidget {
-  const _InfoPopupCard({this.todo});
-  final Todo todo;
+  const _InfoPopupCard({required this.model});
+  final DetailsModel model;
 
   @override
   Widget build(BuildContext context) {
     return Hero(
-      tag: todo.id,
+      tag: model.id,
       createRectTween: (begin, end) {
-        return CustomRectTween(begin: begin, end: end);
+        return CustomRectTween(begin: begin!, end: end!);
       },
       child: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -165,22 +109,14 @@ class _InfoPopupCard extends StatelessWidget {
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    _InfoTitle(title: todo.description),
+                    _InfoTitle(title: model.title),
                     const SizedBox(
                       height: 8,
                     ),
-                    if (todo.items != null) ...[
+                    ...[
                       const Divider(),
-                      _InfoItemsBox(items: todo.items),
+                      _InfoItemsBox(items: model.items),
                     ],
-                    Container(
-                        margin: const EdgeInsets.all(8),
-                        decoration: BoxDecoration(
-                          color: Colors.black12,
-                          borderRadius: BorderRadius.circular(8),
-                        ),
-                        child: const Text ("More Data")
-                    ),
                   ],
                 ),
               ),
@@ -203,48 +139,14 @@ class _InfoItemsBox extends StatelessWidget {
     required this.items,
   });
 
-  final List<Item> items;
+  final List<DetailsItem> items;
 
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
-        for (final item in items) _InfoItemTile(item: item),
+        for (final item in items) Text(item.key+": "+item.value),
       ],
-    );
-  }
-}
-
-/// {@template todo_item_template}
-/// An individual [Todo] [Item] with its [Checkbox].
-/// {@endtemplate}
-class _InfoItemTile extends StatefulWidget {
-  /// {@macro todo_item_template}
-  const _InfoItemTile({
-    required this.item,
-  });
-
-  final Item item;
-
-  @override
-  _InfoItemTileState createState() => _InfoItemTileState();
-}
-
-class _InfoItemTileState extends State<_InfoItemTile> {
-  void _onChanged(bool val) {
-    setState(() {
-      widget.item.completed = val;
-    });
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return ListTile(
-      leading: Checkbox(
-        onChanged: _onChanged,
-        value: widget.item.completed,
-      ),
-      title: Text(widget.item.description),
     );
   }
 }
