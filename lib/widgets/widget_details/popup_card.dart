@@ -76,7 +76,7 @@ class _InfoTitle extends StatelessWidget {
   Widget build(BuildContext context) {
     return Text(
       title,
-      style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+      style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16, color: Colors.white),
     );
   }
 }
@@ -145,7 +145,7 @@ class _InfoItemsBox extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        for (final item in items) Text(item.key+": "+item.value),
+        for (final item in items) Text(item.key+": "+item.value, style: TextStyle(color: Colors.white),),
       ],
     );
   }
