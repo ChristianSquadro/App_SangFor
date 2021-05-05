@@ -42,7 +42,9 @@ class _WebViewConsoleState extends State<WebViewConsole> {
                 print(data);
 
                 return WebView(
+
                   initialUrl: data,
+                  //initialUrl: "https://www.google.it",
                 );
 
               }
