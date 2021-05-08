@@ -22,7 +22,10 @@ class _WebViewConsoleState extends State<WebViewConsole> {
     url = listVMApiCall.loadConsole(
         context, Provider.of<VmCache>(context, listen: false).detailsVM.links[0].href);
     // Enable hybrid composition.
-    if (Platform.isAndroid) WebView.platform = SurfaceAndroidWebView();
+    if (Platform.isAndroid) {
+      WebView.platform = SurfaceAndroidWebView();
+      WebView.platform.clearCookies();
+    }
   }
 
   @override
@@ -44,7 +47,10 @@ class _WebViewConsoleState extends State<WebViewConsole> {
                 return WebView(
 
                   initialUrl: data,
-                  //initialUrl: "https://www.google.it",
+                  //initialUrl: "https://www.youtube.it",
+                  initialMediaPlaybackPolicy: AutoMediaPlaybackPolicy.always_allow,
+                  javascriptMode: JavascriptMode.unrestricted,
+                  allowsInlineMediaPlayback: true,
                 );
 
               }
