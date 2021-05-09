@@ -2,6 +2,7 @@ import 'package:app_sangfor/api/api_call/listVM_apicall.dart';
 import 'package:app_sangfor/api/json_models/listVM/listVM.dart';
 import 'package:app_sangfor/cache/Vm_Cache.dart';
 import 'package:app_sangfor/widgets/reusable_widgets/drawer_menu.dart';
+import 'package:app_sangfor/widgets/widget_VM/barchart_performance.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -55,36 +56,60 @@ class _VMPageState extends State<VMPage> {
                   separatorBuilder: (BuildContext context, int index) =>
                       const Divider(),
                   itemBuilder: (context, index) {
-                    return Container(
-                        height: 100,
-                        color: Colors.blueGrey,
-                        child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceAround,
-                            children: [
-                              Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    ElevatedButton(
-                                        onPressed: () {
-                                          value.detailsVM= data.servers[index];
-                                          Navigator.of(context).pushNamed(RouteGenerator.webViewConsole);
-                                        },
-                                        child: Text("Console")),
-                                    ElevatedButton(
-                                        onPressed: () {
-                                          value.detailsVM= data.servers[index];
-                                          Navigator.of(context).pushNamed(RouteGenerator.VMMoreAbout);
-                                        },
-                                        child: Text("More"))
-                                  ]),
-                              Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Text(
-                                        "Name VM: ${data.servers[index].name} \n"
-                                        "Status: ${data.servers[index].status}")
-                                  ])
-                            ]));
+                    return Card(
+                        color: Colors.white,
+                        child: Column(children: [
+                          Padding(
+                              padding: const EdgeInsets.all(8),
+                              child: Center(
+                                  child: Text(
+                                data.servers[index].name.toUpperCase(),
+                                style: TextStyle(
+                                    fontWeight: FontWeight.bold, fontSize: 15),
+                              ))),
+                          const Divider(
+                            height: 1,
+                            color: Colors.grey,
+                          ),
+                          Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceAround,
+                              children: [
+                                Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      OutlinedButton(
+                                          onPressed: () {
+                                            value.detailsVM =
+                                                data.servers[index];
+                                            Navigator.of(context).pushNamed(
+                                                RouteGenerator.webViewConsole);
+                                          },
+                                          child: Text("Console")),
+                                      OutlinedButton(
+                                          onPressed: () {
+                                            value.detailsVM =
+                                                data.servers[index];
+                                            Navigator.of(context).pushNamed(
+                                                RouteGenerator.VMMoreAbout);
+                                          },
+                                          child: Text("More"))
+                                    ]),
+
+                                      Column(children:[Expanded(child:BarChartSample1())]),
+                              ]),
+                          const Divider(
+                            height: 1,
+                            color: Colors.grey,
+                          ),
+                          Padding(
+                              padding: const EdgeInsets.all(8),
+                              child: Center(
+                                  child: Text(
+                                data.servers[index].status,
+                                style: TextStyle(
+                                    fontWeight: FontWeight.bold, fontSize: 15, color: Colors.green ),
+                              ))),
+                        ]));
                   },
                 );
               }

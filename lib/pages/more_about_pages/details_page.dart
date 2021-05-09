@@ -34,6 +34,7 @@ class _DetailsState extends State<DetailsPage> {
     var subnetNames = subnetMap.keys.toList();
     int indexNIC = 1;
 
+  //defining static details model
     details.add(DetailsModel(
         title: "Hardware Configuration",
         images: [
@@ -51,6 +52,8 @@ class _DetailsState extends State<DetailsPage> {
           DetailsItem(key: "Status", value: detailsVM.status.toLowerCase())
         ]));
 
+
+    //Defining variable details model (you could install more NICS)
     for (int i = 0; i < subnetNames.length; i++) {
       var subnetValues = subnetMap[subnetNames[i]].toList() as List<dynamic>;
       List<dynamic> values = [];
@@ -80,9 +83,9 @@ class _DetailsState extends State<DetailsPage> {
       }
     }
 
+    //add a bonus model to have pair number of InfoCard
     if (indexNIC - 1 % 2 != 0)
-      details
-          .add(DetailsModel(title: "---", id: "-",items: []));
+      details.add(DetailsModel(title: "---", id: "-",items: []));
 
     return details;
   }
@@ -96,10 +99,6 @@ class _DetailsState extends State<DetailsPage> {
             if (snapshot.hasData && snapshot.connectionState == ConnectionState.done) {
               var data = snapshot.data;
               var details = loadDetailsModel(value.detailsVM,data!);
-              List<InfoCard> infoCard = [];
-
-              for (int i = 2; i < details.length; i++)
-                infoCard.add(InfoCard(model: details[i]));
 
               return Column(
                   children: [
@@ -111,12 +110,11 @@ class _DetailsState extends State<DetailsPage> {
                     crossAxisCount: 2,
                     childAspectRatio: 3.2,
                     crossAxisSpacing: 14,
-                    children: infoCard,
+                    children:[  for (int i = 2; i < details.length; i++) InfoCard(model: details[i])],
                   )) : Container(),
                 DetailsCard(model: details[1]),
               ]);
             }
-
 
             if (snapshot.hasError &&
                 snapshot.connectionState == ConnectionState.done) {

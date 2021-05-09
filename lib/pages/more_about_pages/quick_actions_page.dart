@@ -23,17 +23,22 @@ class _QuickActionsState extends State<QuickActionsPage> {
           ),
           Row(children: [
             Expanded(
-                child: ElevatedButton(
-                    onPressed: () =>
-                        quickActionApiCall.powerOn(context, value.detailsVM.id),
-                    child: Text("Power On")))
+                child: Padding(
+                    padding: const EdgeInsets.fromLTRB(20,0,20,0),
+                    child: ElevatedButton(
+                        onPressed: () => quickActionApiCall.powerOn(
+                            context, value.detailsVM.id),
+                        child: Row (mainAxisAlignment: MainAxisAlignment.center,children: [Icon(Icons.power_outlined),Text("Power ON")]))))
           ]),
           Row(children: [
             Expanded(
-                child: ElevatedButton(
-                    onPressed: () =>
-                        quickActionApiCall.powerOff(context, value.detailsVM.id),
-                    child: Text("Power Off")))
+                child: Padding(
+                    padding: const EdgeInsets.fromLTRB(20,0,20,0),
+                    child: ElevatedButton(
+                      onPressed: () => quickActionApiCall.powerOff(
+                          context, value.detailsVM.id),
+                      child: Row (mainAxisAlignment: MainAxisAlignment.center,children: [Icon(Icons.power_off_outlined),Text("Power OFF")]),
+                    )))
           ]),
         ]),
       );
