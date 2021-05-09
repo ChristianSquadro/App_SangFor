@@ -20,7 +20,7 @@ class InfoCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: (model.showHero==true) ? () {
+      onTap: () {
         Navigator.of(context).push(
           HeroDialogRoute(
             builder: (context) => Center(
@@ -28,7 +28,7 @@ class InfoCard extends StatelessWidget {
             ),
           ),
         );
-      } : () {},
+      },
       child: Hero(
         createRectTween: (begin, end) {
           return CustomRectTween(begin: begin!, end: end!);
@@ -46,11 +46,7 @@ class InfoCard extends StatelessWidget {
                   _InfoTitle(title: model.title),
                   const SizedBox(
                     height: 8,
-                  ),
-                  if (model.showHero == false)...[
-                    const Divider(),
-                    _InfoItemsBox(items: model.items),
-                  ]
+                  )
                 ],
               ),
             ),
@@ -145,7 +141,7 @@ class _InfoItemsBox extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        for (final item in items) Text(item.key+": "+item.value, style: TextStyle(color: Colors.white),),
+        for (final item in items) Text(item.key.toUpperCase()+": "+item.value, style: TextStyle(color: Colors.white, fontSize: 15),),
       ],
     );
   }

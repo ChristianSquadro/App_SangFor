@@ -9,16 +9,16 @@ class FlavorVM_ApiCall {
   const FlavorVM_ApiCall();
 
   /// Login with usernamne and password
-  Future<FlavorVM?> loadFlavorVM (String ipServer,String tenant,String username, String password,BuildContext context) async
+  Future<FlavorVM> loadFlavorVM (String idFlavor,BuildContext context) async
   {
-    var requestHTTP=DataConnection.createRequestREST("/compute/v2/flavors/detail/",true);
+    var requestHTTP=DataConnection.createRequestREST("/compute/v2/flavors/$idFlavor",true);
     try {
       var response = await requestHTTP.executeGet<FlavorVM>(const FlavorVMParser());
       return response;
     } on DioError catch(e)
     {
       showErrorDialog(context,e.message);
-      return null;// it's null if the requestHTTP doesn't go well
+      return Future.error(e);// it's null if the requestHTTP doesn't go well
     }
   }
 

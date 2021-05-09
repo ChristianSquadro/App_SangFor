@@ -30,6 +30,7 @@ Servers _$ServersFromJson(Map<String, dynamic> json) {
         .map((e) => Links.fromJson(e as Map<String, dynamic>))
         .toList(),
     json['addresses'],
+    Flavor.fromJson(json['flavor'] as Map<String, dynamic>),
   );
 }
 
@@ -42,6 +43,7 @@ Map<String, dynamic> _$ServersToJson(Servers instance) => <String, dynamic>{
       'updated': instance.updated,
       'links': instance.links.map((e) => e.toJson()).toList(),
       'addresses': instance.addresses,
+      'flavor': instance.flavor.toJson(),
     };
 
 Links _$LinksFromJson(Map<String, dynamic> json) {
@@ -54,4 +56,14 @@ Links _$LinksFromJson(Map<String, dynamic> json) {
 Map<String, dynamic> _$LinksToJson(Links instance) => <String, dynamic>{
       'href': instance.href,
       'rel': instance.rel,
+    };
+
+Flavor _$FlavorFromJson(Map<String, dynamic> json) {
+  return Flavor(
+    json['id'] as String,
+  );
+}
+
+Map<String, dynamic> _$FlavorToJson(Flavor instance) => <String, dynamic>{
+      'id': instance.id,
     };

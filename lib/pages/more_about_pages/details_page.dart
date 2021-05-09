@@ -1,14 +1,34 @@
+import 'package:app_sangfor/api/api_call/flavorVM_apicall.dart';
+import 'package:app_sangfor/api/json_models/flavorVM/flavorVM.dart';
 import 'package:app_sangfor/api/json_models/listVM/listVM.dart';
 import 'package:app_sangfor/cache/Vm_Cache.dart';
 import 'package:app_sangfor/models/details_model.dart';
+import 'package:app_sangfor/widgets/widget_details/details_card.dart';
+import 'package:app_sangfor/widgets/widget_details/images_card.dart';
 import 'package:app_sangfor/widgets/widget_details/popup_card.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class DetailsPage extends StatelessWidget {
+class DetailsPage extends StatefulWidget {
   const DetailsPage();
 
-  List<DetailsModel> loadDetailsModel(Servers detailsVM) {
+  @override
+  _DetailsState createState() => _DetailsState();
+}
+
+class _DetailsState extends State<DetailsPage> {
+  FlavorVM_ApiCall flavorVM_ApiCall = FlavorVM_ApiCall();
+  late Future<FlavorVM> flavorVM;
+
+  @override
+  void initState() {
+    super.initState();
+    flavorVM = flavorVM_ApiCall.loadFlavorVM(
+        Provider.of<VmCache>(context, listen: false).detailsVM.flavor.id,
+        context);
+  }
+
+  List<DetailsModel> loadDetailsModel(Servers detailsVM,FlavorVM data) {
     List<DetailsModel> details = [];
     var subnetMap = detailsVM.addresses as Map;
     var subnetNames = subnetMap.keys.toList();
@@ -16,19 +36,19 @@ class DetailsPage extends StatelessWidget {
 
     details.add(DetailsModel(
         title: "Hardware Configuration",
-        id: "Hardware Configuration",
-        showHero: false,
-        items: []));
+        images: [
+          DetailsImage(pathImage: "assets/cpu.png", value: data.flavor.vcpus.toString()+" Core(s)"),
+          DetailsImage(pathImage: "assets/ram.png", value: data.flavor.ram.toString()+" MB"),
+          DetailsImage(pathImage: "assets/disk.png", value: data.flavor.disk.toString()+" GB"),
+        ]));
 
     details.add(DetailsModel(
         title: "Other Information",
-        id: "Other Information",
-        showHero: false,
         items: [
           DetailsItem(key: "Resource Pool", value: detailsVM.availability_zone),
-          DetailsItem(key: "Created", value: detailsVM.created),
-          DetailsItem(key: "Updated", value: detailsVM.updated),
-          DetailsItem(key: "Status", value: detailsVM.status)
+          DetailsItem(key: "Created", value: detailsVM.created.replaceAll(RegExp(".000000"), "").replaceAll("T", " ")),
+          DetailsItem(key: "Updated", value: detailsVM.updated.replaceAll(RegExp(".000000"), "").replaceAll("T", " ")),
+          DetailsItem(key: "Status", value: detailsVM.status.toLowerCase())
         ]));
 
     for (int i = 0; i < subnetNames.length; i++) {
@@ -55,18 +75,14 @@ class DetailsPage extends StatelessWidget {
         details.add(DetailsModel(
             title: "NIC $indexNIC",
             id: "NIC$indexNIC",
-            showHero: true,
             items: detailsItems));
         indexNIC++;
       }
     }
 
-    if (indexNIC -1 % 2 != 0)
-      details.add(DetailsModel(
-          title: "---",
-          id: "-",
-          showHero: true,
-          items: []));
+    if (indexNIC - 1 % 2 != 0)
+      details
+          .add(DetailsModel(title: "---", id: "-",items: []));
 
     return details;
   }
@@ -74,28 +90,43 @@ class DetailsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(body: Consumer<VmCache>(builder: (_, value, __) {
-      var details = loadDetailsModel(value.detailsVM);
-      List<InfoCard> infoCard = [];
+      return FutureBuilder<FlavorVM>(
+          future: flavorVM,
+          builder: (context, snapshot) {
+            if (snapshot.hasData && snapshot.connectionState == ConnectionState.done) {
+              var data = snapshot.data;
+              var details = loadDetailsModel(value.detailsVM,data!);
+              List<InfoCard> infoCard = [];
 
-      for (int i = 2; i < details.length; i++)
-        infoCard.add(InfoCard(model: details[i]));
+              for (int i = 2; i < details.length; i++)
+                infoCard.add(InfoCard(model: details[i]));
 
-      return
-        Column(
-          children: [
-        InfoCard(model: details[0]),
-        Flexible(
-          child: GridView.count(
-            shrinkWrap: true,
-            physics: NeverScrollableScrollPhysics(),
-            crossAxisCount: 2,
-            childAspectRatio: 3.2,
-            crossAxisSpacing: 14,
-            children: infoCard,
-          ),
-        ),
-        InfoCard(model: details[1]),
-      ]);
+              return Column(
+                  children: [
+                ImagesCard(model: details[0]),
+                (details.length > 2) ? Flexible(
+                  child: GridView.count(
+                    shrinkWrap: true,
+                    physics: NeverScrollableScrollPhysics(),
+                    crossAxisCount: 2,
+                    childAspectRatio: 3.2,
+                    crossAxisSpacing: 14,
+                    children: infoCard,
+                  )) : Container(),
+                DetailsCard(model: details[1]),
+              ]);
+            }
+
+
+            if (snapshot.hasError &&
+                snapshot.connectionState == ConnectionState.done) {
+              return Center(child: Text("No Data!"));
+            }
+
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
+          });
     }));
   }
 }

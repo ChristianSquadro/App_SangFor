@@ -16,7 +16,6 @@ class _WebViewConsoleState extends State<WebViewConsole> {
   final listVMApiCall = ListVM_ApiCall();
   late Future<String> url;
   bool isLoading = true;
-  final key=UniqueKey();
 
   @override
   void initState() {
@@ -46,21 +45,21 @@ class _WebViewConsoleState extends State<WebViewConsole> {
                 data = data!.replaceFirst("192.168.3.140", "scp.sicloud.org");
                 print(data);
 
-                return WebView(
-                    key:key,
+                return Stack(children: [
+                  WebView(
                     initialUrl: data,
-                    //initialUrl: "https://www.youtube.it",
-                    initialMediaPlaybackPolicy:
-                        AutoMediaPlaybackPolicy.always_allow,
+                    initialMediaPlaybackPolicy: AutoMediaPlaybackPolicy.always_allow,
                     javascriptMode: JavascriptMode.unrestricted,
                     allowsInlineMediaPlayback: true,
+                    gestureNavigationEnabled: true,
                     onPageFinished: (finish) {
                       setState(() {
                         isLoading = false;
                       });
                     },
-                  );
-                  //isLoading ? Center(child: CircularProgressIndicator(),) : Stack(),;
+                  ),
+                  isLoading ? Center(child: CircularProgressIndicator(),) : Stack()
+                ]);
               }
               if (snapshot.hasError &&
                   snapshot.connectionState == ConnectionState.done) {

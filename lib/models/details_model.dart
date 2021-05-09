@@ -7,10 +7,10 @@ import 'package:meta/meta.dart';
 class DetailsModel {
   /// {@macro todo}
   const DetailsModel({
-    required this.id,
+    this.id="",
     required this.title,
-    required this.showHero,
-    required this.items,
+    this.items= const [],
+    this.images=const []
   });
 
   /// The id of this todo.
@@ -18,10 +18,10 @@ class DetailsModel {
 
   final String title;
 
-  final bool showHero;
-
   /// A list of [DetailsItem]s for sub-todos.
   final List<DetailsItem> items;
+
+  final List<DetailsImage> images;
 }
 
 /// {@template item}
@@ -36,6 +36,24 @@ class DetailsItem {
 
   /// The id of this item.
   final String key;
+
+  /// Description of this item.
+  final String value;
+
+}
+
+/// {@template item}
+/// An individual item model, used within a [DetailsModel].
+/// {@endtemplate}
+class DetailsImage {
+  /// {@macro item}
+  DetailsImage({
+    required this.pathImage,
+    required this.value,
+  });
+
+  /// The id of this item.
+  final String pathImage;
 
   /// Description of this item.
   final String value;
