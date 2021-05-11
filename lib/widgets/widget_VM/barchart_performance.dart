@@ -3,50 +3,45 @@ import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 
 class BarChartSample1 extends StatefulWidget {
-  final List<Color> availableColors = [
-    Colors.purpleAccent,
-    Colors.yellow,
-    Colors.lightBlue,
-    Colors.orange,
-    Colors.pink,
-    Colors.redAccent,
-  ];
 
   @override
   State<StatefulWidget> createState() => BarChartSample1State();
 }
 
 class BarChartSample1State extends State<BarChartSample1> {
-  final Color barBackgroundColor = const Color(0xff72d8bf);
+  final Color barBackgroundColor = Colors.lightBlue;
   final Duration animDuration = const Duration(milliseconds: 250);
 
-  int touchedIndex=-1;
-
+  int touchedIndex = -1;
 
   @override
   Widget build(BuildContext context) {
     return AspectRatio(
-      aspectRatio: 4,
-      child: BarChart(
-                mainBarData(),
-              ),
-            );
+        aspectRatio: 2.5,
+        child: Column(
+            children: <Widget>[
+              Expanded(
+                child: BarChart(
+                  mainBarData(),
+                ),
+              )
+            ]));
   }
 
   BarChartGroupData makeGroupData(
-      int x,
-      double y, {
-        bool isTouched = false,
-        Color barColor = Colors.yellow,
-        double width = 22,
-        List<int> showTooltips = const [],
-      }) {
+    int x,
+    double y, {
+    bool isTouched = false,
+    Color barColor = const Color(0xff02d05f),
+    double width = 22,
+    List<int> showTooltips = const [],
+  }) {
     return BarChartGroupData(
       x: x,
       barRods: [
         BarChartRodData(
           y: isTouched ? y + 1 : y,
-          colors: isTouched ? [Colors.yellow] : [barColor],
+          colors: isTouched ? [Colors.purpleAccent] : [barColor],
           width: width,
           backDrawRodData: BackgroundBarChartRodData(
             show: true,
@@ -60,28 +55,29 @@ class BarChartSample1State extends State<BarChartSample1> {
   }
 
   List<BarChartGroupData> showingGroups() => List.generate(3, (i) {
-    switch (i) {
-      case 0:
-        return makeGroupData(0, 5, isTouched: i == touchedIndex);
-      case 1:
-        return makeGroupData(1, 6.5, isTouched: i == touchedIndex);
-      case 2:
-        return makeGroupData(2, 5, isTouched: i == touchedIndex);
-      case 3:
-        return makeGroupData(3, 7.5, isTouched: i == touchedIndex);
-      default:
-        throw ArgumentError('Unexpected type for data');
-    }
-  });
+        switch (i) {
+          case 0:
+            return makeGroupData(0, 5, isTouched: i == touchedIndex);
+          case 1:
+            return makeGroupData(1, 6.5, isTouched: i == touchedIndex);
+          case 2:
+            return makeGroupData(2, 5, isTouched: i == touchedIndex);
+          case 3:
+            return makeGroupData(3, 7.5, isTouched: i == touchedIndex);
+          default:
+            throw ArgumentError('Unexpected type for data');
+        }
+      });
 
   BarChartData mainBarData() {
     return BarChartData(
       alignment: BarChartAlignment.center,
+      groupsSpace: 50,
       barTouchData: BarTouchData(
         touchTooltipData: BarTouchTooltipData(
             tooltipBgColor: Colors.blueGrey,
             getTooltipItem: (group, groupIndex, rod, rodIndex) {
-              String weekDay="";
+              String weekDay = "";
               switch (group.x.toInt()) {
                 case 0:
                   weekDay = 'Cpu';
@@ -96,7 +92,7 @@ class BarChartSample1State extends State<BarChartSample1> {
               return BarTooltipItem(
                 weekDay + '\n',
                 TextStyle(
-                  color: Colors.black,
+                  color: Colors.black54,
                   fontWeight: FontWeight.bold,
                   fontSize: 18,
                 ),
@@ -104,7 +100,7 @@ class BarChartSample1State extends State<BarChartSample1> {
                   TextSpan(
                     text: (rod.y - 1).toString(),
                     style: TextStyle(
-                      color: Colors.yellow,
+                      color: const Color(0xff02d38f),
                       fontSize: 16,
                       fontWeight: FontWeight.w500,
                     ),
@@ -127,16 +123,7 @@ class BarChartSample1State extends State<BarChartSample1> {
       titlesData: FlTitlesData(
         show: true,
         bottomTitles: SideTitles(
-          showTitles: true,
-          getTextStyles: (value) =>
-          const TextStyle(color: Colors.black, fontWeight: FontWeight.bold, fontSize: 14),
-          margin: 16,
-          getTitles: (double value) {
-            switch (value.toInt()) {
-              default:
-                return '';
-            }
-          },
+          showTitles: false,
         ),
         leftTitles: SideTitles(
           showTitles: false,
@@ -149,4 +136,3 @@ class BarChartSample1State extends State<BarChartSample1> {
     );
   }
 }
-
