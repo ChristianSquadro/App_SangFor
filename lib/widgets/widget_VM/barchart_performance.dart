@@ -1,31 +1,64 @@
+import 'package:app_sangfor/api/api_call/current_performance_apicall.dart';
+import 'package:app_sangfor/api/json_models/listVM/listVM.dart';
 import 'package:flutter/gestures.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 
-class BarChartSample1 extends StatefulWidget {
+class BarPerformance extends StatefulWidget {
+  final Servers vm;
+
+  const BarPerformance(this.vm);
 
   @override
-  State<StatefulWidget> createState() => BarChartSample1State();
+  BarPerformanceState createState() => BarPerformanceState(vm);
 }
 
-class BarChartSample1State extends State<BarChartSample1> {
+class BarPerformanceState extends State<BarPerformance> {
   final Color barBackgroundColor = Colors.lightBlue;
   final Duration animDuration = const Duration(milliseconds: 250);
-
   int touchedIndex = -1;
+  late Future<List<dynamic>> _currentPerformance;
+  final Servers vm;
+  List<dynamic>? data;
+
+  BarPerformanceState(this.vm);
+
+  @override
+  void initState() {
+    super.initState();
+    var currentPerformanceApiCall=CurrentPerformanceApiCall();
+    _currentPerformance=currentPerformanceApiCall.getPerformanceUtilisation(context, vm.id);
+  }
 
   @override
   Widget build(BuildContext context) {
-    return AspectRatio(
-        aspectRatio: 2.5,
-        child: Column(
-            children: <Widget>[
-              Expanded(
-                child: BarChart(
-                  mainBarData(),
-                ),
-              )
-            ]));
+    return FutureBuilder<List<dynamic>>(
+        future: _currentPerformance,
+        builder: (context, snapshot) {
+      //adding connectionState i'm sure when i press the refresh button to show the circular progress bar
+      // because after set state the hasData and hasError aren't reset until the response is back
+      if (snapshot.hasData && snapshot.connectionState == ConnectionState.done) {
+         data = snapshot.data;
+
+        return AspectRatio(
+            aspectRatio: 3.4,
+            child: Column(
+                children: <Widget>[
+                  Expanded(
+                    child: BarChart(
+                      mainBarData(),
+                    ),
+                  )
+                ]));
+      }
+
+      if (snapshot.hasError &&
+          snapshot.connectionState == ConnectionState.done) {
+        return Center(child: Text("No Data!"));
+      }
+
+      return Container(height: 114,child: const Center(child:CircularProgressIndicator()));
+    });
   }
 
   BarChartGroupData makeGroupData(
@@ -57,11 +90,14 @@ class BarChartSample1State extends State<BarChartSample1> {
   List<BarChartGroupData> showingGroups() => List.generate(3, (i) {
         switch (i) {
           case 0:
-            return makeGroupData(0, 5, isTouched: i == touchedIndex);
+            var tmp=data![0][59][2] as num;
+            return makeGroupData(0, tmp.roundToDouble() , isTouched: i == touchedIndex);
           case 1:
-            return makeGroupData(1, 6.5, isTouched: i == touchedIndex);
+            var tmp=data![1][59][2] as num;
+            return makeGroupData(1, tmp.roundToDouble(), isTouched: i == touchedIndex);
           case 2:
-            return makeGroupData(2, 5, isTouched: i == touchedIndex);
+            var tmp=data![2][59][2] as num;
+            return makeGroupData(2, tmp.roundToDouble(), isTouched: i == touchedIndex);
           case 3:
             return makeGroupData(3, 7.5, isTouched: i == touchedIndex);
           default:

@@ -47,10 +47,6 @@ class _ResourceTwoLineState extends State<ResourceTwoLineWidget> {
 
   void _loadFlSpot(List<dynamic> chart1, List<dynamic> chart2) {
     //move inside bloc
-    _coordinates1=[];
-    _toolTips1=[];
-    _coordinates2=[];
-    _toolTips2=[];
     int length = (chart1.length > chart2.length) ? chart1.length : chart2.length;
     for (int i = 0; i < length; i++) {
       var percentageUtil1 = chart1[i][2] as num;

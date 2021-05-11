@@ -27,8 +27,6 @@ class _ResourceOneLineState extends State<ResourceOneLineWidget> {
 
   void _loadFlSpot(List<dynamic> chart) {
     //move inside bloc
-    _coordinates=[];
-    _toolTips=[];
     for (int i = 0; i < chart.length; i++) {
        var percentageUtil=chart[i][2] as num;
        var dateUtil=chart[i][0] as String;

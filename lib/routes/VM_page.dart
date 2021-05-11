@@ -1,3 +1,4 @@
+import 'package:app_sangfor/api/api_call/current_performance_apicall.dart';
 import 'package:app_sangfor/api/api_call/listVM_apicall.dart';
 import 'package:app_sangfor/api/json_models/listVM/listVM.dart';
 import 'package:app_sangfor/cache/Vm_Cache.dart';
@@ -54,8 +55,7 @@ class _VMPageState extends State<VMPage> {
                 return ListView.separated(
                   itemCount: data!.servers.length,
                   padding: const EdgeInsets.all(8),
-                  separatorBuilder: (BuildContext context, int index) =>
-                      const Divider(),
+                  separatorBuilder: (BuildContext context, int index) => const Divider(),
                   itemBuilder: (context, index) {
                     return Card(
                         color: AppColors.cardColor,
@@ -81,7 +81,7 @@ class _VMPageState extends State<VMPage> {
                                   children: [
                                     Positioned(
                                         left: 40,
-                                        top: 50,
+                                        top: 25,
                                         child: Column(
                                             mainAxisSize: MainAxisSize.min,
                                             mainAxisAlignment:
@@ -112,7 +112,7 @@ class _VMPageState extends State<VMPage> {
                                     Align(
                                         heightFactor: 1.1,
                                         widthFactor: 0.65,
-                                        child: BarChartSample1()),
+                                        child: BarPerformance(data.servers[index])),
                                   ]),
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.end,
