@@ -31,7 +31,18 @@ class _WebViewConsoleState extends State<WebViewConsole> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: new AppBar(title: new Text("Console")),
+        appBar: new AppBar(
+            title: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text("Console"),
+            Text(Provider.of<VmCache>(context, listen: false).detailsVM.name,
+                style: new TextStyle(
+                  fontSize: 16.0,
+                  color: Colors.white,
+                ))
+          ],
+        )),
         body: FutureBuilder<String>(
             future: url,
             builder: (context, snapshot) {
@@ -47,7 +58,8 @@ class _WebViewConsoleState extends State<WebViewConsole> {
                 return Stack(children: [
                   WebView(
                     initialUrl: data,
-                    initialMediaPlaybackPolicy: AutoMediaPlaybackPolicy.always_allow,
+                    initialMediaPlaybackPolicy:
+                        AutoMediaPlaybackPolicy.always_allow,
                     javascriptMode: JavascriptMode.unrestricted,
                     allowsInlineMediaPlayback: true,
                     gestureNavigationEnabled: true,
@@ -57,7 +69,11 @@ class _WebViewConsoleState extends State<WebViewConsole> {
                       });
                     },
                   ),
-                  isLoading ? Center(child: CircularProgressIndicator(),) : Stack()
+                  isLoading
+                      ? Center(
+                          child: CircularProgressIndicator(),
+                        )
+                      : Stack()
                 ]);
               }
               if (snapshot.hasError &&

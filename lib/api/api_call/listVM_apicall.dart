@@ -11,10 +11,9 @@ class ListVM_ApiCall {
   const ListVM_ApiCall();
 
   Future<ListVM> loadVM(BuildContext context) async {
-    var requestHTTP =
-        DataConnection.createRequestREST("/compute/v2/servers/detail", true);
     try {
-      var response = requestHTTP.executeGet<ListVM>(const ListVMParser());
+      var requestHTTP = await DataConnection.createRequestREST("/compute/v2/servers/detail", true);
+      var response = requestHTTP!.executeGet<ListVM>(const ListVMParser());
       return response;
     } on DioError catch (e) {
       showErrorDialog(context,e);
@@ -30,11 +29,9 @@ class ListVM_ApiCall {
         }
       };
 
-    var requestHTTP =
-    DataConnection.createRequestREST("${linkVM}/action",true,objectJSON);
-
     try {
-      var response = await requestHTTP.executePost<UrlConsole>(const UrlConsoleParser());
+      var requestHTTP = await DataConnection.createRequestREST("${linkVM}/action",true,objectJSON);
+      var response = await requestHTTP!.executePost<UrlConsole>(const UrlConsoleParser());
       return response.console.url;
     } on DioError catch (e) {
       showErrorDialog(context,e);

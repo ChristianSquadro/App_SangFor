@@ -9,10 +9,9 @@ class DashBoard_ApiCall {
   const DashBoard_ApiCall();
 
   Future<List<double>> loadDashBoard(BuildContext context) async {
-    var requestHTTP =
-    DataConnection.createRequestREST("/compute/v2/servers/detail", true);
     try {
-      var response = await requestHTTP.executeGet<ListVM>(const ListVMParser());
+      var requestHTTP = await DataConnection.createRequestREST("/compute/v2/servers/detail", true);
+      var response = await requestHTTP!.executeGet<ListVM>(const ListVMParser());
       var listStatusVM=_countStatusVM(response);
       return listStatusVM;
     } on DioError catch (e) {

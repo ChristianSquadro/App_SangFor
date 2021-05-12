@@ -1,6 +1,8 @@
 import 'dart:convert';
 import 'dart:io';
 import 'package:app_sangfor/api/http_client.dart';
+import 'package:app_sangfor/api/json_models/login/login.dart';
+import 'package:app_sangfor/api/json_parsers/loginParser/login_parser.dart';
 import 'package:dio/adapter.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
@@ -40,7 +42,7 @@ class DataConnection {
     ));
 
 
-    //accept the HTTP certification
+    //ignore the HTTP certification
     (dio.httpClientAdapter as DefaultHttpClientAdapter).onHttpClientCreate =
         (HttpClient client) {
       client.badCertificateCallback =
@@ -65,11 +67,28 @@ class DataConnection {
         client: dio, endpoint: resource_path, data: jsonEncode(objectJSON));
   }
 
-  static RequestREST createRequestREST(String resource_path,bool headerToken,[objectJSON]) {
+  static Future<RequestREST?> createRequestREST(String resource_path,bool headerToken,[objectJSON]) async {
     var dio=_createDio(resource_path,headerToken);
+    RequestREST? requestREST;
 
-    return RequestREST(
-        client: dio, endpoint: resource_path, data: jsonEncode(objectJSON ?? <String,String> {}));
+    try {
+       requestREST= RequestREST(
+          client: dio,
+          endpoint: resource_path,
+          data: jsonEncode(objectJSON ?? <String, String>{}));
+    } on DioError catch (e)
+    {
+        if (e.response!.statusCode==401) {
+           var requestToken=createFirstRequestREST(
+              "/identity/v2.0/tokens", false);
+           var response = await requestToken.executePost<Login>(const LoginParser());
+          token = response.access.token.id;
+        }
+        else
+          rethrow;
+    }
+
+    return requestREST;
   }
 
   static Future<void> storageWrite () async {

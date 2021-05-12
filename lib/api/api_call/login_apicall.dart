@@ -15,7 +15,7 @@ class Login_ApiCall {
   Future<bool> authenticate(String ipServer,String tenant,String username, String password,BuildContext context) async
   {
     DataConnection.modifyDataConnection(IpAddress: ipServer,Tenant: tenant,Username: username,Password: password);
-    var requestHTTP=DataConnection.createFirstRequestREST("/identity/v2.0/tokens",true);
+    var requestHTTP=DataConnection.createFirstRequestREST("/identity/v2.0/tokens",false);
     try {
       var response = await requestHTTP.executePost<Login>(const LoginParser());
       DataConnection.modifyDataConnection(Token:response.access.token.id);

@@ -2,7 +2,7 @@ import 'package:json_annotation/json_annotation.dart';
 
 part 'Empty.g.dart';
 
-@JsonSerializable()
+@JsonSerializable(nullable: true)
 class Empty {
   const Empty();
 

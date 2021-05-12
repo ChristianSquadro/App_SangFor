@@ -27,7 +27,19 @@ class _VMPageState extends State<VMPage> {
     _listVM = listVM_ApiCall.loadVM(context);
   }
 
-//you have to transfer this method in WebView_Page
+  MaterialColor _changeColor (String statusVM)
+  {
+    switch (statusVM) {
+      case "ACTIVE":
+        return Colors.green;
+      case "SHUTOFF":
+        return Colors.red;
+      case "SUSPENDED":
+        return Colors.orange;
+      default:
+        return Colors.blue;
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -150,7 +162,7 @@ class _VMPageState extends State<VMPage> {
                                     style: TextStyle(
                                         fontWeight: FontWeight.bold,
                                         fontSize: 15,
-                                        color: Colors.green),
+                                        color: _changeColor(data.servers[index].status)),
                                   ))),
                             ]));
                   },
