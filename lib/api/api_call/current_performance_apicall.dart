@@ -11,9 +11,9 @@ class CurrentPerformanceApiCall {
     List<dynamic> responses=[];
 
     try {
-      var requestHTTP1 = await DataConnection.createRequestREST("/metric/v1/resource/generic/$idServer/metric/cpu_util/measures", true);
-      var requestHTTP2 = await DataConnection.createRequestREST("/metric/v1/resource/generic/$idServer/metric/memory_util/measures", true);
-      var requestHTTP3 = await DataConnection.createRequestREST("/metric/v1/resource/generic/$idServer/metric/disk_util/measures",true);
+      var requestHTTP1 = await DataConnection.createRequestREST("/metric/v1/resource/generic/$idServer/metric/cpu_util/measures", true,true);
+      var requestHTTP2 = await DataConnection.createRequestREST("/metric/v1/resource/generic/$idServer/metric/memory_util/measures", true,true);
+      var requestHTTP3 = await DataConnection.createRequestREST("/metric/v1/resource/generic/$idServer/metric/disk_util/measures",true,true);
       responses.add(await requestHTTP1!.executeGet<List<dynamic>>(const PerformanceVMParser()));
       responses.add(await requestHTTP2!.executeGet<List<dynamic>>(const PerformanceVMParser()));
       responses.add(await requestHTTP3!.executeGet<List<dynamic>>(const PerformanceVMParser()));

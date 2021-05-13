@@ -12,7 +12,7 @@ class FlavorVM_ApiCall {
   Future<FlavorVM> loadFlavorVM (String idFlavor,BuildContext context) async
   {
     try {
-      var requestHTTP=await DataConnection.createRequestREST("/compute/v2/flavors/$idFlavor",true);
+      var requestHTTP=await DataConnection.createRequestREST("/compute/v2/flavors/$idFlavor",true,true);
       var response = await requestHTTP!.executeGet<FlavorVM>(const FlavorVMParser());
       return response;
     } on DioError catch(e)

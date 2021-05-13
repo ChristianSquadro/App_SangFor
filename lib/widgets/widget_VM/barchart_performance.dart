@@ -78,7 +78,7 @@ class BarPerformanceState extends State<BarPerformance> {
           width: width,
           backDrawRodData: BackgroundBarChartRodData(
             show: true,
-            y: 20,
+            y: 100,
             colors: [barBackgroundColor],
           ),
         ),
@@ -98,8 +98,6 @@ class BarPerformanceState extends State<BarPerformance> {
           case 2:
             var tmp=data![2][59][2] as num;
             return makeGroupData(2, tmp.roundToDouble(), isTouched: i == touchedIndex);
-          case 3:
-            return makeGroupData(3, 7.5, isTouched: i == touchedIndex);
           default:
             throw ArgumentError('Unexpected type for data');
         }
@@ -109,6 +107,8 @@ class BarPerformanceState extends State<BarPerformance> {
     return BarChartData(
       alignment: BarChartAlignment.center,
       groupsSpace: 50,
+      minY: 0,
+      maxY: 100,
       barTouchData: BarTouchData(
         touchTooltipData: BarTouchTooltipData(
             tooltipBgColor: Colors.blueGrey,
@@ -116,13 +116,13 @@ class BarPerformanceState extends State<BarPerformance> {
               String weekDay = "";
               switch (group.x.toInt()) {
                 case 0:
-                  weekDay = 'Cpu';
+                  weekDay = 'Cpu %';
                   break;
                 case 1:
-                  weekDay = 'Ram';
+                  weekDay = 'Ram %';
                   break;
                 case 2:
-                  weekDay = 'Disk';
+                  weekDay = 'Disk %';
                   break;
               }
               return BarTooltipItem(

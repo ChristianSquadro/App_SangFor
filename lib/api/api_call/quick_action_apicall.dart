@@ -15,7 +15,7 @@ class QuickActions_ApiCall {
     };
     try {
       var requestHTTP = await DataConnection.createRequestREST("/compute/v2/servers/$idServer/action", true,objectJSON);
-      await requestHTTP!.executePost<Empty>(const EmptyParser());
+      await requestHTTP!.executePost<Empty>(const EmptyParser(),expectedResponse: false);
       return Future<bool>.value(true);
     } on DioError catch (e) {
       showErrorDialog(context, e);
@@ -30,7 +30,7 @@ class QuickActions_ApiCall {
     };
     try {
       var requestHTTP = await DataConnection.createRequestREST("/compute/v2/servers/$idServer/action", true,objectJSON);
-      await requestHTTP!.executePost<Empty>(const EmptyParser());
+      await requestHTTP!.executePost<Empty>(const EmptyParser(),expectedResponse: false);
       return Future<bool>.value(true);
     } on DioError catch (e) {
       showErrorDialog(context, e);

@@ -12,24 +12,24 @@ class RequestREST {
       required this.data
       });
 
-  Future<T> executeGet<T>(JsonParser<T> parser) async {
+  Future<T> executeGet<T>(JsonParser<T> parser,{bool expectedResponse=true}) async {
     try {
       final response = await client.get<String>(endpoint);
-      return await parser.parseFromJson(response.data!);
-    } on DioError catch (e) {
+      return await (expectedResponse) ? parser.parseFromJson(response.data!) : parser.parseFromJson("{\"empty\": \"empty\"}");
+    } on DioError{
       rethrow;
     }
   }
 
-  Future<T> executePost<T>(JsonParser<T> parser) async {
+  Future<T> executePost<T>(JsonParser<T> parser,{bool expectedResponse=true}) async {
     try {
       final formData = data;
       final response = await client.post<String>(
         endpoint,
         data: formData,
       );
-      return await parser.parseFromJson(response.data!);
-    } on DioError catch (e) {
+      return await (expectedResponse) ? parser.parseFromJson(response.data!) : parser.parseFromJson("{\"empty\": \"empty\"}");
+    } on DioError {
       rethrow;
     }
   }

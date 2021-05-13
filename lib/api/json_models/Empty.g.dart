@@ -7,7 +7,11 @@ part of 'Empty.dart';
 // **************************************************************************
 
 Empty _$EmptyFromJson(Map<String, dynamic> json) {
-  return Empty();
+  return Empty(
+    json['empty'] as String,
+  );
 }
 
-Map<String, dynamic> _$EmptyToJson(Empty instance) => <String, dynamic>{};
+Map<String, dynamic> _$EmptyToJson(Empty instance) => <String, dynamic>{
+      'empty': instance.empty,
+    };

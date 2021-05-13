@@ -33,16 +33,27 @@ class _WebViewConsoleState extends State<WebViewConsole> {
     return Scaffold(
         appBar: new AppBar(
             title: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text("Console"),
-            Text(Provider.of<VmCache>(context, listen: false).detailsVM.name,
-                style: new TextStyle(
-                  fontSize: 16.0,
-                  color: Colors.white,
-                ))
-          ],
-        )),
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text("Console"),
+                Text(
+                    Provider.of<VmCache>(context, listen: false).detailsVM.name,
+                    style: new TextStyle(
+                      fontSize: 16.0,
+                      color: Colors.white,
+                    ))
+              ],
+            ),
+            actions: <Widget>[
+              IconButton(
+                icon: Icon(Icons.refresh),
+                onPressed: () {
+                  url = listVMApiCall.loadConsole(context, Provider.of<VmCache>(context, listen: false).detailsVM.links[0].href);
+                  isLoading=true;
+                  setState(() => {});
+                },
+              )
+            ]),
         body: FutureBuilder<String>(
             future: url,
             builder: (context, snapshot) {

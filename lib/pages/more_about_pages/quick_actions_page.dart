@@ -11,7 +11,35 @@ class QuickActionsPage extends StatefulWidget {
 }
 
 class _QuickActionsState extends State<QuickActionsPage> {
+  bool isButtonPressed=false;
+
   QuickActions_ApiCall quickActionApiCall = QuickActions_ApiCall();
+
+  Function()? _buttonPressed (String buttonName)
+  {
+        switch (buttonName) {
+          case "PowerOn":
+            if(Provider.of<VmCache>(context, listen: false).detailsVM.status=="SHUTOFF" && !isButtonPressed)
+              return () {
+               quickActionApiCall.powerOn(context, Provider.of<VmCache>(context, listen: false).detailsVM.id);
+               setState(() => isButtonPressed=true);
+              };
+            else
+              return null;
+
+          case "PowerOff":
+            if(Provider.of<VmCache>(context, listen: false).detailsVM.status=="ACTIVE" && !isButtonPressed)
+              return () {
+              quickActionApiCall.powerOff(context, Provider.of<VmCache>(context, listen: false).detailsVM.id);
+              setState(() => isButtonPressed=true);
+            };
+            else
+              return null;
+
+          default:
+            return null;
+      }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -26,8 +54,7 @@ class _QuickActionsState extends State<QuickActionsPage> {
                 child: Padding(
                     padding: const EdgeInsets.fromLTRB(20,0,20,0),
                     child: ElevatedButton(
-                        onPressed: () => quickActionApiCall.powerOn(
-                            context, value.detailsVM.id),
+                        onPressed: _buttonPressed("PowerOn"),
                         child: Row (mainAxisAlignment: MainAxisAlignment.center,children: [Icon(Icons.power_outlined),Text("Power ON")]))))
           ]),
           Row(children: [
@@ -35,8 +62,7 @@ class _QuickActionsState extends State<QuickActionsPage> {
                 child: Padding(
                     padding: const EdgeInsets.fromLTRB(20,0,20,0),
                     child: ElevatedButton(
-                      onPressed: () => quickActionApiCall.powerOff(
-                          context, value.detailsVM.id),
+                      onPressed: _buttonPressed("PowerOff"),
                       child: Row (mainAxisAlignment: MainAxisAlignment.center,children: [Icon(Icons.power_off_outlined),Text("Power OFF")]),
                     )))
           ]),
