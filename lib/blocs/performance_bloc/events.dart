@@ -17,5 +17,5 @@ abstract class PerformanceEvent extends Equatable {
 
 class ChartDownloadEvent extends PerformanceEvent {
   const ChartDownloadEvent(List<dynamic> chartCpu,List<dynamic> chartRam,List<dynamic> chartDiskRead,List<dynamic> chartDiskWrite,List<dynamic> chartNetworkInComing,List<dynamic> chartNetworkOutGoing)
-      : super(chartCpu:chartCpu,chartRam: chartRam,chartDiskRead: chartDiskRead,chartDiskWrite: chartDiskWrite,chartNetworkOutGoing: chartNetworkOutGoing,chartNetworkInComing: chartNetworkOutGoing);
+      : super(chartCpu:chartCpu,chartRam: chartRam,chartDiskRead: chartDiskRead,chartDiskWrite: chartDiskWrite,chartNetworkOutGoing: chartNetworkOutGoing,chartNetworkInComing: chartNetworkInComing);
 }

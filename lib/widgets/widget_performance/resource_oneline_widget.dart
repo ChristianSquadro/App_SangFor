@@ -50,8 +50,18 @@ class _ResourceOneLineState extends State<ResourceOneLineWidget> {
           }
         }
 
-        return Stack(
+        return Column(
           children: <Widget>[
+            Align(
+              alignment: Alignment.topCenter,
+              child: Text(
+                _typeResource,
+                style: TextStyle(fontSize: 20, color: Colors.black),
+              ),
+            ),
+            Align(
+              heightFactor: 1.06,
+                child:
             AspectRatio(
               aspectRatio: 1.60,
               child: Container(
@@ -196,14 +206,7 @@ class _ResourceOneLineState extends State<ResourceOneLineWidget> {
                       ),
                     )),
               ),
-            ),
-            Align(
-              alignment: Alignment.topCenter,
-              child: Text(
-                _typeResource,
-                style: TextStyle(fontSize: 20, color: Colors.white),
-              ),
-            ),
+            )),
           ],
         );
       },

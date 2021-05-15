@@ -67,12 +67,12 @@ class _PerformanceState extends State<PerformancePage> {
                         const SizedBox(
                           height: 5,
                         ),
-                        ResourceTwoLineWidget("DISK", "B/s", "Read", "Write"),
+                        ResourceTwoLineWidget("DISK", "MB/s", "Read", "Write",25),
                         const SizedBox(
                           height: 5,
                         ),
                         ResourceTwoLineWidget(
-                            "NETWORK", "bps", "Inbound", "Outbound"),
+                            "NETWORK", "Mbps", "Inbound", "Outbound",100),
                       ],
                     );
                   }
