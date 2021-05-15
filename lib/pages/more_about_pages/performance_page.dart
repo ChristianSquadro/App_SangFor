@@ -2,6 +2,7 @@ import 'package:app_sangfor/api/api_call/performance_apicall.dart';
 import 'package:app_sangfor/blocs/performance_bloc/bloc.dart';
 import 'package:app_sangfor/blocs/performance_bloc/events.dart';
 import 'package:app_sangfor/cache/Vm_Cache.dart';
+import 'package:app_sangfor/styles.dart';
 import 'package:app_sangfor/widgets/widget_performance/resource_oneline_widget.dart';
 import 'package:app_sangfor/widgets/widget_performance/resource_twoline_widget.dart';
 import 'package:flutter/material.dart';
@@ -34,6 +35,7 @@ class _PerformanceState extends State<PerformancePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: AppColors.appBackgroundColor,
         body: BlocProvider<PerformanceBloc>(
             create: (context) => PerformanceBloc(),
             child: FutureBuilder<List<dynamic>>(
@@ -54,27 +56,29 @@ class _PerformanceState extends State<PerformancePage> {
                         data[4] as List<dynamic>,
                         data[5] as List<dynamic>));
 
-                    return ListView(
+                    return Padding(
+                      padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
+                        child:ListView(
                       children: const <Widget>[
                         const SizedBox(
                           height: 5,
                         ),
                         ResourceOneLineWidget("CPU"),
                         const SizedBox(
-                          height: 5,
+                          height: 20,
                         ),
                         ResourceOneLineWidget("RAM"),
                         const SizedBox(
-                          height: 5,
+                          height: 20,
                         ),
                         ResourceTwoLineWidget("DISK", "MB/s", "Read", "Write",25),
                         const SizedBox(
-                          height: 5,
+                          height: 20,
                         ),
                         ResourceTwoLineWidget(
                             "NETWORK", "Mbps", "Inbound", "Outbound",100),
                       ],
-                    );
+                    ));
                   }
                   ;
 

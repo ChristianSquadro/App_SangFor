@@ -1,5 +1,6 @@
 import 'package:app_sangfor/api/api_call/current_performance_apicall.dart';
 import 'package:app_sangfor/api/json_models/listVM/listVM.dart';
+import 'package:app_sangfor/styles.dart';
 import 'package:flutter/gestures.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
@@ -14,7 +15,7 @@ class BarPerformance extends StatefulWidget {
 }
 
 class BarPerformanceState extends State<BarPerformance> {
-  final Color barBackgroundColor = Colors.lightBlue;
+  final Color barBackgroundColor = AppColors.appBackgroundColor;
   final Duration animDuration = const Duration(milliseconds: 250);
   int touchedIndex = -1;
   late Future<List<dynamic>> _currentPerformance;
@@ -65,7 +66,7 @@ class BarPerformanceState extends State<BarPerformance> {
     int x,
     double y, {
     bool isTouched = false,
-    Color barColor = const Color(0xff02d05f),
+    Color barColor = Colors.blueGrey,
     double width = 22,
     List<int> showTooltips = const [],
   }) {
@@ -74,7 +75,7 @@ class BarPerformanceState extends State<BarPerformance> {
       barRods: [
         BarChartRodData(
           y: isTouched ? y + 1 : y,
-          colors: isTouched ? [Colors.purpleAccent] : [barColor],
+          colors: isTouched ? [barColor] : [barColor],
           width: width,
           backDrawRodData: BackgroundBarChartRodData(
             show: true,
@@ -128,7 +129,7 @@ class BarPerformanceState extends State<BarPerformance> {
               return BarTooltipItem(
                 weekDay + '\n',
                 TextStyle(
-                  color: Colors.black54,
+                  color: Colors.white,
                   fontWeight: FontWeight.bold,
                   fontSize: 18,
                 ),
@@ -136,7 +137,7 @@ class BarPerformanceState extends State<BarPerformance> {
                   TextSpan(
                     text: (rod.y - 1).toString(),
                     style: TextStyle(
-                      color: const Color(0xff02d38f),
+                      color: Colors.white,
                       fontSize: 16,
                       fontWeight: FontWeight.w500,
                     ),

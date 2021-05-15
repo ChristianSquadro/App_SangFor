@@ -1,4 +1,5 @@
 import 'package:app_sangfor/api/api_call/login_apicall.dart';
+import 'package:app_sangfor/pages/homepage_pages/intro_page.dart';
 import 'package:app_sangfor/repository/data_connection.dart';
 import 'package:app_sangfor/pages/homepage_pages/dashboard.dart';
 import 'package:app_sangfor/pages/homepage_pages/login_page.dart';
@@ -19,7 +20,7 @@ Future<void> showLogoutDialog(BuildContext context) async {
         content: SingleChildScrollView(
           child: ListBody(
             children: <Widget>[
-              Text('Are you sure to Log Out?'),
+              Text('Are you sure to log out?'),
             ],
           ),
         ),
@@ -60,7 +61,7 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
     super.initState();
     tabController = TabController(
       vsync: this,
-      length: 2,
+      length: 3,
     );
     checkCredentials();
   }
@@ -78,20 +79,22 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
     await DataConnection.storageRead();
     var success=false;
     //it means someone didn't log in yet or log out
-   if (DataConnection.ipAddress.isNotEmpty)
-        success= await loginApiCall.authenticate(DataConnection.ipAddress, DataConnection.tenant, DataConnection.username,DataConnection.password, context);
+   if (DataConnection.ipAddress != null)
+        success= await loginApiCall.authenticate(DataConnection.ipAddress!, DataConnection.tenant!, DataConnection.username!,DataConnection.password!, context);
     if(success)
+      tabController.animateTo(2);
+    else
       tabController.animateTo(1);
   }
 
   /// Sliding animation to show the login form
   void loginTransition() {
-    if (tabController.index != 1) tabController.animateTo(1);
+    if (tabController.index != 2) tabController.animateTo(2);
   }
 
   /// Sliding animation to show the welcome page
   void logoutTransition() {
-    if (tabController.index != 0) tabController.animateTo(0);
+    if (tabController.index != 1) tabController.animateTo(1);
   }
 
   @override
@@ -112,6 +115,7 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
           physics: const NeverScrollableScrollPhysics(),
           controller: tabController,
           children: const [
+            IntroPage(),
             LoginPage(),
             DashBoard(),
           ],

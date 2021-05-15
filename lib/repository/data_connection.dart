@@ -10,11 +10,11 @@ import 'package:app_sangfor/api/json_models/Empty.dart';
 import 'package:app_sangfor/api/json_parsers/empty_parser.dart';
 
 class DataConnection {
-  static String ipAddress = "";
-  static String token = "";
-  static String tenant = "";
-  static String username = "";
-  static String password = "";
+  static String? ipAddress = "";
+  static String? token = "";
+  static String? tenant = "";
+  static String? username = "";
+  static String? password = "";
 
   ///this is for insert data  (IpAdress,Token,Tenant,Username,Password) with optional-parameters
   static modifyDataConnection(
@@ -32,7 +32,7 @@ class DataConnection {
 
   static Dio _createDio(String resource_path, bool headerToken) {
     var dio = Dio(BaseOptions(
-      baseUrl: "https://" + ipAddress + "/openstack/",
+      baseUrl: "https://" + ipAddress! + "/openstack/",
       connectTimeout: 5000, // 3 seconds
       receiveTimeout: 5000, // 3 seconds
       receiveDataWhenStatusError: true,
@@ -107,11 +107,11 @@ class DataConnection {
 
   static Future<void> storageRead() async {
     var storage = new FlutterSecureStorage();
-    ipAddress = (await storage.read(key: "ipAddress"))!;
-    token = (await storage.read(key: "token"))!;
-    tenant = (await storage.read(key: "tenant"))!;
-    username = (await storage.read(key: "username"))!;
-    password = (await storage.read(key: "password"))!;
+    ipAddress = (await storage.read(key: "ipAddress"));
+    token = (await storage.read(key: "token"));
+    tenant = (await storage.read(key: "tenant"));
+    username = (await storage.read(key: "username"));
+    password = (await storage.read(key: "password"));
     var tmp = await storage.readAll();
     print(tmp.toString());
   }

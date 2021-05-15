@@ -1,5 +1,6 @@
 import 'package:app_sangfor/routes.dart';
 import 'package:app_sangfor/routes/home_page.dart';
+import 'package:app_sangfor/styles.dart';
 import 'package:flutter/material.dart';
 
 class DrawerMenu extends StatelessWidget {
@@ -8,10 +9,13 @@ class DrawerMenu extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Drawer(
-        child: ListView(
+      elevation: 2,
+        child:Container(
+        color: AppColors.appBarColor ,
+        child:ListView(
             children: [
                 ListTile(
-                  leading: const Icon(Icons.home),
+                  leading: const Icon(Icons.home_outlined),
                   title: const Text("DashBoard"),
                   onTap: () => Navigator.of(context).pushNamed(RouteGenerator.dashboard),
                 ),
@@ -20,7 +24,7 @@ class DrawerMenu extends StatelessWidget {
                   color: Colors.grey,
                 ),
               ListTile(
-                leading: const Icon(Icons.computer),
+                leading: const Icon(Icons.computer_outlined),
                 title: const Text("Virtual Machines"),
                 onTap: () => Navigator.of(context).pushNamed(RouteGenerator.vmPage),
               ),
@@ -29,7 +33,7 @@ class DrawerMenu extends StatelessWidget {
                 color: Colors.grey,
               ),
               ListTile(
-                leading: const Icon(Icons.exit_to_app),
+                leading: const Icon(Icons.exit_to_app_outlined),
                 title: const Text("Logout"),
                 onTap: () {
                   showLogoutDialog (context);
@@ -41,6 +45,6 @@ class DrawerMenu extends StatelessWidget {
               ),
             ]
         )
-    );
+    ));
   }
 }

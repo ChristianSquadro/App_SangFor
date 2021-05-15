@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:app_sangfor/api/api_call/listVM_apicall.dart';
 import 'package:app_sangfor/cache/Vm_Cache.dart';
+import 'package:app_sangfor/styles.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:webview_flutter/webview_flutter.dart';
@@ -32,6 +33,7 @@ class _WebViewConsoleState extends State<WebViewConsole> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: new AppBar(
+          backgroundColor: AppColors.appBarColor,
             title: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [

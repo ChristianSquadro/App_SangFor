@@ -35,7 +35,7 @@ class InfoCard extends StatelessWidget {
         },
         tag: model.id,
         child: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 8.0),
+          padding: const EdgeInsets.symmetric(vertical: 7.0),
           child: Material(
             color: AppColors.cardColor,
             borderRadius: BorderRadius.circular(12),

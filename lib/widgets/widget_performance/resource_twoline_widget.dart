@@ -87,7 +87,7 @@ class _ResourceTwoLineState extends State<ResourceTwoLineWidget> {
             alignment: Alignment.topCenter,
             child: Text(
               _typeResource,
-              style: TextStyle(fontSize: 20, color: Colors.black),
+              style: TextStyle(fontSize: 20, color: Colors.white),
             ),
           ),
           Align(
@@ -275,7 +275,7 @@ class _ResourceTwoLineState extends State<ResourceTwoLineWidget> {
                   ),
                 ),
                 Align(
-                    heightFactor: 14.3,
+                    heightFactor: 13.8,
                     alignment: Alignment.bottomCenter,
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceAround,

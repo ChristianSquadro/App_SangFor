@@ -1,4 +1,5 @@
 import 'package:app_sangfor/api/api_call/dashboard_apicall.dart';
+import 'package:app_sangfor/styles.dart';
 import 'package:app_sangfor/widgets/reusable_widgets/Indicator.dart';
 import 'package:app_sangfor/widgets/reusable_widgets/drawer_menu.dart';
 import 'package:fl_chart/fl_chart.dart';
@@ -27,8 +28,10 @@ class _DashBoardState extends State<DashBoard> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: AppColors.appBackgroundColor,
         appBar: AppBar(
           title: Text("DashBoard"),
+          backgroundColor: AppColors.appBarColor,
           actions: [
             IconButton(
               icon: const Icon(Icons.refresh),
@@ -51,7 +54,8 @@ class _DashBoardState extends State<DashBoard> {
                 return AspectRatio(
                   aspectRatio: 1.2,
                   child: Card(
-                    color: Colors.white,
+                    color: AppColors.appBackgroundColor,
+                    elevation: 0,
                     child: Column(
                       children: <Widget>[
                         const SizedBox(
@@ -63,7 +67,7 @@ class _DashBoardState extends State<DashBoard> {
                             Text(
                               "Virtual Machines",
                               style: TextStyle(
-                                  fontSize: 19, fontWeight: FontWeight.bold),
+                                  fontSize: 19, fontWeight: FontWeight.bold,color: Colors.white),
                             )
                           ],
                         ),
@@ -78,12 +82,12 @@ class _DashBoardState extends State<DashBoard> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: <Widget>[
                                 Indicator(
-                                  color: const Color(0xff0293ee),
+                                  color: const Color(0xff145663),
                                   text: 'Running',
                                   isSquare: false,
                                   //size: touchedIndex == 0 ? 18 : 16,
                                   textColor: _touchedIndex == 0
-                                      ? Colors.black
+                                      ? Colors.white
                                       : Colors.grey,
                                 ),
                                 Indicator(
@@ -92,7 +96,7 @@ class _DashBoardState extends State<DashBoard> {
                                   isSquare: false,
                                   //size: touchedIndex == 1 ? 18 : 16,
                                   textColor: _touchedIndex == 1
-                                      ? Colors.black
+                                      ? Colors.white
                                       : Colors.grey,
                                 ),
                               ],
@@ -106,7 +110,7 @@ class _DashBoardState extends State<DashBoard> {
                                   isSquare: false,
                                   //size: touchedIndex == 2 ? 18 : 16,
                                   textColor: _touchedIndex == 2
-                                      ? Colors.black
+                                      ? Colors.white
                                       : Colors.grey,
                                 ),
                                 Indicator(
@@ -115,7 +119,7 @@ class _DashBoardState extends State<DashBoard> {
                                   isSquare: false,
                                   //size: touchedIndex == 3 ? 18 : 16,
                                   textColor: _touchedIndex == 3
-                                      ? Colors.black
+                                      ? Colors.white
                                       : Colors.grey,
                                 ),
                               ],
@@ -185,7 +189,7 @@ class _DashBoardState extends State<DashBoard> {
       switch (i) {
         case 0:
           return (listStatusVM[0]== 0.0) ? PieChartSectionData(value: 0.001, title: '',radius: radius,color: const Color(0xff0293ee)) :PieChartSectionData(
-            color: const Color(0xff0293ee),
+            color: const Color(0xff145663),
             value: listStatusVM[0],
             title: listStatusVM[0].toString().replaceAll(".0", ""),
             radius: radius,

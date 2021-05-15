@@ -36,6 +36,8 @@ class _VMPageState extends State<VMPage> {
         return Colors.red;
       case "SUSPENDED":
         return Colors.orange;
+      case "CRASHED":
+        return Colors.yellow;
       default:
         return Colors.blue;
     }
@@ -45,7 +47,11 @@ class _VMPageState extends State<VMPage> {
   Widget build(BuildContext context) {
     return Consumer<VmCache>(builder: (_, value, __) {
       return Scaffold(
-        appBar: AppBar(title: Text("Virtual Machines"), actions: <Widget>[
+        backgroundColor: AppColors.appBackgroundColor,
+        appBar: AppBar(
+          backgroundColor: AppColors.appBarColor,
+            title: Text("Virtual Machines"),
+            actions: <Widget>[
           IconButton(
             icon: Icon(Icons.refresh),
             onPressed: () {
@@ -71,6 +77,7 @@ class _VMPageState extends State<VMPage> {
                   itemBuilder: (context, index) {
                     return Card(
                         color: AppColors.cardColor,
+                        elevation: 10,
                         child: Column(
                             crossAxisAlignment: CrossAxisAlignment.stretch,
                             children: [
@@ -100,7 +107,7 @@ class _VMPageState extends State<VMPage> {
                                                 MainAxisAlignment.center,
                                             children: [
                                               ElevatedButton(
-                                                style: ButtonStyle(backgroundColor: MaterialStateProperty.all<Color>(const Color(0xff02d38f)),),
+                                                style: ButtonStyle(backgroundColor: MaterialStateProperty.all<Color>(AppColors.buttonColor),),
                                                   onPressed: () {
                                                     value.detailsVM =
                                                         data.servers[index];
@@ -110,7 +117,7 @@ class _VMPageState extends State<VMPage> {
                                                   },
                                                   child: Text("Console")),
                                               ElevatedButton(
-                                                  style: ButtonStyle(backgroundColor: MaterialStateProperty.all<Color>(const Color(0xff02d38f)),),
+                                                  style: ButtonStyle(backgroundColor: MaterialStateProperty.all<Color>(AppColors.buttonColor),),
                                                   onPressed: () {
                                                     value.detailsVM =
                                                         data.servers[index];

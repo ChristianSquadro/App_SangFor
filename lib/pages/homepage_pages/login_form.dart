@@ -1,3 +1,4 @@
+import 'package:app_sangfor/styles.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:app_sangfor/blocs/login_bloc.dart';
@@ -20,8 +21,7 @@ class _LoginFormState extends State<LoginForm> {
   final passwordController = TextEditingController();
 
   String? validateIpServer(String? input) {
-    if(input!.isNotEmpty){
-    //if (input!.contains(RegExp(r"^(?!0)(?!.*\.$)((1?\d?\d|25[0-5]|2[0-4]\d)(\.|$)){4}$", caseSensitive: false, multiLine: false))) {
+    if (input!.contains(RegExp(r"^(?!0)(?!.*\.$)((1?\d?\d|25[0-5]|2[0-4]\d)(\.|$)){4}$", caseSensitive: false, multiLine: false))) {
       return null;
     } else {
       return "invalid_field";
@@ -83,9 +83,9 @@ class _LoginFormState extends State<LoginForm> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              FlutterLogo(size: 70),
+              Image(image: AssetImage("assets/login_sangfor_logo.png"),height: 70),
 
-              const Separator(50),
+              const Separator(30),
 
               Form(
                 key: formKey,
@@ -97,8 +97,8 @@ class _LoginFormState extends State<LoginForm> {
                       width: baseWidth - 30,
                       child: TextFormField(
                         decoration: InputDecoration(
-                          prefixIcon: const Icon(Icons.computer),
-                          hintText: "ip server",
+                          prefixIcon: const Icon(Icons.computer_outlined),
+                          hintText: "IP Server",
                         ),
                         validator: validateIpServer,
                         controller: ipServerController,
@@ -108,8 +108,8 @@ class _LoginFormState extends State<LoginForm> {
                       width: baseWidth - 30,
                       child: TextFormField(
                         decoration: InputDecoration(
-                          prefixIcon: const Icon(Icons.person),
-                          hintText: "tenant",
+                          prefixIcon: const Icon(Icons.person_outline_rounded),
+                          hintText: "Tenant",
                         ),
                         validator: validateTenant,
                         controller: tenantController,
@@ -119,8 +119,8 @@ class _LoginFormState extends State<LoginForm> {
                       width: baseWidth - 30,
                       child: TextFormField(
                         decoration: InputDecoration(
-                          prefixIcon: const Icon(Icons.email),
-                          hintText: "username",
+                          prefixIcon: const Icon(Icons.email_outlined),
+                          hintText: "Username/Email",
                         ),
                         validator: validateEmail,
                         controller: emailController,
@@ -133,8 +133,8 @@ class _LoginFormState extends State<LoginForm> {
                         validator: validatePassword,
                         controller: passwordController,
                         decoration: InputDecoration(
-                          prefixIcon: const Icon(Icons.vpn_key),
-                          hintText: "password",
+                          prefixIcon: const Icon(Icons.vpn_key_outlined),
+                          hintText: "Password",
                         ),
                       ),
                     ),
@@ -142,7 +142,7 @@ class _LoginFormState extends State<LoginForm> {
                 ),
               ),
 
-              const Separator(25),
+              const Separator(30),
 
               // Login
               BlocConsumer<CredentialsBloc, CredentialsState>(
@@ -159,17 +159,19 @@ class _LoginFormState extends State<LoginForm> {
                     return const CircularProgressIndicator();
                   }
 
-                  return RaisedButton(
-                    key: Key("loginButton"),
-                    child: Text("Login"),
-                    color: Colors.lightGreen,
-                    textColor: Colors.white,
-                    onPressed: () {
-                      if (formKey.currentState!.validate()) {
-                        loginButtonPressed(context);
-                      }
-                    },
-                  );
+                  return ConstrainedBox(
+                      constraints: BoxConstraints.tightFor(width: 120),
+                      child:ElevatedButton(
+                        key: Key("loginButton"),
+                        child: Text("Login"),
+                        style: ButtonStyle(backgroundColor: MaterialStateProperty.all<Color>(AppColors.buttonColor)),
+                        onPressed: () {
+                          if (formKey.currentState!.validate()) {
+                            FocusScope.of(context).unfocus();
+                            loginButtonPressed(context);
+                          }
+                        },
+                  ));
                 },
               )
             ],

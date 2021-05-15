@@ -2,6 +2,7 @@ import 'package:app_sangfor/cache/Vm_Cache.dart';
 import 'package:app_sangfor/pages/more_about_pages/details_page.dart';
 import 'package:app_sangfor/pages/more_about_pages/performance_page.dart';
 import 'package:app_sangfor/pages/more_about_pages/quick_actions_page.dart';
+import 'package:app_sangfor/styles.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -44,6 +45,7 @@ class _VMMoreAboutState extends State<VMMoreAboutPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: AppColors.appBarColor,
         title: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
@@ -55,7 +57,7 @@ class _VMMoreAboutState extends State<VMMoreAboutPage> {
         ],
       )),
       body: SizedBox.expand(
-        child: PageView(
+        child:PageView(
           controller: _pageController,
           physics:new NeverScrollableScrollPhysics(),
           children: const <Widget>[
@@ -67,6 +69,9 @@ class _VMMoreAboutState extends State<VMMoreAboutPage> {
       ),
       //_widgetOptions.elementAt(_selectedIndex),
       bottomNavigationBar: BottomNavigationBar(
+        backgroundColor: AppColors.appBackgroundColor,
+        selectedItemColor: AppColors.buttonColor,
+        unselectedItemColor: Colors.white,
         currentIndex: _selectedIndex,
         //selectedItemColor: Colors.white,
         onTap: _onItemTapped,
@@ -74,17 +79,14 @@ class _VMMoreAboutState extends State<VMMoreAboutPage> {
           BottomNavigationBarItem(
             icon: Icon(Icons.info),
             label: "Details",
-            backgroundColor: Colors.lightBlue,
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.auto_fix_high),
             label: "Quick Actions",
-            backgroundColor: Colors.lightBlue,
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.graphic_eq_sharp),
             label: "Performance",
-            backgroundColor: Colors.lightBlue,
           ),
           /*BottomNavigationBarItem(
             icon: Icon(Icons.details),

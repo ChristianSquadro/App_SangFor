@@ -15,9 +15,6 @@ class LoginPage extends StatelessWidget {
     final authBloc = context.watch<AuthenticationBloc>();
 
     return Scaffold(
-      appBar: AppBar(
-          title: Text("Login"),
-      ),
       body: BlocProvider<CredentialsBloc>(
         create: (context) =>CredentialsBloc(
           authenticationBloc: authBloc,

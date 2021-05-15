@@ -56,7 +56,7 @@ class _ResourceOneLineState extends State<ResourceOneLineWidget> {
               alignment: Alignment.topCenter,
               child: Text(
                 _typeResource,
-                style: TextStyle(fontSize: 20, color: Colors.black),
+                style: TextStyle(fontSize: 20, color: Colors.white),
               ),
             ),
             Align(

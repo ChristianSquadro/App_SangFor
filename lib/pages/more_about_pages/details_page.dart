@@ -3,6 +3,7 @@ import 'package:app_sangfor/api/json_models/flavorVM/flavorVM.dart';
 import 'package:app_sangfor/api/json_models/listVM/listVM.dart';
 import 'package:app_sangfor/cache/Vm_Cache.dart';
 import 'package:app_sangfor/models/details_model.dart';
+import 'package:app_sangfor/styles.dart';
 import 'package:app_sangfor/widgets/widget_details/details_card.dart';
 import 'package:app_sangfor/widgets/widget_details/images_card.dart';
 import 'package:app_sangfor/widgets/widget_details/popup_card.dart';
@@ -92,7 +93,9 @@ class _DetailsState extends State<DetailsPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(body: Consumer<VmCache>(builder: (_, value, __) {
+    return Scaffold(
+      backgroundColor: AppColors.appBackgroundColor,
+        body: Consumer<VmCache>(builder: (_, value, __) {
       return FutureBuilder<FlavorVM>(
           future: flavorVM,
           builder: (context, snapshot) {
@@ -100,7 +103,9 @@ class _DetailsState extends State<DetailsPage> {
               var data = snapshot.data;
               var details = loadDetailsModel(value.detailsVM,data!);
 
-              return Column(
+              return Padding(
+                  padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
+                  child:Column(
                   children: [
                 ImagesCard(model: details[0]),
                 (details.length > 2) ? Flexible(
@@ -113,7 +118,7 @@ class _DetailsState extends State<DetailsPage> {
                     children:[  for (int i = 2; i < details.length; i++) InfoCard(model: details[i])],
                   )) : Container(),
                 DetailsCard(model: details[1]),
-              ]);
+              ]));
             }
 
             if (snapshot.hasError &&
