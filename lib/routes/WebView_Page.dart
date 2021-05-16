@@ -28,6 +28,10 @@ class _WebViewConsoleState extends State<WebViewConsole> {
     if (Platform.isAndroid) {
       WebView.platform = SurfaceAndroidWebView();
     }
+    else
+      {
+        WebView.platform.clearCookies();
+      }
   }
 
   @override
@@ -46,17 +50,7 @@ class _WebViewConsoleState extends State<WebViewConsole> {
                       color: Colors.white,
                     ))
               ],
-            ),
-            actions: <Widget>[
-              IconButton(
-                icon: Icon(Icons.refresh),
-                onPressed: () {
-                  url = listVMApiCall.loadConsole(context, Provider.of<VmCache>(context, listen: false).detailsVM.links[0].href);
-                  isLoading=true;
-                  setState(() => {});
-                },
-              )
-            ]),
+            )),
         body: FutureBuilder<String>(
             future: url,
             builder: (context, snapshot) {

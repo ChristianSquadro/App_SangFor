@@ -106,7 +106,7 @@ class _DashBoardState extends State<DashBoard> {
                               children: <Widget>[
                                 Indicator(
                                   color: const Color(0xff845bef),
-                                  text: 'Suspended/Pause',
+                                  text: 'Suspended',
                                   isSquare: false,
                                   //size: touchedIndex == 2 ? 18 : 16,
                                   textColor: _touchedIndex == 2

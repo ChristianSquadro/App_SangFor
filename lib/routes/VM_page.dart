@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:app_sangfor/api/api_call/current_performance_apicall.dart';
 import 'package:app_sangfor/api/api_call/listVM_apicall.dart';
 import 'package:app_sangfor/api/json_models/listVM/listVM.dart';
@@ -137,20 +139,20 @@ class _VMPageState extends State<VMPage> {
                                 mainAxisAlignment: MainAxisAlignment.end,
                                 children: [
                                   Padding(
-                                      padding: EdgeInsets.fromLTRB(0, 0, 32,5),
+                                      padding: (Platform.isAndroid) ? EdgeInsets.fromLTRB(0, 0, 32,5) : EdgeInsets.fromLTRB(0, 0, 33,5),
                                       child: Image(
                                         image: AssetImage("assets/cpu.png"),
                                         height: 40,
                                         width: 40,
                                       )),
                                   Padding(
-                                      padding: EdgeInsets.fromLTRB(0, 0, 32,0),
+                                      padding: (Platform.isAndroid) ? EdgeInsets.fromLTRB(0, 0, 32,5) : EdgeInsets.fromLTRB(0, 0, 33,5),
                                       child: Image(
                                           image: AssetImage("assets/ram.png"),
                                           height: 40,
                                           width: 40)),
                                   Padding(
-                                      padding: EdgeInsets.fromLTRB(0, 0, 32,5),
+                                      padding: (Platform.isAndroid) ? EdgeInsets.fromLTRB(0, 0, 32,5) : EdgeInsets.fromLTRB(0, 0, 38,5),
                                       child: Image(
                                           image: AssetImage("assets/disk.png"),
                                           height: 40,
