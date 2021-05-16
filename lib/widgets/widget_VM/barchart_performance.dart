@@ -46,13 +46,13 @@ class BarPerformanceState extends State<BarPerformance> {
             child: Column(
                 children: <Widget>[
                   Flexible(
-                    flex:8,
+                    flex:9,
                     child: BarChart(
                       mainBarData(),
                     ),
                   ),
                   Flexible(
-                      flex:2,
+                      flex:3,
                   child:Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [

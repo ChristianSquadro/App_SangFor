@@ -96,7 +96,7 @@ class _VMPageState extends State<VMPage> {
                                 height: 1,
                                 color: Colors.grey,
                               ),
-                              Stack(
+                              Column(
                                   children: [
                                     Align(
                                         alignment: Alignment.centerLeft,
@@ -104,7 +104,7 @@ class _VMPageState extends State<VMPage> {
                                         widthFactor: 0.70,
                                         child: BarPerformance(data.servers[index])),
                                     Align(
-                                      widthFactor: 1,
+                                      widthFactor: 1.0,
                                       heightFactor: 2.2,
                                       alignment: Alignment.centerLeft,
                                         child:Column(
