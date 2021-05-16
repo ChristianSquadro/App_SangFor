@@ -39,8 +39,8 @@ class QuickActions_ApiCall {
           JsonParser<HTTPError> parser=const HTTPErrorParser();
           HTTPError error=await parser.parseFromJson(e.response!.data as String);
           showErrorDialog(context,error.error.message);
+          return Future<bool>.error(e);
         }
-        return Future<bool>.error(e);
       }
     }
     return Future<bool>.error("No Data");
@@ -54,26 +54,23 @@ class QuickActions_ApiCall {
     bool isNotDone = true;
     while (isNotDone) {
       try {
-        var requestHTTP = await DataConnection.createRequestREST(
-            "/compute/v2/servers/$idServer/action", true, objectJSON);
-        await requestHTTP
-        !.executePost<Empty>(const EmptyParser(), expectedResponse: false);
+        var requestHTTP = await DataConnection.createRequestREST("/compute/v2/servers/$idServer/action", true, objectJSON);
+        await requestHTTP!.executePost<Empty>(const EmptyParser(), expectedResponse: false);
         return Future<bool>.value(true);
       } on DioError catch (e) {
         //catch the Unauthorized error
         if (e.response!.statusCode == 401) {
           var requestToken =
           DataConnection.createFirstRequestREST("/identity/v2.0/tokens", false);
-          var response = await requestToken.executePost<Login>(
-              const LoginParser());
+          var response = await requestToken.executePost<Login>(const LoginParser());
           DataConnection.token = response.access.token.id;
         } else {
           isNotDone = false;
           JsonParser<HTTPError> parser=const HTTPErrorParser();
           HTTPError error=await parser.parseFromJson(e.response!.data as String);
           showErrorDialog(context,error.error.message);
+          return Future<bool>.error(e);
         }
-        return Future<bool>.error(e);
       }
     }
     return Future<bool>.error("No Data");

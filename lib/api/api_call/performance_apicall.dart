@@ -62,8 +62,8 @@ class PerformanceVM_ApiCall {
           JsonParser<HTTPError> parser=const HTTPErrorParser();
           HTTPError error=await parser.parseFromJson(e.response!.data as String);
           showErrorDialog(context,error.error.message);
+          return Future<List<dynamic>>.error(e);
         }
-        return Future<List<dynamic>>.error(e);
       }
     }
     return Future<List<dynamic>>.error("No Data");

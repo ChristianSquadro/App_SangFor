@@ -29,30 +29,39 @@ class _DetailsState extends State<DetailsPage> {
         context);
   }
 
-  List<DetailsModel> loadDetailsModel(Servers detailsVM,FlavorVM data) {
+  List<DetailsModel> loadDetailsModel(Servers detailsVM, FlavorVM data) {
     List<DetailsModel> details = [];
     var subnetMap = detailsVM.addresses as Map;
     var subnetNames = subnetMap.keys.toList();
     int indexNIC = 1;
 
-  //defining static details model
-    details.add(DetailsModel(
-        title: "Hardware Configuration",
-        images: [
-          DetailsImage(pathImage: "assets/cpu.png", value: data.flavor.vcpus.toString()+" Core(s)"),
-          DetailsImage(pathImage: "assets/ram.png", value: data.flavor.ram.toString()+" MB"),
-          DetailsImage(pathImage: "assets/disk.png", value: data.flavor.disk.toString()+" GB"),
-        ]));
+    //defining static details model
+    details.add(DetailsModel(title: "Hardware Configuration", images: [
+      DetailsImage(
+          pathImage: "assets/cpu.png",
+          value: data.flavor.vcpus.toString() + " Core(s)"),
+      DetailsImage(
+          pathImage: "assets/ram.png",
+          value: data.flavor.ram.toString() + " MB"),
+      DetailsImage(
+          pathImage: "assets/disk.png",
+          value: data.flavor.disk.toString() + " GB"),
+    ]));
 
-    details.add(DetailsModel(
-        title: "Other Information",
-        items: [
-          DetailsItem(key: "Resource Pool", value: detailsVM.availability_zone),
-          DetailsItem(key: "Created", value: detailsVM.created.replaceAll(RegExp(".000000"), "").replaceAll("T", " ")),
-          DetailsItem(key: "Updated", value: detailsVM.updated.replaceAll(RegExp(".000000"), "").replaceAll("T", " ")),
-          DetailsItem(key: "Status", value: detailsVM.status.toLowerCase())
-        ]));
-
+    details.add(DetailsModel(title: "Other Information", items: [
+      DetailsItem(key: "Resource Pool", value: detailsVM.availability_zone),
+      DetailsItem(
+          key: "Created",
+          value: detailsVM.created
+              .replaceAll(RegExp(".000000"), "")
+              .replaceAll("T", " ")),
+      DetailsItem(
+          key: "Updated",
+          value: detailsVM.updated
+              .replaceAll(RegExp(".000000"), "")
+              .replaceAll("T", " ")),
+      DetailsItem(key: "Status", value: detailsVM.status.toLowerCase())
+    ]));
 
     //Defining variable details model (you could install more NICS)
     for (int i = 0; i < subnetNames.length; i++) {
@@ -77,16 +86,14 @@ class _DetailsState extends State<DetailsPage> {
         detailsItems
             .add(DetailsItem(key: "Ip Type", value: values[j++].toString()));
         details.add(DetailsModel(
-            title: "NIC $indexNIC",
-            id: "NIC$indexNIC",
-            items: detailsItems));
+            title: "NIC $indexNIC", id: "NIC$indexNIC", items: detailsItems));
         indexNIC++;
       }
     }
 
     //add a bonus model to have pair number of InfoCard
     if (indexNIC - 1 % 2 != 0)
-      details.add(DetailsModel(title: "---", id: "-",items: []));
+      details.add(DetailsModel(title: "---", id: "-", items: []));
 
     return details;
   }
@@ -94,42 +101,49 @@ class _DetailsState extends State<DetailsPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.appBackgroundColor,
+        backgroundColor: AppColors.appBackgroundColor,
         body: Consumer<VmCache>(builder: (_, value, __) {
-      return FutureBuilder<FlavorVM>(
-          future: flavorVM,
-          builder: (context, snapshot) {
-            if (snapshot.hasData && snapshot.connectionState == ConnectionState.done) {
-              var data = snapshot.data;
-              var details = loadDetailsModel(value.detailsVM,data!);
+          return FutureBuilder<FlavorVM>(
+              future: flavorVM,
+              builder: (context, snapshot) {
+                if (snapshot.hasData &&
+                    snapshot.connectionState == ConnectionState.done) {
+                  var data = snapshot.data;
+                  var details = loadDetailsModel(value.detailsVM, data!);
 
-              return Padding(
-                  padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
-                  child:Column(
-                  children: [
-                ImagesCard(model: details[0]),
-                (details.length > 2) ? Flexible(
-                  child: GridView.count(
-                    shrinkWrap: true,
-                    physics: NeverScrollableScrollPhysics(),
-                    crossAxisCount: 2,
-                    childAspectRatio: 3.2,
-                    crossAxisSpacing: 14,
-                    children:[  for (int i = 2; i < details.length; i++) InfoCard(model: details[i])],
-                  )) : Container(),
-                DetailsCard(model: details[1]),
-              ]));
-            }
+                  return Padding(
+                      padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
+                      child: ListView(children: [
+                        Column(mainAxisSize: MainAxisSize.min, children: [
+                          ImagesCard(model: details[0]),
+                          (details.length > 2)
+                              ? Flexible(
+                                  child: GridView.count(
+                                  shrinkWrap: true,
+                                  physics: NeverScrollableScrollPhysics(),
+                                  crossAxisCount: 2,
+                                  childAspectRatio: 3.2,
+                                  crossAxisSpacing: 14,
+                                  children: [
+                                    for (int i = 2; i < details.length; i++)
+                                      InfoCard(model: details[i])
+                                  ],
+                                ))
+                              : Container(),
+                          DetailsCard(model: details[1]),
+                        ])
+                      ]));
+                }
 
-            if (snapshot.hasError &&
-                snapshot.connectionState == ConnectionState.done) {
-              return Center(child: Text("No Data!"));
-            }
+                if (snapshot.hasError &&
+                    snapshot.connectionState == ConnectionState.done) {
+                  return Center(child: Text("No Data!"));
+                }
 
-            return const Center(
-              child: CircularProgressIndicator(),
-            );
-          });
-    }));
+                return const Center(
+                  child: CircularProgressIndicator(),
+                );
+              });
+        }));
   }
 }

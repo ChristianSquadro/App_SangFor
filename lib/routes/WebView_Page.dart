@@ -2,6 +2,7 @@ import 'dart:io';
 import 'package:app_sangfor/api/api_call/listVM_apicall.dart';
 import 'package:app_sangfor/cache/Vm_Cache.dart';
 import 'package:app_sangfor/styles.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:webview_flutter/webview_flutter.dart';
@@ -65,8 +66,9 @@ class _WebViewConsoleState extends State<WebViewConsole> {
               if (snapshot.hasData &&
                   snapshot.connectionState == ConnectionState.done) {
                 var data = snapshot.data;
-                //it's for testing
-                data = data!.replaceFirst("192.168.3.140", "scp.sicloud.org");
+                //only for test
+                if(kDebugMode)
+                  data = data!.replaceFirst("192.168.3.140", "scp.sicloud.org");
                 print(data);
 
                 return Stack(children: [

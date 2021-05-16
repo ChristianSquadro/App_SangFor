@@ -21,7 +21,7 @@ class ListVM_ApiCall {
       try {
         var requestHTTP = await DataConnection.createRequestREST(
             "/compute/v2/servers/detail", true);
-        var response = requestHTTP!.executeGet<ListVM>(const ListVMParser());
+        var response = await requestHTTP!.executeGet<ListVM>(const ListVMParser());
         isNotDone = false;
         return response;
       } on DioError catch (e) {
@@ -37,8 +37,8 @@ class ListVM_ApiCall {
           JsonParser<HTTPError> parser=const HTTPErrorParser();
           HTTPError error=await parser.parseFromJson(e.response!.data as String);
           showErrorDialog(context,error.error.message);
+          return Future<ListVM>.error(e);
         }
-        return Future<ListVM>.error(e);
       }
     }
     return Future<ListVM>.error("No data!");
@@ -70,8 +70,8 @@ class ListVM_ApiCall {
         JsonParser<HTTPError> parser=const HTTPErrorParser();
         HTTPError error=await parser.parseFromJson(e.response!.data as String);
         showErrorDialog(context,error.error.message);
+        return Future<String>.error(e);
       }
-      return Future<String>.error(e);
     }
   return Future<String>.error("No data!");
   }

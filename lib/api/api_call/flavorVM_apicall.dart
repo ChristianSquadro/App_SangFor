@@ -36,8 +36,8 @@ class FlavorVM_ApiCall {
           JsonParser<HTTPError> parser=const HTTPErrorParser();
           HTTPError error=await parser.parseFromJson(e.response!.data as String);
           showErrorDialog(context,error.error.message);
+          return Future<FlavorVM>.error(e);
         }
-        return Future<FlavorVM>.error(e);
       }
     }
     return Future<FlavorVM>.error("No data!");

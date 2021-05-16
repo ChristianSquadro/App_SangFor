@@ -35,8 +35,8 @@ class DashBoard_ApiCall {
           JsonParser<HTTPError> parser=const HTTPErrorParser();
           HTTPError error=await parser.parseFromJson(e.response!.data as String);
           showErrorDialog(context,error.error.message);
+          return Future<List<double>>.error(e);
         }
-        return Future<List<double>>.error(e);
       }
     }
   return Future<List<double>>.error("No data!");

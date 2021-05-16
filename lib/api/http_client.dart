@@ -16,8 +16,8 @@ class RequestREST {
     try {
       final response = await client.get<String>(endpoint);
       return await (expectedResponse) ? parser.parseFromJson(response.data!) : parser.parseFromJson("{\"empty\": \"empty\"}");
-    } on DioError{
-      rethrow;
+    } on DioError catch (e){
+      throw e;
     }
   }
 
@@ -29,8 +29,8 @@ class RequestREST {
         data: formData,
       );
       return await (expectedResponse) ? parser.parseFromJson(response.data!) : parser.parseFromJson("{\"empty\": \"empty\"}");
-    } on DioError {
-      rethrow;
+    } on DioError catch (e){
+      throw e;
     }
   }
 }
