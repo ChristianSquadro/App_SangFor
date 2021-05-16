@@ -3,12 +3,15 @@ import 'package:flutter/material.dart';
 import 'package:app_sangfor/routes.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:provider/provider.dart';
-
+import 'package:webview_flutter/webview_flutter.dart';
 import 'blocs/authentication_bloc.dart';
 import 'cache/Vm_Cache.dart';
 
-void main() => runApp(Provider<VmCache>(
-    create: (_) => VmCache(), child: const LoginApp()));
+
+void main(){
+  //i insert this instruction for some problems with android webview
+  WebView.platform.clearCookies();
+  runApp(Provider<VmCache>(create: (_) => VmCache(), child: const LoginApp()));}
 
 class LoginApp extends StatelessWidget {
   const LoginApp();

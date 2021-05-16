@@ -1,3 +1,4 @@
+import 'package:app_sangfor/repository/data_connection.dart';
 import 'package:app_sangfor/styles.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -19,9 +20,13 @@ class _LoginFormState extends State<LoginForm> {
   final tenantController = TextEditingController();
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
+  bool checkedValue = false;
 
   String? validateIpServer(String? input) {
-    if (input!.contains(RegExp(r"^(?!0)(?!.*\.$)((1?\d?\d|25[0-5]|2[0-4]\d)(\.|$)){4}$", caseSensitive: false, multiLine: false))) {
+    if (input!.contains(RegExp(
+        r"^(?!0)(?!.*\.$)((1?\d?\d|25[0-5]|2[0-4]\d)(\.|$)){4}$",
+        caseSensitive: false,
+        multiLine: false))) {
       return null;
     } else {
       return "invalid_field";
@@ -55,9 +60,12 @@ class _LoginFormState extends State<LoginForm> {
   //it'll search for the instance of CredentialsBloc from the loginform to the nearest widget above itself
   void loginButtonPressed(BuildContext context) {
     context.read<CredentialsBloc>().add(LoginButtonPressed(
-        ipServer: ipServerController.text,tenant: tenantController.text,username: emailController.text, password: passwordController.text,context: context));
+        ipServer: ipServerController.text,
+        tenant: tenantController.text,
+        username: emailController.text,
+        password: passwordController.text,
+        context: context));
   }
-
 
   @override
   void dispose() {
@@ -83,7 +91,9 @@ class _LoginFormState extends State<LoginForm> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Image(image: AssetImage("assets/login_sangfor_logo.png"),height: 70),
+              Image(
+                  image: AssetImage("assets/login_sangfor_logo.png"),
+                  height: 70),
 
               const Separator(30),
 
@@ -138,6 +148,22 @@ class _LoginFormState extends State<LoginForm> {
                         ),
                       ),
                     ),
+                    SizedBox(
+                        width: baseWidth - 30,
+                        child: CheckboxListTile(
+                          title: Text("Save Credentials?"),
+                          value: checkedValue,
+                          onChanged: (newValue) {
+                            if (newValue==true)
+                              DataConnection.saveCredentials=true;
+                            else
+                              DataConnection.saveCredentials=false;
+                            setState(() {
+                              checkedValue = newValue!;
+                            });
+                          },
+                          controlAffinity: ListTileControlAffinity.leading,
+                        ))
                   ],
                 ),
               ),
@@ -161,17 +187,19 @@ class _LoginFormState extends State<LoginForm> {
 
                   return ConstrainedBox(
                       constraints: BoxConstraints.tightFor(width: 120),
-                      child:ElevatedButton(
+                      child: ElevatedButton(
                         key: Key("loginButton"),
                         child: Text("Login"),
-                        style: ButtonStyle(backgroundColor: MaterialStateProperty.all<Color>(AppColors.buttonColor)),
+                        style: ButtonStyle(
+                            backgroundColor: MaterialStateProperty.all<Color>(
+                                AppColors.buttonColor)),
                         onPressed: () {
                           if (formKey.currentState!.validate()) {
                             FocusScope.of(context).unfocus();
                             loginButtonPressed(context);
                           }
                         },
-                  ));
+                      ));
                 },
               )
             ],

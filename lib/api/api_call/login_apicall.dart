@@ -1,3 +1,6 @@
+import 'package:app_sangfor/api/json_models/HTTPError.dart';
+import 'package:app_sangfor/api/json_parsers/HTTPError_parser.dart';
+import 'package:app_sangfor/api/json_parsers/json_parser.dart';
 import 'package:app_sangfor/api/json_parsers/loginParser/login_parser.dart';
 import 'package:app_sangfor/api/json_models/login/login.dart';
 import 'package:app_sangfor/repository/data_connection.dart';
@@ -23,7 +26,9 @@ class Login_ApiCall {
       return Future<bool>.value(true);
     } on DioError catch(e)
     {
-      showErrorDialog(context,e);
+      JsonParser<HTTPError> parser=const HTTPErrorParser();
+      HTTPError error=await parser.parseFromJson(e.response!.data as String);
+      showErrorDialog(context,error.error.message);
       return Future<bool>.value(false);
     }
   }

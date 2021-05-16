@@ -77,7 +77,7 @@ class _ResourceOneLineState extends State<ResourceOneLineWidget> {
                       LineChartData(
                         lineTouchData: LineTouchData(
                           touchTooltipData: LineTouchTooltipData(
-                              tooltipBgColor: Colors.blueAccent,
+                              tooltipBgColor: Colors.cyan,
                               getTooltipItems: (List<LineBarSpot> touchedBarSpots) {
                                 return touchedBarSpots.map((barSpot) {
                                   final flSpot = barSpot;

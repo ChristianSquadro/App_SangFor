@@ -26,6 +26,7 @@ class _WebViewConsoleState extends State<WebViewConsole> {
     // Enable hybrid composition.
     if (Platform.isAndroid) {
       WebView.platform = SurfaceAndroidWebView();
+      WebView.platform.clearCookies();
     }
   }
 

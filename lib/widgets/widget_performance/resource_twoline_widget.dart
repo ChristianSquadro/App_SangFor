@@ -108,7 +108,7 @@ class _ResourceTwoLineState extends State<ResourceTwoLineWidget> {
                           LineChartData(
                             lineTouchData: LineTouchData(
                               touchTooltipData: LineTouchTooltipData(
-                                  tooltipBgColor: Colors.blue,
+                                  tooltipBgColor: Colors.cyan,
                                   getTooltipItems:
                                       (List<LineBarSpot> touchedBarSpots) {
                                     return touchedBarSpots.map((barSpot) {

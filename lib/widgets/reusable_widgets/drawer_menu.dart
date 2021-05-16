@@ -15,8 +15,8 @@ class DrawerMenu extends StatelessWidget {
         child:ListView(
             children: [
                 ListTile(
-                  leading: const Icon(Icons.home_outlined),
-                  title: const Text("DashBoard"),
+                  leading: const Icon(Icons.home_outlined,color: Colors.white,),
+                  title: const Text("DashBoard", style: TextStyle(color: Colors.white,fontSize: 14),),
                   onTap: () => Navigator.of(context).pushNamed(RouteGenerator.dashboard),
                 ),
                 const Divider(
@@ -24,8 +24,8 @@ class DrawerMenu extends StatelessWidget {
                   color: Colors.grey,
                 ),
               ListTile(
-                leading: const Icon(Icons.computer_outlined),
-                title: const Text("Virtual Machines"),
+                leading: const Icon(Icons.computer_outlined,color: Colors.white,),
+                title: const Text("Virtual Machines",style: TextStyle(color: Colors.white,fontSize: 14)),
                 onTap: () => Navigator.of(context).pushNamed(RouteGenerator.vmPage),
               ),
               const Divider(
@@ -33,8 +33,8 @@ class DrawerMenu extends StatelessWidget {
                 color: Colors.grey,
               ),
               ListTile(
-                leading: const Icon(Icons.exit_to_app_outlined),
-                title: const Text("Logout"),
+                leading: const Icon(Icons.exit_to_app_outlined,color: Colors.white,),
+                title: const Text("Logout", style: TextStyle(color: Colors.white,fontSize: 14)),
                 onTap: () {
                   showLogoutDialog (context);
                 },

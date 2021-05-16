@@ -2,7 +2,7 @@ import 'package:json_annotation/json_annotation.dart';
 
 part 'Empty.g.dart';
 
-@JsonSerializable(nullable: true)
+@JsonSerializable()
 class Empty {
   final String empty;
 

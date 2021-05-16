@@ -1,13 +1,9 @@
 import 'dart:convert';
 import 'dart:io';
 import 'package:app_sangfor/api/http_client.dart';
-import 'package:app_sangfor/api/json_models/login/login.dart';
-import 'package:app_sangfor/api/json_parsers/loginParser/login_parser.dart';
 import 'package:dio/adapter.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-import 'package:app_sangfor/api/json_models/Empty.dart';
-import 'package:app_sangfor/api/json_parsers/empty_parser.dart';
 
 class DataConnection {
   static String? ipAddress = "";
@@ -15,6 +11,7 @@ class DataConnection {
   static String? tenant = "";
   static String? username = "";
   static String? password = "";
+  static bool saveCredentials = false;
 
   ///this is for insert data  (IpAdress,Token,Tenant,Username,Password) with optional-parameters
   static modifyDataConnection(
@@ -68,30 +65,10 @@ class DataConnection {
   static Future<RequestREST?> createRequestREST(String resource_path, bool headerToken, [objectJSON]) async {RequestREST? requestREST;
     var dio = _createDio(resource_path, headerToken);
 
-    try {
-      //attempt of connection to test the token availability
-      requestREST = RequestREST(
-          client: dio,
-          endpoint: "/compute/v2/",
-          data: jsonEncode(objectJSON ?? <String, String>{}));
-      await requestREST.executeGet<Empty>(const EmptyParser(),expectedResponse: false);
-    } on DioError catch (e) {
-      //catch the Unauthorized error
-      if (e.response!.statusCode == 401) {
-        var requestToken =
-        createFirstRequestREST("/identity/v2.0/tokens", false);
-        var response = await requestToken.executePost<Login>(const LoginParser());
-        token = response.access.token.id;
-      }
-    } finally {
-      //the true request and the other exception are caught by the designated API
-      requestREST = RequestREST(
+    return requestREST = RequestREST(
           client: dio,
           endpoint: resource_path,
           data: jsonEncode(objectJSON ?? <String, String>{}));
-    }
-
-    return requestREST;
   }
 
   static Future<void> storageWrite() async {
@@ -101,6 +78,7 @@ class DataConnection {
     await storage.write(key: "tenant", value: tenant);
     await storage.write(key: "username", value: username);
     await storage.write(key: "password", value: password);
+    await storage.write(key: "saveCredentials", value: saveCredentials.toString());
     var tmp = await storage.readAll();
     print(tmp.toString());
   }
@@ -112,6 +90,10 @@ class DataConnection {
     tenant = (await storage.read(key: "tenant"));
     username = (await storage.read(key: "username"));
     password = (await storage.read(key: "password"));
+    if (await storage.read(key: "saveCredentials")=="true")
+      saveCredentials=true;
+    else
+      saveCredentials=false;
     var tmp = await storage.readAll();
     print(tmp.toString());
   }
