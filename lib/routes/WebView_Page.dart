@@ -29,10 +29,11 @@ class _WebViewConsoleState extends State<WebViewConsole> {
       WebView.platform = SurfaceAndroidWebView();
     }
     else
-      {
-        WebView.platform.clearCookies();
-      }
+    {
+      WebView.platform.clearCookies();
+    }
   }
+
 
   @override
   Widget build(BuildContext context) {
@@ -64,7 +65,8 @@ class _WebViewConsoleState extends State<WebViewConsole> {
                   data = data!.replaceFirst("192.168.3.140", "scp.sicloud.org");
                 print(data);
 
-                return Stack(children: [
+                return Stack(
+                    children: [
                   WebView(
                     initialUrl: data,
                     initialMediaPlaybackPolicy:
