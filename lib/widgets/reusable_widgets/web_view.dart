@@ -10,28 +10,41 @@ class WebViewCustom extends StatefulWidget {
 }
 
 class _WebViewCustomState extends State<WebViewCustom> {
-  final String url;
-  bool isLoading = true;
+  final String _url;
+  bool _isLoading = true;
+  late WebViewController _controller;
 
-  _WebViewCustomState(this.url);
+  _WebViewCustomState(this._url);
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+    //i'm forced to clear the cache for the ios version because there are issues the second time you invoked the webview
+    _controller.clearCache();
+    //i insert this instruction for some token problems with android webview
+    WebView.platform.clearCookies();
+  }
 
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
     return Stack(children: [
       WebView(
-        initialUrl: url,
+        onWebViewCreated: (WebViewController webViewController) {
+    _controller = webViewController;},
+        initialUrl:_url,
         initialMediaPlaybackPolicy: AutoMediaPlaybackPolicy.always_allow,
         javascriptMode: JavascriptMode.unrestricted,
         allowsInlineMediaPlayback: true,
         gestureNavigationEnabled: true,
         onPageFinished: (finish) {
           setState(() {
-            isLoading = false;
+            _isLoading = false;
           });
         },
       ),
-      isLoading
+      _isLoading
           ? Center(
               child: CircularProgressIndicator(),
             )
