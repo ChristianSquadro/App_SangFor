@@ -2,6 +2,7 @@ import 'dart:io';
 import 'package:app_sangfor/api/api_call/listVM_apicall.dart';
 import 'package:app_sangfor/cache/Vm_Cache.dart';
 import 'package:app_sangfor/styles.dart';
+import 'package:app_sangfor/widgets/reusable_widgets/web_view.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -17,7 +18,6 @@ class WebViewConsole extends StatefulWidget {
 class _WebViewConsoleState extends State<WebViewConsole> {
   final listVMApiCall = ListVM_ApiCall();
   late Future<String> url;
-  bool isLoading = true;
 
   @override
   void initState() {
@@ -33,6 +33,7 @@ class _WebViewConsoleState extends State<WebViewConsole> {
         WebView.platform.clearCookies();
       }
   }
+
 
   @override
   Widget build(BuildContext context) {
@@ -64,26 +65,7 @@ class _WebViewConsoleState extends State<WebViewConsole> {
                   data = data!.replaceFirst("192.168.3.140", "scp.sicloud.org");
                 print(data);
 
-                return Stack(children: [
-                  WebView(
-                    initialUrl: data,
-                    initialMediaPlaybackPolicy:
-                        AutoMediaPlaybackPolicy.always_allow,
-                    javascriptMode: JavascriptMode.unrestricted,
-                    allowsInlineMediaPlayback: true,
-                    gestureNavigationEnabled: true,
-                    onPageFinished: (finish) {
-                      setState(() {
-                        isLoading = false;
-                      });
-                    },
-                  ),
-                  isLoading
-                      ? Center(
-                          child: CircularProgressIndicator(),
-                        )
-                      : Stack()
-                ]);
+                return WebViewCustom(data!);
               }
               if (snapshot.hasError &&
                   snapshot.connectionState == ConnectionState.done) {
