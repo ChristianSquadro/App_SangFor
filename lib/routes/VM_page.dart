@@ -96,19 +96,12 @@ class _VMPageState extends State<VMPage> {
                                 height: 1,
                                 color: Colors.grey,
                               ),
-                              Column(
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceAround,
                                   children: [
                                     Align(
-                                        alignment: Alignment.centerLeft,
-                                        heightFactor: 1.1,
-                                        widthFactor: 0.70,
-                                        child: BarPerformance(data.servers[index])),
-                                    Align(
-                                      widthFactor: 1.0,
-                                      heightFactor: 2.2,
-                                      alignment: Alignment.centerLeft,
                                         child:Column(
-                                            //mainAxisAlignment: MainAxisAlignment.center,
+                                            mainAxisSize: MainAxisSize.min,
                                             children: [
                                               ElevatedButton(
                                                 style: ButtonStyle(backgroundColor: MaterialStateProperty.all<Color>(AppColors.buttonColor),),
@@ -132,6 +125,9 @@ class _VMPageState extends State<VMPage> {
                                                   },
                                                   child: Text("   More   "))
                                             ])),
+                                    Padding(padding: EdgeInsets.fromLTRB(0, 7, 0, 0) , child:ConstrainedBox(
+                                        constraints: BoxConstraints.tight(Size.square(200)),
+                                        child: BarPerformance(data.servers[index]))),
                                   ]),
                               const Divider(
                                 height: 1,

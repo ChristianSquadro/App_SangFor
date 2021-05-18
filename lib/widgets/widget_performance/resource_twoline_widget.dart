@@ -52,13 +52,11 @@ class _ResourceTwoLineState extends State<ResourceTwoLineWidget> {
       if (_typeResource == "DISK")
         percentageUtil1 = (chart1[i][2] as num) / 1000000;
       else
-        chart1[i][2]=8000000000;
         percentageUtil1 = (chart1[i][2] as num) / 1000000000;
       var dateUtil1 = chart1[i][0] as String;
       if (_typeResource == "DISK")
         percentageUtil2 = (chart2[i][2] as num) / 1000000;
       else
-        chart2[i][2]=15000000000;
         percentageUtil2 = (chart2[i][2] as num) / 1000000000;
       var dateUtil2 = chart2[i][0] as String;
       _coordinates1.add(FlSpot(i.toDouble(), percentageUtil1.roundToDouble()));
@@ -112,13 +110,14 @@ class _ResourceTwoLineState extends State<ResourceTwoLineWidget> {
                             lineTouchData: LineTouchData(
                               touchTooltipData: LineTouchTooltipData(
                                   tooltipBgColor: Colors.cyan,
+                                  maxContentWidth: 200,
                                   getTooltipItems:
                                       (List<LineBarSpot> touchedBarSpots) {
                                     return touchedBarSpots.map((barSpot) {
                                       final flSpot = barSpot;
 
                                       return LineTooltipItem(
-                                        '${(flSpot.barIndex == 0) ? lineDescription1+" "+_toolTips1[flSpot.spotIndex] : lineDescritpion2+" "+_toolTips2[flSpot.spotIndex]} \n',
+                                        '${(flSpot.barIndex == 0) ? lineDescription1+"\n"+_toolTips1[flSpot.spotIndex] : lineDescritpion2+"\n"+_toolTips2[flSpot.spotIndex]} \n',
                                         const TextStyle(
                                           color: Colors.white,
                                           fontWeight: FontWeight.bold,
