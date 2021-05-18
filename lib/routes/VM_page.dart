@@ -81,7 +81,6 @@ class _VMPageState extends State<VMPage> {
                         color: AppColors.cardColor,
                         elevation: 10,
                         child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.stretch,
                             children: [
                               Padding(
                                   padding: const EdgeInsets.all(8),
@@ -98,15 +97,18 @@ class _VMPageState extends State<VMPage> {
                                 color: Colors.grey,
                               ),
                               Stack(
-                                  alignment: Alignment.bottomRight,
                                   children: [
-                                    Positioned(
-                                        left: 40,
-                                        top: 25,
-                                        child: Column(
-                                            mainAxisSize: MainAxisSize.min,
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.center,
+                                    Align(
+                                        alignment: Alignment.centerLeft,
+                                        heightFactor: 1.1,
+                                        widthFactor: 0.70,
+                                        child: BarPerformance(data.servers[index])),
+                                    Align(
+                                      widthFactor: 1,
+                                      heightFactor: 2.2,
+                                      alignment: Alignment.centerLeft,
+                                        child:Column(
+                                            //mainAxisAlignment: MainAxisAlignment.center,
                                             children: [
                                               ElevatedButton(
                                                 style: ButtonStyle(backgroundColor: MaterialStateProperty.all<Color>(AppColors.buttonColor),),
@@ -130,35 +132,7 @@ class _VMPageState extends State<VMPage> {
                                                   },
                                                   child: Text("   More   "))
                                             ])),
-                                    Align(
-                                        heightFactor: 1.1,
-                                        widthFactor: 0.65,
-                                        child: BarPerformance(data.servers[index])),
                                   ]),
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.end,
-                                children: [
-                                  Padding(
-                                      padding: (Platform.isAndroid) ? EdgeInsets.fromLTRB(0, 0, 32,5) : EdgeInsets.fromLTRB(0, 0, 33,5),
-                                      child: Image(
-                                        image: AssetImage("assets/cpu.png"),
-                                        height: 40,
-                                        width: 40,
-                                      )),
-                                  Padding(
-                                      padding: (Platform.isAndroid) ? EdgeInsets.fromLTRB(0, 0, 32,5) : EdgeInsets.fromLTRB(0, 0, 33,5),
-                                      child: Image(
-                                          image: AssetImage("assets/ram.png"),
-                                          height: 40,
-                                          width: 40)),
-                                  Padding(
-                                      padding: (Platform.isAndroid) ? EdgeInsets.fromLTRB(0, 0, 32,5) : EdgeInsets.fromLTRB(0, 0, 38,5),
-                                      child: Image(
-                                          image: AssetImage("assets/disk.png"),
-                                          height: 40,
-                                          width: 40)),
-                                ],
-                              ),
                               const Divider(
                                 height: 1,
                                 color: Colors.grey,

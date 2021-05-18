@@ -76,7 +76,7 @@ class _PerformanceState extends State<PerformancePage> {
                           height: 20,
                         ),
                         ResourceTwoLineWidget(
-                            "NETWORK", "Mbps", "Inbound", "Outbound",100),
+                            "NETWORK", "Gbps", "Inbound", "Outbound",100),
                       ],
                     ));
                   }

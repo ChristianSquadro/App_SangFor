@@ -42,14 +42,41 @@ class BarPerformanceState extends State<BarPerformance> {
          data = snapshot.data;
 
         return AspectRatio(
-            aspectRatio: 3.4,
+            aspectRatio: 2.3,
             child: Column(
                 children: <Widget>[
-                  Expanded(
+                  Flexible(
+                    flex:8,
                     child: BarChart(
                       mainBarData(),
                     ),
-                  )
+                  ),
+                  Flexible(
+                      flex:2,
+                  child:Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Padding(
+                          padding:  EdgeInsets.fromLTRB(0, 5, 32,0) ,
+                          child: Image(
+                            image: AssetImage("assets/cpu.png"),
+                            height: 40,
+                            width: 40,
+                          )),
+                      Padding(
+                          padding: EdgeInsets.fromLTRB(0, 0, 15,0),
+                          child: Image(
+                              image: AssetImage("assets/ram.png"),
+                              height: 40,
+                              width: 40)),
+                      Padding(
+                          padding: EdgeInsets.fromLTRB(17, 5,0,0) ,
+                          child: Image(
+                              image: AssetImage("assets/disk.png"),
+                              height: 40,
+                              width: 40)),
+                    ],
+                  )),
                 ]));
       }
 
@@ -58,7 +85,7 @@ class BarPerformanceState extends State<BarPerformance> {
         return Center(child: Text("No Data!"));
       }
 
-      return Container(height: 114,child: const Center(child:CircularProgressIndicator()));
+      return Container(height: 200,child: const Center(child:CircularProgressIndicator()));
     });
   }
 

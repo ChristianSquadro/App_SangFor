@@ -52,12 +52,14 @@ class _ResourceTwoLineState extends State<ResourceTwoLineWidget> {
       if (_typeResource == "DISK")
         percentageUtil1 = (chart1[i][2] as num) / 1000000;
       else
-        percentageUtil1 = ((chart1[i][2] as num) * 8) / 1000000;
+        chart1[i][2]=8000000000;
+        percentageUtil1 = (chart1[i][2] as num) / 1000000000;
       var dateUtil1 = chart1[i][0] as String;
       if (_typeResource == "DISK")
         percentageUtil2 = (chart2[i][2] as num) / 1000000;
       else
-        percentageUtil2 = ((chart2[i][2] as num) * 8) / 1000000;
+        chart2[i][2]=15000000000;
+        percentageUtil2 = (chart2[i][2] as num) / 1000000000;
       var dateUtil2 = chart2[i][0] as String;
       _coordinates1.add(FlSpot(i.toDouble(), percentageUtil1.roundToDouble()));
       _toolTips1.add(dateUtil1.replaceFirst("T", "\n"));
@@ -92,8 +94,9 @@ class _ResourceTwoLineState extends State<ResourceTwoLineWidget> {
           ),
           Align(
               heightFactor: 1.06,
-              child: Stack(children: [
-                AspectRatio(
+              child: Stack(alignment: Alignment.bottomCenter, children: [
+                Align(
+                    child: AspectRatio(
                   aspectRatio: 1.45,
                   child: Container(
                     decoration: const BoxDecoration(
@@ -115,7 +118,7 @@ class _ResourceTwoLineState extends State<ResourceTwoLineWidget> {
                                       final flSpot = barSpot;
 
                                       return LineTooltipItem(
-                                        '${(flSpot.barIndex == 0) ? _toolTips1[flSpot.spotIndex] : _toolTips2[flSpot.spotIndex]} \n',
+                                        '${(flSpot.barIndex == 0) ? lineDescription1+" "+_toolTips1[flSpot.spotIndex] : lineDescritpion2+" "+_toolTips2[flSpot.spotIndex]} \n',
                                         const TextStyle(
                                           color: Colors.white,
                                           fontWeight: FontWeight.bold,
@@ -273,15 +276,14 @@ class _ResourceTwoLineState extends State<ResourceTwoLineWidget> {
                           ),
                         )),
                   ),
-                ),
-                Align(
-                    heightFactor: 13.8,
-                    alignment: Alignment.bottomCenter,
+                )),
+                Padding(
+                    padding: EdgeInsets.fromLTRB(0, 0, 0, 10),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: <Widget>[
                         Indicator(
-                          color: Colors.lightBlue,
+                          color: const Color(0xff02d39a),
                           text: lineDescription1,
                           isSquare: false,
                         ),
