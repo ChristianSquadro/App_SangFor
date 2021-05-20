@@ -126,9 +126,7 @@ class _DashBoardState extends State<DashBoard> {
                             ),
                           ],
                         ),
-                        const SizedBox(
-                          height: 18,
-                        ),
+                        const Divider(height:18),
                         Expanded(
                           child: AspectRatio(
                             aspectRatio: 1,

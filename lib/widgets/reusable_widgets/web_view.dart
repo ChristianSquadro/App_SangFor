@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
@@ -21,9 +23,8 @@ class _WebViewCustomState extends State<WebViewCustom> {
     // TODO: implement dispose
     super.dispose();
     //i'm forced to clear the cache for the ios version because there are issues the second time you invoked the webview
-    _controller.clearCache();
-    //i insert this instruction for some token problems with android webview
-    WebView.platform.clearCookies();
+    if (Platform.isIOS)
+      _controller.clearCache();
   }
 
   @override
@@ -34,6 +35,7 @@ class _WebViewCustomState extends State<WebViewCustom> {
         onWebViewCreated: (WebViewController webViewController) {
     _controller = webViewController;},
         initialUrl:_url,
+        userAgent: "random",
         initialMediaPlaybackPolicy: AutoMediaPlaybackPolicy.always_allow,
         javascriptMode: JavascriptMode.unrestricted,
         allowsInlineMediaPlayback: true,

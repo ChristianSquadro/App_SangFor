@@ -33,13 +33,13 @@ class _LoginFormState extends State<LoginForm> {
     }
   }
 
-  String? validateTenant(String? input) {
+  /*String? validateTenant(String? input) {
     if (input!.isNotEmpty) {
       return null;
     } else {
       return "invalid_field";
     }
-  }
+  }*/
 
   String? validateEmail(String? input) {
     if ((input!.isNotEmpty)) {
@@ -61,7 +61,8 @@ class _LoginFormState extends State<LoginForm> {
   void loginButtonPressed(BuildContext context) {
     context.read<CredentialsBloc>().add(LoginButtonPressed(
         ipServer: ipServerController.text,
-        tenant: tenantController.text,
+        tenant:"",
+        //tenant: tenantController.text,
         username: emailController.text,
         password: passwordController.text,
         context: context));
@@ -70,7 +71,7 @@ class _LoginFormState extends State<LoginForm> {
   @override
   void dispose() {
     ipServerController.dispose();
-    tenantController.dispose();
+    //tenantController.dispose();
     emailController.dispose();
     passwordController.dispose();
     super.dispose();
@@ -114,7 +115,7 @@ class _LoginFormState extends State<LoginForm> {
                         controller: ipServerController,
                       ),
                     ),
-                    SizedBox(
+                    /*SizedBox(
                       width: baseWidth - 30,
                       child: TextFormField(
                         decoration: InputDecoration(
@@ -124,7 +125,7 @@ class _LoginFormState extends State<LoginForm> {
                         validator: validateTenant,
                         controller: tenantController,
                       ),
-                    ),
+                    ),*/
                     SizedBox(
                       width: baseWidth - 30,
                       child: TextFormField(

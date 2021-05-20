@@ -9,6 +9,9 @@ import 'cache/Vm_Cache.dart';
 
 
 void main(){
+  //i insert this instruction for some token problems with android webview
+  //if (Platform.isAndroid)
+  WebView.platform.clearCookies();
   runApp(Provider<VmCache>(create: (_) => VmCache(), child: const LoginApp()));}
 
 class LoginApp extends StatelessWidget {

@@ -51,11 +51,17 @@ class DataConnection {
       String resource_path, bool headerToken) {
     var dio = _createDio(resource_path, headerToken);
 
-    var objectJSON = {
+    /*var objectJSON = {
       "auth": {
         "tenantName": tenant,
         "passwordCredentials": {"username": username, "password": password}
+      }*/
+
+    var objectJSON = {
+      "auth": {
+        "passwordCredentials": {"username": username, "password": password}
       }
+
     };
 
     return RequestREST(
