@@ -61,9 +61,9 @@ class _WebViewConsoleState extends State<WebViewConsole> {
                   snapshot.connectionState == ConnectionState.done) {
                 var data = snapshot.data;
                 //only for test
-                if(kDebugMode)
+                /*if(kDebugMode)
                   data = data!.replaceFirst("192.168.3.140", "scp.sicloud.org");
-                print(data);
+                print(data);*/
 
                 return WebViewCustom(data!);
               }
