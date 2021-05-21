@@ -1,6 +1,8 @@
 import 'dart:io';
 
+import 'package:app_sangfor/widgets/reusable_widgets/show_error_dialog.dart';
 import 'package:flutter/material.dart';
+import 'package:webview_flutter/platform_interface.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
 class WebViewCustom extends StatefulWidget {
@@ -35,11 +37,13 @@ class _WebViewCustomState extends State<WebViewCustom> {
         onWebViewCreated: (WebViewController webViewController) {
     _controller = webViewController;},
         initialUrl:_url,
-        userAgent: "random",
         initialMediaPlaybackPolicy: AutoMediaPlaybackPolicy.always_allow,
         javascriptMode: JavascriptMode.unrestricted,
         allowsInlineMediaPlayback: true,
         gestureNavigationEnabled: true,
+        onWebResourceError: (WebResourceError webResourceError){
+          showErrorDialog(context, webResourceError.toString());
+        },
         onPageFinished: (finish) {
           setState(() {
             _isLoading = false;
