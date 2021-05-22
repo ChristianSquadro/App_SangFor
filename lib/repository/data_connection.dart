@@ -68,10 +68,10 @@ class DataConnection {
         client: dio, endpoint: resource_path, data: jsonEncode(objectJSON));
   }
 
-  static Future<RequestREST?> createRequestREST(String resource_path, bool headerToken, [objectJSON]) async {RequestREST? requestREST;
+  static Future<RequestREST?> createRequestREST(String resource_path, bool headerToken, [objectJSON]) async {
     var dio = _createDio(resource_path, headerToken);
 
-    return requestREST = RequestREST(
+    return RequestREST(
           client: dio,
           endpoint: resource_path,
           data: jsonEncode(objectJSON ?? <String, String>{}));

@@ -1,4 +1,3 @@
-import 'package:app_sangfor/api/json_models/Empty.dart';
 import 'package:app_sangfor/api/json_models/HTTPError.dart';
 import 'package:app_sangfor/api/json_parsers/json_parser.dart';
 import 'object_decoder.dart';

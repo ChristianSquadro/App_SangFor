@@ -1,4 +1,4 @@
-import 'package:meta/meta.dart';
+
 
 /// {@template todo}
 /// Model for a todo. Can contain an optional list of [items] for

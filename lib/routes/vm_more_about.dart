@@ -25,12 +25,6 @@ class _VMMoreAboutState extends State<VMMoreAboutPage> {
     _pageController = PageController();
   }
 
-  static const List<Widget> _widgetOptions = const <Widget>[
-    DetailsPage(),
-    QuickActionsPage(),
-    PerformancePage(),
-  ];
-
   void _onItemTapped(int index) {
     setState(() {
       _selectedIndex = index;
