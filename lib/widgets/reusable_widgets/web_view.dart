@@ -42,7 +42,7 @@ class _WebViewCustomState extends State<WebViewCustom> {
         allowsInlineMediaPlayback: true,
         gestureNavigationEnabled: true,
         onWebResourceError: (WebResourceError webResourceError){
-          showErrorDialog(context, webResourceError.toString());
+          showErrorDialog(context, webResourceError.description);
         },
         onPageFinished: (finish) {
           setState(() {
