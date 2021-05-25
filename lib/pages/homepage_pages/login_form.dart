@@ -26,7 +26,7 @@ class _LoginFormState extends State<LoginForm> {
     if (input!.contains(RegExp(
         r"^(?!0)(?!.*\.$)((1?\d?\d|25[0-5]|2[0-4]\d)(\.|$)){4}$",
         caseSensitive: false,
-        multiLine: false))) {
+        multiLine: false))){
       return null;
     } else {
       return "invalid_field";

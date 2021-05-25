@@ -55,14 +55,14 @@ class _WebViewConsoleState extends State<WebViewConsole> {
             future: url,
             builder: (context, snapshot) {
               //adding connectionState i'm sure when i press the refresh button to show the circular progress bar
-              // because after set state the hasData and hasError aren't reset until the response is back
+              // because after set state the hasData and hasError aren't reset until the response is back,
               if (snapshot.hasData &&
                   snapshot.connectionState == ConnectionState.done) {
                 var data = snapshot.data;
                 //only for test
-                /*if(kDebugMode)
+                //if(kDebugMode)
                   data = data!.replaceFirst("192.168.3.140", "scp.sicloud.org");
-                print(data);*/
+                print(data);
 
                 return WebViewCustom(data!);
               }
