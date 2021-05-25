@@ -35,8 +35,13 @@ class ListVM_ApiCall {
         } else {
           isNotDone = false;
           JsonParser<HTTPError> parser=const HTTPErrorParser();
-          HTTPError error=await parser.parseFromJson(e.response!.data as String);
-          showErrorDialog(context,error.error.message);
+          if(e.response?.data != null) {
+            HTTPError error = await parser.parseFromJson(
+                e.response!.data as String);
+            showErrorDialog(context, error.error.message);
+          }
+          else
+            showErrorDialog(context, "Connection Timeout!");
           return Future<ListVM>.error(e);
         }
       }
@@ -54,7 +59,7 @@ class ListVM_ApiCall {
     bool isNotDone=true;
     while (isNotDone)
     try {
-      var requestHTTP = await DataConnection.createRequestREST("${linkVM}/action",true,objectJSON);
+      var requestHTTP = await DataConnection.createRequestREST("compute/v2/servers/${linkVM}/action",true,objectJSON);
       var response = await requestHTTP!.executePost<UrlConsole>(const UrlConsoleParser());
       return response.console.url;
     } on DioError catch (e) {
@@ -68,8 +73,13 @@ class ListVM_ApiCall {
       } else {
         isNotDone = false;
         JsonParser<HTTPError> parser=const HTTPErrorParser();
-        HTTPError error=await parser.parseFromJson(e.response!.data as String);
-        showErrorDialog(context,error.error.message);
+        if(e.response?.data != null) {
+          HTTPError error = await parser.parseFromJson(
+              e.response!.data as String);
+          showErrorDialog(context, error.error.message);
+        }
+        else
+          showErrorDialog(context, "Connection Timeout!");
         return Future<String>.error(e);
       }
     }

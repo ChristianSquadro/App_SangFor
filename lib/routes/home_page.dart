@@ -81,10 +81,12 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
     //it means someone didn't log in yet or log out
    if (DataConnection.saveCredentials == true)
         success= await loginApiCall.authenticate(DataConnection.ipAddress!, DataConnection.tenant!, DataConnection.username!,DataConnection.password!, context);
-    if(success)
+   if(success)
       tabController.animateTo(2);
-    else
-      tabController.animateTo(1);
+    else {
+     tabController.animateTo(1);
+     DataConnection.storageDeleteAll();
+   }
   }
 
   /// Sliding animation to show the login form

@@ -37,8 +37,13 @@ class QuickActions_ApiCall {
         } else {
           isNotDone = false;
           JsonParser<HTTPError> parser=const HTTPErrorParser();
-          HTTPError error=await parser.parseFromJson(e.response!.data as String);
-          showErrorDialog(context,error.error.message);
+          if(e.response?.data != null) {
+            HTTPError error = await parser.parseFromJson(
+                e.response!.data as String);
+            showErrorDialog(context, error.error.message);
+          }
+          else
+            showErrorDialog(context, "Connection Timeout!");
           return Future<bool>.error(e);
         }
       }
@@ -67,8 +72,13 @@ class QuickActions_ApiCall {
         } else {
           isNotDone = false;
           JsonParser<HTTPError> parser=const HTTPErrorParser();
-          HTTPError error=await parser.parseFromJson(e.response!.data as String);
-          showErrorDialog(context,error.error.message);
+          if(e.response?.data != null) {
+            HTTPError error = await parser.parseFromJson(
+                e.response!.data as String);
+            showErrorDialog(context, error.error.message);
+          }
+          else
+            showErrorDialog(context, "Connection Timeout!");
           return Future<bool>.error(e);
         }
       }

@@ -1,3 +1,6 @@
+
+import 'dart:io';
+
 import 'package:app_sangfor/api/api_call/login_apicall.dart';
 import 'package:flutter/material.dart';
 import 'package:app_sangfor/routes.dart';
@@ -10,7 +13,6 @@ import 'cache/Vm_Cache.dart';
 
 void main(){
   //i insert this instruction for some token problems with android webview
-  //if (Platform.isAndroid)
   WebView.platform.clearCookies();
   runApp(Provider<VmCache>(create: (_) => VmCache(), child: const LoginApp()));}
 
