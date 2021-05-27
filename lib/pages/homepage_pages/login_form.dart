@@ -17,7 +17,7 @@ class LoginForm extends StatefulWidget {
 class _LoginFormState extends State<LoginForm> {
   final formKey = GlobalKey<FormState>();
   final ipServerController = TextEditingController();
-  final tenantController = TextEditingController();
+  //final tenantController = TextEditingController();
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
   bool checkedValue = false;
