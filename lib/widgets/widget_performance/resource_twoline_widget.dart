@@ -95,7 +95,7 @@ class _ResourceTwoLineState extends State<ResourceTwoLineWidget> {
               child: Stack(alignment: Alignment.bottomCenter, children: [
                 Align(
                     child: AspectRatio(
-                  aspectRatio: 1.45,
+                  aspectRatio: 1.25,
                   child: Container(
                     decoration: const BoxDecoration(
                         borderRadius: BorderRadius.all(

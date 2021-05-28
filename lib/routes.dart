@@ -1,6 +1,7 @@
 import 'package:app_sangfor/animations/sliding_page_route.dart';
 import 'package:app_sangfor/routes/VM_page.dart';
 import 'package:app_sangfor/routes/WebView_Page.dart';
+import 'package:app_sangfor/routes/about.dart';
 import 'package:app_sangfor/routes/home_page.dart';
 import 'package:app_sangfor/pages/homepage_pages/dashboard.dart';
 import 'package:flutter/material.dart';
@@ -28,6 +29,11 @@ class RouteGenerator {
             navigateTo: const VMPage()
         );
 
+      case about:
+        return FadePageRoute(
+            navigateTo: const About()
+        );
+
       case webViewConsole:
         return SlideUpPageRoute(
             navigateTo: const WebViewConsole()
@@ -49,6 +55,7 @@ class RouteGenerator {
   static const dashboard = '/DashBoard';
   static const webViewConsole = '/DashBoard/WebViewConsole';
   static const VMMoreAbout = '/DashBoard/VMMoreAbout';
+  static const about = '/About';
 }
 
 /// Exception thrown when a given route doesn't exist
